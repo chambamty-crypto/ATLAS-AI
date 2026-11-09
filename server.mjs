@@ -133,8 +133,10 @@ app.post("/api/assistant", rateLimit(20, 60_000), async (req, res) => {
       .flatMap((item) => item.content || [])
       .filter((part) => part.type === "output_text")
       .flatMap((part) => part.annotations || [])
-      .filter((annotation) => annotation.type === "url_citation" && /^https?:\/\//i.test(annotation.url || ""))
-      .map((annotation) => ({ title: annotation.title || annotation.url, url: annotation.url }))
+      .filter((annotation) => annotation.type === "url_citation")
+      .map((annotation) => annotation.url_citation || annotation)
+      .filter((citation) => /^https?:\/\//i.test(citation.url || ""))
+      .map((citation) => ({ title: citation.title || citation.url, url: citation.url }))
       .slice(0, 8);
 
     res.set("Cache-Control", "no-store");
