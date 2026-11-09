@@ -288,7 +288,7 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ATLAS_TOOL_NAMES });
 });
 
-app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (_req, res) => {
+app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (req, res) => {
   if (!apiKey) {
     return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
   }
@@ -367,9 +367,11 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
   }
 
   try {
-    const tools = [{ type: "web_search" }, ...ATLAS_FUNCTION_TOOLS];
+    const { preferences } = buildUserContext(req.user.id);
+    const tools = [{ type: "web_search" }, ...ATLAS_FUNCTION_TOOLS, ...(preferences.memory_enabled ? [USER_HISTORY_TOOL] : [])];
+    const instructions = buildPersonalizedInstructions(req.user.id);
     let input = safeMessages;
-    let data = await callResponsesAPI(input, tools);
+    let data = await callResponsesAPI(input, tools, instructions);
 
     for (let round = 0; round < 2; round += 1) {
       const calls = (data.output || []).filter((item) => item.type === "function_call");
@@ -380,7 +382,9 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
         let output;
         try {
           const args = JSON.parse(call.arguments || "{}");
-          output = call.name === USER_HISTORY_TOOL.name\n            ? executeUserTool(call.name, args, req.user.id)\n            : executeAtlasTool(call.name, args);
+          output = call.name === USER_HISTORY_TOOL.name
+            ? executeUserTool(call.name, args, req.user.id)
+            : executeAtlasTool(call.name, args);
         } catch (error) {
           output = { ok: false, error: error.message || "No se pudo ejecutar la herramienta." };
         }
