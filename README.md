@@ -1,16 +1,16 @@
 # ATLAS-AI
 
-Asistente personal inteligente con interfaz web y conversación por voz en tiempo real.
+Asistente personal inteligente con interfaz web, conversación por voz en tiempo real e interacción por texto.
 
 ## Estado
 
-**Versión inicial: 0.1.0.** Incluye interfaz visual, servidor Node.js y conexión de voz preparada con OpenAI Realtime API.
+**Versión 0.2.0.** Incluye interfaz de voz WebRTC, historial local de conversaciones, chat de texto y un endpoint de servidor para respuestas inteligentes con búsqueda web.
 
 ## Requisitos
 
 - Node.js 22.6 o posterior.
-- Una API key de OpenAI con acceso a Realtime API.
-- Navegador moderno con permiso de micrófono.
+- Una API key de OpenAI con acceso a Responses API y Realtime API.
+- Navegador moderno con permiso de micrófono para la función de voz.
 
 ## Instalación local
 
@@ -24,14 +24,22 @@ Asistente personal inteligente con interfaz web y conversación por voz en tiemp
 5. Abre `.env` y agrega tu clave en `OPENAI_API_KEY`.
 6. Inicia el servidor:
    `npm run dev`
-7. Abre [http://localhost:3000](http://localhost:3000) y presiona **Iniciar conversación**.
+7. Abre [http://localhost:3000](http://localhost:3000).
 
-## Seguridad
+## Funciones disponibles
 
-- La API key principal se utiliza únicamente en el servidor.
-- El navegador recibe un client secret temporal para iniciar la sesión Realtime.
+- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor.
+- **Chat de texto:** el servidor llama a Responses API usando el modelo `gpt-5.4` y la herramienta integrada `web_search`.
+- **Historial local:** las conversaciones se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos ni se guardan en una base de datos.
+- **Citas web:** cuando Responses devuelve anotaciones de fuentes, la interfaz las muestra como enlaces.
+
+## Seguridad y límites
+
+- La API key principal solo se utiliza en el servidor; el frontend recibe un client secret temporal exclusivamente para iniciar Realtime.
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
-- El endpoint de sesión incluye un límite básico de solicitudes para desarrollo. Antes de exponer la aplicación públicamente, agrega autenticación, autorización, límites robustos, HTTPS y controles de abuso.
+- El historial se almacena en el navegador del usuario. Borrar los datos del sitio o usar otro navegador/perfil puede eliminar o separar ese historial.
+- Los endpoints tienen límites básicos por dirección IP en memoria. No sustituyen autenticación ni protección contra abuso en producción.
+- Antes de desplegar públicamente, agrega autenticación, límites distribuidos, HTTPS, monitoreo y controles de costos. No expongas el servidor sin esas medidas.
 
 ## Estructura
 
@@ -48,18 +56,16 @@ ATLAS-AI/
 └── server.mjs
 ```
 
-## Tecnología
+## Documentación oficial
 
-- Node.js y Express
-- WebRTC en el navegador
-- OpenAI Realtime API
-
-La conexión de voz sigue el flujo documentado de credenciales efímeras: el servidor crea el client secret y el navegador lo usa para negociar WebRTC. Consulta la [guía oficial de Realtime](https://developers.openai.com/api/docs/guides/realtime) y la [guía oficial de WebRTC](https://developers.openai.com/api/docs/guides/voice-webrtc).
+- [Realtime API](https://developers.openai.com/api/docs/guides/realtime)
+- [WebRTC para voz](https://developers.openai.com/api/docs/guides/realtime-webrtc)
+- [Responses API](https://developers.openai.com/api/reference/responses/overview)
+- [Herramienta de búsqueda web](https://developers.openai.com/api/docs/guides/tools-web-search)
 
 ## Próximas etapas
 
-- Historial de conversaciones.
-- Herramientas para búsquedas, cálculos y tareas.
-- Autenticación de usuario y controles de acceso.
-- Preferencias de voz y configuración.
-- Despliegue seguro.
+- Autenticación y sincronización segura del historial.
+- Herramientas propias con permisos y confirmación para acciones sensibles.
+- Ajustes de voz y preferencias de usuario.
+- Pruebas automatizadas y despliegue seguro.
