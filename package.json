@@ -1,12 +1,13 @@
 {
   "name": "atlas-ai",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "ATLAS-AI — voice-first personal AI assistant",
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "dev": "node --watch server.mjs"
+    "dev": "node --watch server.mjs",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=22.6.0"
