@@ -146,7 +146,7 @@ function getResponseCitations(data) {
 app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
   const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
   const password = req.body?.password;
-  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 254 ||
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 ||
       typeof password !== "string" || password.length < 12 || password.length > 128) {
     return res.status(400).json({ error: "Usa un correo válido y una contraseña de 12 a 128 caracteres." });
   }
@@ -213,7 +213,7 @@ app.put("/api/conversations", csrfGuard, requireAuth, (req, res) => {
       }
       const clean = { role: message.role, content: message.content.trim() };
       if (Array.isArray(message.citations)) clean.citations = message.citations.slice(0, 8)
-        .filter((c) => c && typeof c.url === "string" && /^https?:\\/\\//i.test(c.url))
+        .filter((c) => c && typeof c.url === "string" && /^https?:\/\//i.test(c.url))
         .map((c) => ({ url: c.url.slice(0, 2048), title: typeof c.title === "string" ? c.title.slice(0, 300) : c.url.slice(0, 300) }));
       messages.push(clean);
     }
