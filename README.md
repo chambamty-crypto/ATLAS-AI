@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.7.0.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.8.0.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
@@ -36,7 +36,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 - **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.
 - **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
 - **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
-- **Historial privado:** conversaciones persistidas en SQLite y vinculadas al ID de usuario. Las consultas y escrituras se limitan al usuario autenticado; máximo 40 conversaciones y 100 mensajes por conversación.
+- **Historial privado y persistente:** conversaciones guardadas en SQLite por cuenta, disponibles al volver a iniciar sesión. El panel permite buscar por título o contenido, abrir una conversación, eliminar una individual o borrar todo el historial. Cada conversación se guarda de forma independiente para evitar que una pestaña sobrescriba el historial completo de otra; máximo 40 conversaciones y 100 mensajes por conversación.
 - **Memoria personal:** el usuario agrega y elimina recuerdos explícitamente; máximo 50 recuerdos por cuenta. Puede desactivar su uso sin borrar lo guardado.
 - **Preferencias individuales:** idioma, tono y nivel de detalle se guardan por cuenta y personalizan chat y voz.
 - **Búsqueda en el historial:** `search_my_history` encuentra coincidencias únicamente en las conversaciones de la cuenta autenticada. Es una herramienta de lectura; no modifica mensajes ni comparte datos entre usuarios.
@@ -45,6 +45,12 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 - **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta versión no las agenda ni las persiste.
 - **Conversión de unidades:** longitud (m, km, cm, mi, ft), masa (kg, g, lb, oz), temperatura (°C, °F, K) y volumen (L, mL, galón estadounidense).
 - **Citas web:** muestra enlaces de fuentes cuando Responses API devuelve anotaciones.
+
+## Historial de conversaciones
+
+El navegador carga el historial de la cuenta autenticada desde el servidor. Los cambios se guardan por conversación en la ruta /api/conversations/:id; esto reduce el tamaño de cada escritura y evita que guardar una conversación reemplace accidentalmente las demás. El panel muestra el número de conversaciones y permite filtrar por título o por texto de los mensajes, abrir una conversación y eliminarla individualmente. La acción de borrar todo requiere confirmación.
+
+El almacenamiento definitivo está en SQLite, no en localStorage. Para conservarlo entre reinicios o despliegues, monta un volumen persistente en la ruta indicada por ATLAS_DB_PATH. El historial no se comparte entre cuentas. Las operaciones de escritura requieren sesión y validación de origen.
 
 ## Arquitectura de herramientas
 
@@ -60,7 +66,7 @@ Ejecuta las pruebas unitarias:
 npm test
 ```
 
-La suite se ejecuta en GitHub Actions; la validación de CI del PR #2 terminó correctamente. Estas pruebas no sustituyen una prueba de integración con una API key real ni una prueba manual de voz en navegador.
+El workflow de GitHub Actions ejecuta npm test en los cambios de main y en pull requests. Estas pruebas no sustituyen una prueba de integración con una API key real ni una prueba manual de voz en navegador.
 
 ## Seguridad y límites
 
@@ -84,10 +90,12 @@ ATLAS-AI/
 ├── src/
 │   ├── atlas-tools.mjs
 │   ├── auth-store.mjs
+│   ├── conversation-validation.mjs
 │   └── user-context.mjs
 ├── test/
 │   ├── atlas-tools.test.mjs
 │   ├── auth-store.test.mjs
+│   ├── conversation-validation.test.mjs
 │   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
