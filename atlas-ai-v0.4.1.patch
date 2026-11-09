@@ -1,0 +1,2564 @@
+diff --git a/.gitignore b/.gitignore
+index fbc7875..5aa3785 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -4,3 +4,5 @@ node_modules/
+ !.env.example
+ .DS_Store
+ npm-debug.log*
++*.zip
++*.patch
+diff --git a/ATLAS-AI-v0.4.0.zip b/ATLAS-AI-v0.4.0.zip
+deleted file mode 100644
+index b64fef88936848eab8ef6cc49d48c782a25c5e1f..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 26667
+zcmb5VbBt%*+AUf}mu=g&ZQHhO+qP}Hs>^m&m+k(QZFJp!_jhu>o$u^(Z|+Lw%=%+x
+z<Voh584t!#lmP|%0rbzKMP;S;ub2O|K?C6e38~5osn7{YF{r6R1A%U+-C6&$+&p1`
+zfWiLx>|dMW|Aqkl9}sZ=4&mZ#@?S9Qe<A)^{{aT|FD4X_#$T8K16;IE2p}Ll6rjH#
+z{}#zVFh;JnMlN)&4i2_1^mf)R{|av9KL^*QY2dKMi5xIrk%=7>hRWltyuBmRY;~|D
+z69n?6QmSv*AxCdWx@k_5q@OIE!v4nScR9>|wblC`a|KJK)JzBHhOrGANS2%{*mE%F
+zTvC-XIXJ#_^>y|4f1F-<#lsbLP<5nJX6IG<<y`mXcVlQ1vp1X8p4g32a(8!nwNg_c
+zAAsA>&(n)tkcZblnsU<t#D7E(*jw=6cPb~HrCns|u-_-GzOa^hVwJ@*T{DlxQHAcZ
+z8Ce6^PUY=CQIv+To@0|4J@kN<h0&qy({6>W$1s5XDkn?H0?8M#lHM*fq-W-aK0Ab=
+zQi6_E=I?+#J`6ZbX9mq=>3xmP$1>W-cQ*T(E^B39C=i$jY<o1sST)0fzS#I-=r;L<
+zks6p!$Zp<$&*52HFL1l8PT^ERzM+1*Di1V*?1lxn0lbq|B`xh5g2%T&1c4CIpc_B|
+zKMGsz6L>Psqlx;=e|N=*-;n!!M;9SHW<TyXDZgs!l)N>RE%0tdy!4KR@0#__HOnSy
+zr}tZJ@ELU-*h50Q4)p~cQ*~%`30F5Tvu;Hf=Ufpm<xk<hO=8J<a+^ec%349twvkOI
+zA<<i1p=h6=w;ED{2;0K%w;p%=i02Y!4NMtb<4LM^IJQq~GwZ{Lv>Ty^R5*C3Xrx+)
+z>zB6R?VSv3%InNMqe?kManTa&$z4mgnu~2wK1-#Y%uEO+2SscsW9i78L4n005RtaX
+zl_zto4wUN>1y)uhEhD>bK)vMwlVpB)DGN0FZGI-gIoE3ba`4E_Eb+@4-UpMyr>Ct~
+zGfjEc&ZP01g3(~cJ34G6utH^I<CUVt<O12|#1RURdxHAN=>33Q<#eY9rGiL?LKJ2K
+zdITqfj7bzVkc#GV5-0jfc<5oJj~&z$M{BH>Yf^2<UpT;dMm-LYC^@>jNGVZ_@2PfG
+zZuCO+tH;C>OeR&Y!o@e?^aXyz^uX}p_H*Or=JM8VPEm}Jrred%&x3e<3OCVwsH75T
+zf&pO)iquq2QFjZqh=_o*K|rW0BLz5HTik-g?AYs4?8w$65WY!p{?b0H^!Vu-V)~gK
+za)3=c)*<3HMk%ET5}eS(n9CK8sC~IXS`v=25q4%^It=CjyVcI4zZSt2RtCg|j_EB~
+zomFBj#ujVLuJg%`roMvB+YOHtlG*M%EL<?B*s{?#@xD0y6$2J<l=1o}FyN-7GoY!3
+z@8<~MU^$9dq`*rGPo1tL(3;7a%%KZbSxr2~cJ!wz+G&W`$IsVnGv9j4u?jFO>S9iL
+za$<>~#r`CpIa9_u<YZq(Vewx5OHaGEnm1kxDvE@U;WHq|X>sYjYG15lISe1S6ogY^
+zgjnMw%C_2G?sae2CVXL5R|<*2fi_FMqI#NYDU&%msH{7l?UooTpg8o_m0J!doTV3~
+zD_a>`pwC{Eg&PC>PC9ypPl&0wN{k5XbA`R;pU0k?RF++c1gcxXq2jIcEuCvfJPnw7
+zb5#0mvML5EL!H4Z8gh^|OMZya2ia|Y86$NFJPJ7kw_1xWq`>+^@d9moc7Y18zdmhW
+z_sT-w>!qy;=HjR>gvO~dn8NDMgzH7<f%e_h#`4lf*?tFRoE_Q6y)r>K80HoKy($88
+zqH`HsJ&$t^9G>(HuxpNP-~+}LjYRe5e%i7Y?j(P}EJ!A8f^Yg86b>SGuB#*2%<E%2
+z#U+@XXqby?vNPMALIa1JlkJE%80<8<sq2kS_jo*^nihfrco^85_PO2zP#-yz8u2#+
+zqJrDea`w+SZXY%FH{QfOsb_P&@8m{9CSF!zr^MXwRM!~EG7vsRGd0%tH1WNxa%kS}
+z+eq~iw-49J8_C>Q@-PN02Uy(iz_~_tT<vVgE3A8~HL?H+Mmi7T52~CWFZtt67EJ(;
+z<(K=U*(|K1Iy9y6;JChgWxWb$!Q#b;xy$eUJj7AC9$_6m;90>Q-AT}VJ&zw}lIrxa
+z`%@N*9BMtitaSCb*vr)TpefVoZn8$x<npOw_Mi+`Q<H1IenWe4kM%Ze8!sQ31CA|n
+z<Awc3+B~F<Wp@5Fgmf#A%Q;;6T>}bu5$L$^YA~F`=<*V#X7iVV6fV3ApUwK21nv}&
+zexW&tnwVWzCpl(}M2^A3>c3n}I(-GmHtqae1^xz=C(MIku%z|!ghCOwiBJL`--Ryl
+zyExv`^ER+?Em&Nuu5$(t*AEE?e6RbRw{zQ<3)p&A?G3vts2pAb+sMfk0gHQG*)x_^
+zAzMsbf7GetSXKjgbHSBp;^ghgf7E_RHH3vY5ZyWL_mD(D%#r>&x$$3NelkiR9#HOV
+zUBK-84Oio)7>b1I!vcDxmpD@yLDl#m77;h)1k!R`QCkB;(^PmklIPV=(D4W8zlmAr
+ze-Ja`zcZ?%o3X9c|KjG|zbtzA|HjS#P`t%E)2Hg+q(K@F2nhQ>Ai21D*_ye~o4EWJ
+zGylW&9RDX~nbvf24JY!>ng-%kWu!ACqGV=-(NfIDGvthNU?bb;FmPw}cIdYsGa3G&
+zlH1LQsKi=ZSfX+kg+hL6NqKz_e_c#>)8^xp48B>dR{|YPmnbBKBeHWa1Bdz@u{Axk
+z4@tdL)meBsUZ{kpYGgEmLZn6VK3D?Y5;-uxEJ1BFynkk%3qoJ|OT5J*Q7Hh0XZR&P
+zz-=+8<ukQnK11N6^iQ+)T|y<jk}?OD11+W(x!d!p%&M*^8kZ9l^~Kca$)?zd6Mwza
+z(61L6mAx8TYfW-ZBfVP#eK&`nlp}Q~5EroXUTnHIE4+vi-SjNE8V@0C4xV!*2Vo84
+zn%qRnA(rb*a~IVu&g#*JNMEzn<$X>qeyw;6bv=wa>TT-NI7#DAkPi37e_H#BYbKcW
+z`3#bM)>hJ@V4A{P@YkY6-NN2>mdwq9A)Y(B(ef&5C@~CpV+6!j^-56O><#W5#h=V>
+zA@VPF#U0Z*F~r7mD5<XDIPrhu9=(q#FY*!REWE16{K(h&1Z}q}sjh!*tpPXip0$BY
+z&eQUa?s-QKYj7HTpl_zU=IQ_Cw;H3Ndzgp9U|$-C&PPRZFkyDgYjFAeqrO04?Kar$
+zFa!ZI6tNEpa*s(xz4R6<*aVByk$23b6wdwT{B^7u_HKVjWSHp`x(-AJWi`|NS0gpc
+zU5(m(e3rYmhMk@x5Y(`f=XQBqr<*fSI+IHvkHfocYez6&@y~q&CYq75X0Xt<IOTZz
+zm~R&co+JTU&4!SqO7Jyjnu8sRi2Z86k0(;y8Ec|#Jzt}aNX6Spbk*0jDNk(<*>?z$
+zl0=9J0Mgw)-P@B2Frh0hlvKo^D9r)}JJ*AA<It3*&()J1BY>4b*)=o!hsjOv58x;B
+z$jSNd8i{Zt-bx-|R$@d_sKANX;i!TXQe7gB&?;tXubosS6_45@2MUIxj1v1&V2U~j
+znH{)K1x{uYC7vhqxXSZ-b#FAWXYu&o2nstU0-hwg?>2l%@+i>4cVeIhRKLpGf27|I
+zwZ4T=$bDIDg75F1uaCA~kT)s24_D^6PcQilM{IynyY;;t83f=2tf_rPXbl-e_0z#p
+zGPs>`ir7o~c*D+mfeT3u?2`*xc{tS7UYmo$F?sT479m|aC&+{G!%S}E?2}N}LaHk-
+zpY`<32J<%JHxj1X2AFAmK{L9+&S02$LimH1*ZO49BFB;Ji}T-#OhVT4J{;T9fo<h_
+zPO-(&oLLl<fzvoR(9@bj5EPW(kR(l!#45E<Zr-F{dE$HeOEMADWua@VtK|?3<%UT;
+zw+6)?u#$Z=r^fKbu0)@;JN+_=DKywb3r>OP(^1T;T`BiNv(w-}cxu}_uGoas;61+^
+z0bZR!OPx4oRr5oT&B(+@ePQISE?Nl9Rsdb%2X$fy3bxk@$L!jIN*X`uiI4i;NEJ2=
+zcX>2%r84amT5PI@J^N{|dxqaOeQ>w%kcn<{IM0tj>YWR|^bRlTG!t%+4kg=goAdZf
+z**b^jo)t~OsQT_|<_p#d9V^%u1k3$^ghc7(+wk75DgB8S1uirC$Z^33dK96<t}&fj
+zxCVzG!#iCta{!vBbZ`@g)^xHOBdH=zM)L{JOW_2Ji^nHSRA?Sp3;MN$0-?0bN7v`~
+zaa`rSe4&tE=4DP|`M41QFnq!Do%)9%_=yjW(hX*dbZWI?2Zs_cxsJ$5BvG}l>i!1c
+zGQtRyLRY=AjaE)91zkBUm>B#As9JVsVUUYz86<}Z05%w}ShFl2B^NGX$by12N+xa~
+zU<Y?EFaG9(oNE|KmvOI5LPeGC2JwvgBb=9i_{}gmA|)QhkUnn0_!UfA0y36+5B&H_
+zKKJBZ`utOq;#rUJRvPM#8+<B%-*RfZFUY!{dsxD(-bT;y%IUVV)m{}k+tmF9?Sa3U
+z657bbV%zsh>#R-W^p<h{C;&(T>s$EIy3Kc-rn0n(<)R-{k|-MjyPzOxg^*;O=ht#<
+zA(nlI4{#n#la-C*s<0&W3_6_K!xr{P#Y^2K|KIZv6RM|nn%qK%Hqp@tsOR@Yt-H&X
+z#H!X_q_4V%EUHXjtSP5`SNJGFr)*H0Hg!qVKLWV_VP0jlK+{>~G}%eS7FNgKZ~&hp
+zq$$6)yWSA=Z*x2>Qc|u~4MWoHW3BqG5=4fCIVO@VikqDc0gzc-$L<^t-c3d&lT|l9
+z&upCbBsK*KU{95Mb-B2Xt~wt;ur1G1Yx{#t{r>iEftt!-(ld2Y7aG}%yb7g^KLJS(
+zT)4~-tH~m3y!NC^Fq;#skNw_~cib*ducwDlFtxY_h#GK!Y&VwfZ`}JHSqeP0)N_c}
+zR3o(uis6c`)FBbj`e`!0@)aZW;eZ*nCr_q41~0$X=6F;!e1Ibz5?F3b;dHMmk2Z|1
+zqN(CqVkC1&guH7ylC}13L}h-RE&~|UHb^}dTvF@xu|#G2>kb&<5_rg=8L0%Fb-i&|
+z;}iqnSK763-eM@|Z`Ujte$x|~lvMwWHpt*=YjhU9&#wb5jo9hvy^K#T*jc{75YCUj
+zTI1Z8mSfVN7ge@sfI4Me8V3sS8U+fv!KZ8h(jiG6BIHS7qx0V@mQ*4pGaLO_(UGAN
+z@KKlM?aiIq!t9Ptcb?{^!`K|<@>(Jb<UOPAj1Dh_&2MPn#|dPv!7o^tb~Ni;1R2+8
+z!A;NGVJD7uD0}K(>f%0F7SI}QON!AS$Gh_32?0)Uh$EEMO6J}yU2H$#I+99<n}=(6
+zp=cJqxR=zv_r^9?=MPH1m|7@CuKuHdA*IX<S~F^b!!Q2&^H(?~*BWn#HJjbu2Y5!k
+zHti%POi1k8P?KO8GKVfcru<S=Dw;Q%z@k|*;#D<LHEkuFSI5Q3p5i12Mmfs_Mj?EE
+z2U~RM`Oj7GOI|Y^@Ll-=8SugmNq=#!f^%Cz-pUpkJVF#LAA`2vB86tgZ_?wGKI~y&
+z6|r2d;^FCUpUv0IA7qJAfidweKVChel6Tsrhe$P(GWv-cy!1pjmK_4S^>V&kX3Kp9
+zx6+||kxvI>0kP9879t<raU?evChRgzgSyCn(uZ_!G;kxFr3^d^YSpd!t>2F3X?{{y
+zMTPVYxEA=;+drhaR0uuQ1Y558WE9G}d)@E*2syi_-v@|sJ{ULOKVD3AQwmL=9|*jl
+z1%|`xW##@pSw>(=B#Beg7&WO#!CKACp(z#`#7Y5m1B_Wwc~S|dB5?2#MtkV;{hEC+
+z>jcYVMWQy<Sgp9bCA}4Hw=Z6{LATvCW?|2dWy%h1%D<2lWC-Yekl1BB4S~G`eAHia
+zyeuYq+zY=~$))dTBG{F(_k#1ENb59gi92)<z5Lv>oKR@In>HYe@PD)GV}wnFiSH#>
+ze|e&s_yv$QrG{KWBRl&^Fy$_<-x)70S&VG-ww(#WMIxuve^<%$Wr0h5qxck-+Pt!s
+zz*{XHEW~%^@8B()Xdl(l_kO{Frv7L9e!J_33f=k54@WA975}BLx7Zd(HHmk#tiil|
+zhHvnHGT#60AyHW<nSR0p0g12x0ipkgJk`k2k^bMhN1Oj=j#`JUm$KD<x6=<|&Vogq
+z=IKt3faSG~BUZ7Tk$<zDvMn|4K92}3)k+miH0VN)G20qY;^1|rQ*aN;t@54nC;6IQ
+z5V?>tkA8Cc42l*#=4%&RI14=*EgEoMqfC|6TtS;`)P-L4qmM?+p9L)nDs9H^#siE!
+z6D4=e=bo^1lsN8M|A(Ls3~(NG44|0uRe8IK0SJB-`<Jkz3T0FNugl#hFpdSw?2}s#
+z@I=jW3t#$VKTPZeq2NY1<gEE|-r+323t($RYetJRJR5Ayw1-xx2TqlbbXLXLDc#yK
+z<PzrSlfE)++X19{t)I~_nSER#1%5Gb>x4lD5&dh#44nDi=ryJdv3C1G!j>?L(KQWb
+zeY-vQh7d47&KY^-T3s2g+889MWg3uGu8U<$Rj-T?u^tT&1He~1V~FIzfO%Gt8*!0^
+zkmzqX`Vd?0o=)5^C+DY%Ndw@RakZfs-~`Z|EiuQh^&0m8{`Y5VU#CAAlP9jMJiVL+
+zL(L5M8!ht`OH_p;QR4}Q<VewG!pFCH=~Bgz`=*ABQ7q{bi4-bnFn#W0NeNEfwx0vR
+z6k&lRv{R|F@ap%Lwknq|>sO!<;!Yy{u~=PqHb}t14&@jCp|J<yS96st&~rnoWhzdP
+zy+i4QuUC=>{a&GbqGHd%&xjIU0Edw7LW6>)4<93`+HWeKCvlN%g={!<r()6T52nJK
+zriuW=SA>s8m2!J#B8*3@5y35$MByT5&IZV(&`2&pX`E=7aouRB1<&E)H5Sca;wX^=
+zfpZ6#B=`;^B8`J7#~H5K--Ew{(sO3b_DvxHae>pkkbbQI`J^ZKV2y-b+@q?XQSI$G
+zNfscGva4k490(1K8&1;_<oM$lyUCZfY)kU-7@WP0inT#z!D5rRn>?9UV=XMHc3Lm|
+zyWF658<tov<VG1MJPce&v7|dhUk6l-EZHM2NsizH)JOA4k}OE=CrL0iAMSOVPLt!`
+z%w|XxN-}TMb{D9s4M<TfH0$NacsceTE{QSb(ztL&J96cwK!X&?7a0r+3ZMD~<WgA?
+zGdv8VYz=D>cjE;r3L>dmU^?O?Y@%zE^83R#;L`c>4CSO*Kh(;uMHID6*HYTc!OXO4
+z55t^~C2RRaHG=e@HtW(AB5$lnoijLQJMY%KE8}?vLAKfJI=W(oqG`C#*c7CVS}?PM
+z=9-MdAOuTKGv}tCbdUET=H9vz3Qrf!@31vjUn%B&epNyfbIYkA6S9YXX0yNWDZ%Ck
+zTs&>i*?NH@zxyJNPHPTMXqQ`qlZ;CLe(g;*y9ODtstRQrVeb_rh>o<z>lh{Eu1!-1
+z>zY8ukG`XpCk}kNSmJjb&53laQs)~#h;b{ozr3wv^Gt^Nyzi}bz5v4vMf?i%urY1Y
+z7?sVww`C;jlYmnU1Oc{4)Mc-xQBlIoN$?!x48=l<{yb8kI@(Jk_{PIjeMa(12S)K7
+z+HEO`VD}BD9{hwS2`Sw7CIdV^)Lj<3eUjr1h`rMc7>0~9r_ANf7IvV8Eadn)Z!xFu
+z^o8NEBse90wcTP`Ms;|7j1X(Lp$wwW?kA9e@rkeqb$}fz3InnGn+WkNHh3kgu1|*Q
+z9;Z8Te=Pe?nUyEeDlJ-we_Xv$X6u5QtAZv8hwq0W_V0$Ey&YFM$X)hD#QfS^x{A%_
+z8Yc=$esZ@iD{m!%aI-W1RbM@I%Dy{ixrnv6DevnZ(U~CU9m=JnA$#VE2XzIzT(#tI
+ztzsE@F55I;61$+pSq}=MDQIx(A&BOq6b<z=R*-!DDEE#lfFjG3hF^hj35a{c(w#k9
+zy>AS8!cRBONMvi8HLFYsI3?@DeEV4IDgBlt#gv?db942U1&KkUnufTwNn0r~8L)#K
+zd1yliI^}{}kTz0fSg?(q3#@49eAbNE6;Uts&BEH2=p^sGRk{Pdev}Q>PPWF^GspiY
+zg`KR)D?TZ6l;@vcY#+jXyxhFqJVptuxW%BZ&ZI_1VVTod&8&Zn^m4$ITuHAToz?0s
+z<7smWwZ_ddTp~b+Dh+LXcuk@qA>No%1{gXg2x^L#Xz3XUQW-WXymC7mNh!B)Z<zLa
+z#U7C;M2#N(RJax{*K5>eqHuw<VW9cfOFm0Z3cF`jD%QJwy0jq0K->wv?zDkg&Psi?
+zjgN$QVCntRm~;nS_TR!jp0HC@Jd|2Prpw?a@?@!oLz^(oKosh>#OvqtMQPJrj-Gz^
+znil3Kv4Vpa9wlL>$aCYOBXPY$`;HFosW6b0gKN|MxsJBARE1?kJ~^eSS(CG`9)%_k
+z=h}1|8SJIHl%2cXJW$$~J9`Om_fQU6W&3JtriPgL_o>_6M~NAMGjqe5<{5^;^E1Sv
+z+{e1x9}^7<IxX7_Q}9&8zWEPZ`3?DANBa{M+l5#co1Y$%e5+{L*C~puZzd9(k2c1-
+zOEiq7PgOf|TEe(SE-9vGtph!LJj%u#-8za8G}W<I$}y3`bC0gvIlKf-ccX8nyf}Hf
+zhCrL)<?twh1^ET>3K9Scj2YTePc@>f+?L75(PL-TQTiSye@Zb(W#fT4wp<V9EOr>D
+z7rkCZ*q|`c)$`oIWL>h1Y0+17vM+lOsY5xI?*$emLCD=1{y(69;tk>p)Ix9g2?Z1S
+zxN~9^C?>8a-!?3Ht(rkYE@3$n06VI6+h__x4#ioilbF_-LzsuEl*_A-KRcyF)GrFc
+z>w~^@4PUApf7LD&R#7B?YEfTigxCZ&F7B+bf|KUgY+n6fO5*TYFK5=g6MmsV`b{10
+zt?s7)w5g+#yDWEPa;wMNorV03f5?v+z{jJ0m72owX3p#{H8q?sN6#QJA2i8Q*XB+S
+z%A>LwgQ}|U7ULS(z%RU9dVv{trLeD=RZ0EPXLZi0cLWkGGps@w9kAbI3{y0ec7u0E
+z%P$OM+n1@fzN1Wo74+k0XXc!&O{^t|d|(5%aP8v^6(q}ke+0B`dJqo<hx=oFpmM%l
+zc9;v+4(t}*oKCuMK5wZB<f}u05QylQD(qD~7x1zQDwRD4VUXO4&93GNxpOgpncpK&
+zRW*%bMVfV8kJ<f~;>+g;Y%@*N4tY&K^=?#Ss3@GWy&>dr%>`!UVNiugf4mwwIHzWi
+zW|=MUF8`|?zn0${QC5RmXbQcGvGO$ZxS}Y;E>jGRoid?aiCFm8@0$6?&-7Z>0Po+f
+zI7<osjUR;ybs^V$x?<*LPb*fB<nD+|=t6L?2K#&DDWwY2XbW(gXgm1&v(w<ElR`<*
+zNcHunzcBG?k-qG=^5oj_&Qh%7PL>wwi|CO*{dChzats91Lr2~boAq_|V=0#MmiI@`
+z+Bj1Sv(L0Ivs(#~qYfbxjUgi~5Jmi9&{t5!n9*KJ58#E|TEgwXDdd##il3Ew>|)v@
+zbCzK%M7rh%v~+~qsmb$#LdF+ymSJuf_-r&XBA)FBkoTb!R{T0h6EsU~e@Vkhw2Z6W
+z3B|vITrfx;Yh_t`Oo>MKElJ&j5|-qBD!w$Ni6`E<w*u8ck_e$<_~tK+)=aq#+V7;w
+zk%3WBb}Kuc@WP4#3qb3P8~wQhgvpZi7-20_=h7zxniH$~CWwM$n`J$Ge|;ICx3yun
+zF$ARfGW_aQ>HwlY0EPYe<OphyH&3gonCM7Tt2L3=DV`O}L$~*mseN(}N@j_Y8e~wi
+zOuRIzfpWY6t`Z80-R8?!QDQsX#kRIw`pK>DEa@$Dt2Co9!j|d=t`E^m+ejYF<oHmU
+zE0Qeb*LPlwf7+cJX8?76ldZekVF=Rrk{hvZQ^hObUUM~0DwGs~;Q}>xiq^`GE=sQd
+z!Cw{JBDAUsn~HAYTZ|sK1umg~7<^P1RNzj2(H<UW<A)T8%gPi>qR*k!;Zweq9Wby9
+zgHMrpAF}-{7(}%$%KnxocAZsoKnpRS4LIQr2?AocVC)G}YQ!$o3C3J+dnK}@WWyS4
+z_g}Chl!lWw{h65KsOVR4ENM%w6{tdt$+z3F_CifkN#L;XBM-muI{qp2MhYK6@;D4o
+zf7W?hsc-kBwRGNQDsO&iimi^X?dC|lj$3JyEb0D;#iLh_oGIcu5nSgboWYSq3-Y|7
+zl*ft1Z#A8s39{^NigyD-K@HPrF63x2QG}v2j#iM!2@lHq2AOo@%)fk(i(iEBgHfpD
+zh2x^+VqBupt@yBwvsn1pla2_<vwLQ_FuO52^cq<R@TP3RuA~mf;U-cST!Op`xI;J|
+zi@3bf*mnxVDA;DNr;=rC>!Sv{6}8)CUm4lm1Z{uPU1`-Tna-BqJJkbH5wCy^4w`$7
+z!;0A+p);XPGF)qJ0?T<?qO9rK-9%c-upiV<W@#bQ0gPcoKL04TwY*ZotMex`mk@Zc
+zuc~tMy?=UsN|p_U2Qr@`hjHXiN?*W&qPaferr6gpD!s?vI@sm4&>Eq#)JEg<5WV}2
+zi-#qYBfZmDvu9}BYE=z(gq9slDodK_wgVz4^%#rQ&C;&ZosdxS4I+E(cQw~u?d{E^
+zA+YSIU&Zu7q{H*7UeXh6$QB@pyj>-z_8tn`__nzfPY`E&5UO2kxS2#M<#Fsp*^Z{6
+z#&50W!tE*oAKp)4JXmyT>-JJJX7yDcmS2`B-{J?54lGQ$PU$o7nO;b0+j`NWYi<<3
+zb4A|t)>t>K_{iKV+$vZ<=Z5lK886txqD_Y;^KJrF(fE)rieY;?33h66Gns?0Y@puN
+zY#YO=j2|iu<(=qYpx9D?fJ_i*kXYq?_*$KX?d01oGFf*Ted{~kq7QtIXf;@W*j&7;
+z_OkKTurDXrkn-<i>7RcIYq0cCZ-80YBr=hRSi7^)@REFGw9X31xuDrex03+7X;$Xo
+z6vCXR`e<uIF)*9v26GK72OWl)%8QtitLPz_j_2rI+0HL)83y42T)eoEt8W0?y)5O_
+z6{91vvhF;YR^S0GLR3SZ<Hf`{_mx|?&|$#V<aQkTJnuZmbe^oT+=bxdT={BBtUVAI
+zI~ox*wrh>NZNB{ZC=keK0=j~{m~u(%Nq#+rGv2z!a0)(WT;z4+d(QPSw{Yn$C||@w
+zD9j%Cc|qLBW39Lw@NGyUI61?z1zO-^kN-*V-?j8V(<86;7ej}?dW>wu|2*@tvNtvJ
+zq_=dnv;CJE<Nq>8O4FQ;-(pAX15lMyFUXK=LH{C`v~4@DU&34$sNKPJE+MTS4Mj#v
+zZaylEc+`AUEfjPB|AE?jlB%<qvuA2h*swrUW#E%%htOVo0BgZ1um{WchZL!47Zp`G
+z?{0r?oi{MWm+P+b9yTbMv=fwZu96(FLX^6iV%H<4;txrK-h`Am#cuSX8&T;qA$nIi
+z7jwN<@sgCV25ottUl$CmMK;oPO{ODv7YF8*U8zd8k^s8y#GHOXJbrw!55jXNO11Ii
+zk6F>(19%LIgKY#051|Y}RF!bqqC(}UT*p>nmAUkIO48a9o%O(ShgM8Zv}`N+5O0E4
+z{GndGF_Cf8b*^cHpi<vMwB%weuDC^%s!|OUhLvu`got69R(ZH|VOlOSaFq~E)7|eh
+z^=wOY9i_-JMQO=)Q?H)cEAEIU<(K|$VyvT_$-6T^1u;g#+O%rGmm#b7{ix-mR-3!D
+zGu4kx9iMwLfBZuL(mk0hTCOd*wcL++Ji#-#3hFY|8~nN!Wh^e&Qs7OKUv{VWcDPZd
+zCT1w@!I>y!<oJ`s;d2q^XEC|ngPxJN9Zu(Mr_Sb~Cu}s>e>nmLBi5Pvf{ZRYa>5!;
+zL#h{1Dw$#yn3pgasUT${w{a3(_C7O89Q#B~=zbU7U;LPcb%wUk>)Ppcl<)nc>++}3
+zMQG(RO#R-Ma#UDL->0W!b^+e}L6)D2R+?H|2IG<R35Bo^-&P=5XXjw?gzxwf_``-T
+z6Ca$BH^kE0=p(c3Wy7aKDvtuB$9Bz-?)YI{TbXKmJPrn1mc1qE=q8MC&7mz*7?ywD
+zOkZ2S(#q#2EiV>Aj5vEQ#thbMV{u^S5L$>6DNRSdAsq~5B&i^~nQ&=&$e1eX_EJKi
+z(WQ2(U=mCS478mRsd=eT7%(ph5(Pxe00a~mX6$C)IBpSQ1||`(E)Y7Gnykqm4)qe~
+zIULB`5FhG6D}jr6+9b>n#Ic__#5$92V-GvEtU_m_f2Ax`_9hIB@O{46eSt?*yaEAA
+z9~8X=xJaPIm57U_Bf1h1wgSheT^~D=H)Q-4H0L(WBfQ2F6Cjo-Rl<C{wsn6zxdpfd
+za`5SfjvjEP3oEL9bcsk(l4QDFR<FBF-;ifA7^LOOIxJp={KLa{=Lle;oR}$wIgWR=
+z^qo^?>=XEumdvo>I?jmHZfaE7z#`x^!(*-x9D~JNc3;+r0BR@sN@cN-dTBQcq~t1c
+zPr)!zUa?gOsUoDT=D{_zF~Oq3SzFecMnRpTRXW%Eg-GQ|CCDpqhN{*(=|j?)MMI0&
+zBxUtfU#;$<1*7IC?`s4;h&(kjms#tixhQ;=5MrHI*o%JS*O8KfDf?8z&PEPV+dK6E
+ze;{msOsbRazIH8S4ynMG({>OvX21+^k1>R@)~2CV9f&%7S8vw^-gtiW4^L}PXh7^d
+z1D9{Y_1NPi>siJ1j?WtNcgNp@j;<N8IEJFF82v;`87djQe7of2wO_0ZN3baYN90NO
+z8q|`~Fy*NIKy1TMVS#uK&R%LuSaOhIRdLBv)4!eH69`&y6KTh#-(5wJmwMUpB3MLr
+z5ppcI+7q+WnEBD$G>gGCw082$he*q3OY8jM6W`Jh9Q!-^=Lk6{2HB|5#xpTG6ErC?
+z12}udax2ZobB$0%)OEqW^h9ly@)3$HaF}AG20eVZspmWT)+rkliIeXU4nkr>vZ0sK
+zp(j&YyOL<^rhNpd{Q}mep7%$#;(?b`&DK>YRGYZm3-81Pj{F1Jt_W|gp#=W^0QQoq
+zBd!p+ejTC%^v92ey)Ucq%{8(V%@NKkjVb<QZfgt#Z?FvZ>R9IT4>I;y4TxZBoCT!o
+z9pL3BhXCC0k|HN}z?V2;5Vs^<X{kAgFia<KikXzDup{N5jF$NgC+oQApoP4;s}wR(
+zk5*F*i8;UeOf2XMti{W&FDis}J_M*e&F6H9MGFAn=<IJg_R}2IOTC~(Ws^fK4_dq~
+z<!EV(Z3Ov6^y47z4w>vryBG(Mqw&sp7ng_}lHHDe;|_W;3aaTx#_0O=xw*~i4evtR
+z7sSH@Tq_;|8KM;6?tDMq^5*)%0<Z3fq#te=alT<TtaZlxQdZQ(xM5H#>v+i)k;Xdg
+zwuj7^AoG)RpAPYac9fZiv<5dZs+3iwCYfnBOHv6|pV}v*QTF$5K)o-f@Q1=k|9?~1
+zKaxTUMZ`*IC?KG5Bp@K<e{TmXiwTL!iP77c{%;}Se~>`rX~-pPv19jLXdq6Iu{54+
+zuwH>IrR2ya4az4ElJ>-iHC0+hw`WP0N-OU=$;bQ&$Mu<XLg1oxzF7G#?KdrWAv2rK
+zHx5FFVon!Lx*31CJ5S2&@6GDZnrnzL#+QxU6sP093TbIZg3yT5x|2JhHTWp=W%yHu
+zfzsVFC|xyk-GY|)V0^R-V<*PieU*Ew&92#&uC%Nz>PL{b9^Lk=-wxq3C8#5MgROPs
+zQHK*`5FY?`#Zm6wM;k4XFrpUesfY>y1PllHZi~IO{-m6rA8k{U>t8XBJI&*W>~@NV
+zFE{*CkKy4^;B+Yg;8*WSh&#u@AUD4HSqfypJvDbh7i`;z6+v1oihV!}5W?9xTj0WR
+zMSR%0h|;|DhZcD5PFF?!*?n0T4RL`eYI1pgaFFMbH)z0J&X$y{V6}Tj;DaLTT0~iX
+zm{#NVMjuI`Fx3z$;<t$BP)VwCr$KY(dIwr8me{~!2Uzn>R+WaNICje9ynx?{EMIYz
+z()pQ;(<`jjYw48O5pN)Ip@UKhS<E(d!_R=1?}|)jO$r!W88=Dg5c9KBsv$24v@t*p
+zpdM|3Kt#4ITZ7tBbl5f{3awO!2pds(q#dKzoip!jxyC4SzJfKg$7qh*s=D8z@7@4f
+zK#r+Cl%lE!!lL5DC-bW)k=?5HM)+O*T8w)rTw5t$htvgYRd%H<n3exm)Ph>1EFh|8
+z-9z=%Yuh8PQ7L}$tGAlAk9O4ez^zZ5?PRLNoA`MGER1wnqrss;f3~4t!ms~(dPU%N
+zRRcA2u**2~R0OK8LfF3gaNg_XrV^hL62mFZ-@xC=$?0x>yx;4CR_#0MQt@4THCxEV
+z|IcNIrWbT^Y-i$KbHs=`WrIo-HV`?oAK&*fP$iN3FL4w7Xq-vd3s5&=AiAQ_0+PZI
+z^hbCmfX%znOJWJfBTwBsrC5y(iIh=w*5wQ>_nIn-KSw8oq<VJ@miGW`3bLMAIC-aX
+zV4xTYvC-4r)KMn1San^_vB}I>-T}J4K6cJ#o0GT|NYqVMV^MJ(&6MItvmZt^Gg@k-
+zfU<D)NfZQP2sZh`uUc;gj5z$VG^e}!r-zyxY2NF~<s^`f%2Be{h0(K&lcn=mvL{VN
+zWhjRDwm4$TWbfbVE=GyF)fs*1>GvYNW=qB1>`%jG9$I=Yag;^OkNS-2UKX=H{v04N
+zZP2nhsPs@a^6WQ4S7FEA(b~d|&Q%a<Wl$1|g=W8U*02Ad#3f5r8ZvSwEDQvn_MxBR
+zbBlS1m2oszo$dpZTfcO%*Brz92~v)giS(}kVPe4$$^eWX7C4f?gWLQjJ_>J9?yA>t
+zDC}7|lij<xls<nhjaeq(XM?5ifxHkYGQpb%*=Ld=n_j2c>PW)FilF8Ub|sRrDS*hH
+zGBKCZH0w6+=}L&;6n~+LZCwaPSI~*F9|UZmAOZ*KYh(UyS{70E-VsbGbz?Fiu^QbT
+zHYiqaQi$guw^0fd#2TOJfk!m`Av~an9PcbEe41~uM@|pkV9snjnR<$Y>=T(Bq7T)I
+z!Yam)*k$lUN5m}qyhA1!w{t=?Jo=o7)$@a+%iqwg%(JAWsreOCjF{LO7dEs)=x8JX
+zIv9K4xE>9hvMGHlBqhAfo>9RuU^CXNjocW~D2Sp`mO{gKqk>LP8h2FK@0w(Trl2MS
+z1Wxgf@^*5?)J}kz9dAX#1E&vhgnqFMYLht{#3HXbXyNn?|BsEOO!fg=W>0r%(j({O
+zk%^8C$Vb1mOMWE^B?(Oo=ex`M=7z}}j{?)7iMpGo;Dbb-;Zs=-Byyp_3EH7?=Kw8K
+zH8rD+ZbA=Gev+L5d7}7dpidD3;_Aj(;pF^<^wQ?U8xg$s#axj#Nv6I<M6G*X>>~Gq
+zg>zGXj)+l1yn*GQ7g%#tN5yo~I8geHjP(4_!BtM-Eb#Qh+wkNeW=xZ99O9`+BbLlK
+z+oeKTK33a1|C@4NUEnFnS_4)HI~dwAXqI6p;9ZlU0SMKcJ4_*aDIn!$lETL3V9AI(
+z^e)(;{1mR&b4}b)jsbF{j6w<QJP4b_Nh6=vc8qwz#sD7(LOQvWtcEC&bo2vJY1BUi
+z;wJ2)ZX&nsZh(bOL6d$mt{J?bBtKYjGhL7qZqU#7^h0|$nGaG(ZlFWVZB_D4k!48x
+z+uM#)P#K2&mENh5ylAc(VlQOWA|Z9c=W7gBp|Wtf@UE*=;g3uk;&83U0f^Jj!>g?=
+z4%3@-&SI3B(-5+};O)xVEtL|uPz8>15({W}?w(|$SOI7K<unM&8JG`-pc>Y+!f)AX
+zV@z9%(FOwlKTpH`cML@`i+Kf%O8D2)^}`m!AzKhEw|-smb}a#qL;^pYVq&GyhAe%O
+zA0cTJSp8dbPyc+cEk&nfjG?@|vWxq*G*`ZI>Q(s%S`f2YNOauP|DHF{PqWjDz28W1
+zlnPW_0LV81Of|d6oZ5*NU$3`P5ZYNCmMow@A>1Wbbq@n*-~x&k6192I%xMZmBQ|aa
+zIc9GP7RxIP3`~kXdm$a)Jl7n?N)8A%&7(0Ygi<h1I1voO`aMJn_D<sN*T89r`(XZ@
+z>Z2AUoYVR&UO)5}&HwN{c1vdS_pe3RT0G6ZW_%;H*-290vGQa)E2L1t|6Ru_&gEmA
+zK_T+{X<vr-gH%M};bqYGZu>biik0R$rUW>oj(;BZu?bvdoK*P8gg=`#Y$wwKev|Oy
+z7F1)K+>T{J*`kOl<{S8*q~gCE6aUlh0RQhvg{zs1>;DhGgAe399U>?YkRl`y5b^(k
+z^Y4a-e}MnLTn}k#atd35h`kRq<@|&dZnzYzP(jL6)+$xV1jwZs#He;xQq5+)7uWTm
+z&{GL#O@KdOe>5$wzzz+y6MY*kUS|7V+|6f}WUXM(<HDNMsXUd*JWu<2OYrpTnN1Wm
+zR;MMWHD{0F;ye&pkO0A2xZCE~aR<^6fgP9t^bd7L7FB7m1p@pR2JwRae1BYjE*?C%
+z`MG$8)x`&)Z_n2gQ^mOMghi`wQ%B%wv=l~LEWD0PnXT5;wa_yJ5nFd$zdao%;Itxh
+zCMF@!rewhpV_C(q+(BIC@|yq|VaFrzeU8Ex;A?k7GVYNAE)@Sb+P#OZJbN$)q90oy
+zaGsFYOEzE&{(EuQ5)9Id@lYKST-@M}-(ijA0YGx=Hk^trGKFSGLTphv&EO<UJAahj
+z!h;oBnP(FBL+3jWUIIu9Td|46>&{cRs?<5g7>?Rlnd^+b5$@7;3MOouzXiHs=qNv}
+zxghG+g0|+GsvWzvQ(&eIFL4QrRLUkHpjAO&$gpxLyUpvI^p!3Q(J7gXie5_9{Tzbb
+zNl}|H$wY_lQK17mU<D81e2Wur+=}P?TXyWlA%~v_jZha+#FZZFtfjn)PNa&aMQRy=
+z8VZQpkZkzww?xZk#+KNuX9HzjEZVE#WfhgnMC7%>IgUdQkk>OWQmv|i<;d(~ngjBH
+zsd~ngct>A1&D;(LnO*GQ4}RfHV0lcoO*tR#Gy4D}!PUX2ERfW9(P#_WjAv<~4QE0J
+z0emhM;UFg?@}Q@mK6_@aXk*l~VCu|kuF<Mz9>T)GjAY+hQ&mirYNa6QI%RLcWYzAR
+zs^^bYPTUzJEMi2_!A@!NRA;9j1_@Cct9ay?Fya}Ub0^lOO5hdLRDt%JtIyU{{r1)T
+z>unuY8Qt}Ju`J6jdmh8BoI|~#CtV8{PXp(;9h>pX>UJbJ7S=*$qf)?e8^*t*or7RI
+zma|Mj>7sq*Yia@{<0`?JaBQJ!{$N%zHQSXZm#urgk5{VorPZl-<ymN+K5x5eb|WCT
+zdmO~w)M=)~8e5pyO&R=mA@I+g1)j)3=Kbq568gJP{{61eTUfbTS=c)`oBgX2_`e93
+zr>7O9;^t=+sAi?;Rsp|cW@$iCytQ?s4Y}KhnK}q5(q!hzIQctC`zh0C8VEHw$k?h_
+z^%y7w^kQKCCCUCTfyzI2D<WsGM$x|_>Jj(<*;F$!u`#kRqqB7|vH2@eaj^eaJpXvF
+z{zGN5t)rFFESuhUV{kX>aiK{|EIj@wN@*V%2x71M2qx1EP1+2#zWB8T*@#|8z1N(6
+z?P*dEhMXVzkjv}E{(YAr@aL6f8RQmV@cpVH<40#@b6xPQX22KB>13pdP>3)B>fLuP
+zV&c%nuPKn=o_)c@X=)Ffd@hV_QP_oUHKyN^WAj}(S3@%|(P3^UzMI#D#UunKj1n5|
+z6XcB_L<N=bL=rGQabC3hAhJS8S$w{dY~K12s1})E^6e`QQFImFAS7bR-ta0AFnkAj
+zf7sNo%e%e()DO(cLO>d6j!7uZ;6yI~86e0YP~lB=N)V)lz-5I^79f_0xo)34b|Qia
+zu73|?@&S!vC4kq4lN+(j-)q=q^y6|}ZW^1`sg*vwqi1Z9JS%mYZVPrb0<Ya@ht9$^
+zJ+m(ZKBa4Ghy$u>5WVYS1B;lcEA=UF^7Pmh5)42=!KL!My?Yw|2=wyYb{|^T^83nx
+zq2;|Ec&HQ!d7k<O5v>#0vce2(&egS^R9OaPozblgb<Bb}=WhPj6Xd(#u24GsY%`vf
+z6UbpsD3Sr;B}fPH)nV<<zMm|v%@xyJ=6D#p6q6;U%&h(o6Cp$d<>=XQEJyJJS8r@Z
+zYAZ>09Z4ElEKB;FTHUeBj?3nr%olgeo-0F<pe-4pB>Uczm&m2*$1Ijh;Qr&8z!i>A
+zD-jzP$X(jz7#`U|3wIV#Rpe7$_!Vc{5YBL?`&ZicK)v04_1p3Gn{o@=$083npyBqD
+zaQnktuQwmMBbvZrtW4iZ+Tj(!+LNp7JPWy>@73=%oA%CkLIr9fvECn%X<_9!n}1bV
+z(D3R*9ECTaByI`&_h!xO{i@v;I0UemgbL!<@NEI6_k3afzn|^H8jx(%8UnW9#>S=N
+zq0|+q6r_cw@|3fqy4MX}PU*2!#A7=|6V6%mSjwEe7O`kQ5N&%>fhx#aiqV&?nlaj)
+z&#9Vav?-EsOBM%M-QQ2?FCLqo3a=4Mir)NnJVaXR#F7l!@%AMM`^YperF*Z@F5|eU
+zmG&^LI39dyeYu8McM6KGojNlV@{49?j8nseF*fjDCOyL`J`HX0CP3n3EV{%U@eb~p
+z2ADz;f~~p{&DKgdv&Ee^f=gtPo(PZnt&FHwx*9>(MF5-Osx%e9o~_%~48A;N>S_(v
+zaU*-q!n9b{=)|KKn6-!bQ#1=$e<Be)tWu+7U)NbO2ZL!4ehIM}!pj%nn~loq*oVvX
+zL@e!49l#O;){WF~Rt^HE@AXoVd+bE-tvd)Rryave$r@gjOD6|Dey98U5aqty(9~Fm
+zwCee3UWP~6=pug6p$FLM8EnXJ$>qs9*qS2`GFG9&-|<PrJo&U9I@Pf3oNtWC&38La
+zuMP7z;5*#e@Ok;P-2pcxph2{jS9a%3<>>Ju=bliF|BkU08gR-GsOvK9B%X~|d6lqZ
+z+METjM?HvjqoOMdP4IAS%^nX<!Dn2CW;TQ5$15MK;|vuvHus<Xex1tjD$u%wkv|~2
+z1uu)sSS0kHG24GqkGX<+Y7HSL-_TbqTbaP_^4!aO!931{>|)X@A>IKcW*;gxE;KI#
+z)Hp551r|et;^-vNt)Kl)T0Ntu8@7CE{a(`@>h*~k-Awo#3f~rF|6GB*f;chxJ=MFl
+z6RvCi)LpqJ))IC2LDdCVe~X98z(ia(L%X+?2vNSu#^E`J_x6NJ^<=CjW-0=Vf5z$@
+znsp!OiH#6>lS*(Uf5$esD3m_Fwnf=QXlIXhm}-Cc8Kj-TyvDc|Ftp(uC!FwJCT&!&
+zP5OG_AT+JG%Q}+i9>hFxdn6||)%jPgKjv#EZi_yB(qY872xhjBjk`mHZO!r}RyzL7
+zvlH)Y#PWnmTgxlZBs$J}3#kx1<2%!jkbjZx5ULg3{A|aGO*o;HyZ1%;J$>YFXC+~u
+zclhebJg+k<&#vG{g|NU$5)t2g?a^$w;-(5(v6|N_Nm|t#Gp%_CP;zh8@;>a&FL>q?
+z;(-5hFo)L{Zknsu0l(+NAORu7*Pj^=QSE_{Y^Dr$%5J5>0XwQ`;=YeP&(nM$NYS4c
+z`TiLJI88TrYa>;HTW`e8dMS^%)aN9_DAj`3;|y`{7l=BP8Y#75&*WM(P8dn#%JLpJ
+z#zPiCCe<ZP7aeLme&AcmKwPxoJ_!{1O7hhmJgF=owfz(kKg$QY<O00ZQ&nqh1HKwq
+z%;_e67y5<2X{K-N3j+DDsKJt5xwhi_#~wp_pUV!5jlGvTu475h#M$cd3@V)+$+rqA
+zK=xCnfZ{tnE)z5_Icr<{G%mRpZO_X|M|7BSB}Ul&oPE_!5BzvJ^&l?u**<9@jP}0h
+zjY#={G;&25PW36a{RnPMA86xEFQ2o11|QF<E;w{x+n5?_7k~fIRuXUN!39T7>UP?&
+z5hTYFVc7N%Om?weFVWEb`HD&KT;t_YTVdv<%z_k2<;@%f7P(SyQCjDK-IicnQRBM;
+z3ET`<QqhU|Z7=GUV+6FBjze)K=ibE7_yMNP^x?X0pU7|SHVgpf^C(5LwNuX~ZH-rE
+zSB6K4Hn(GQUTtpV7-wIY6crZ_#YE65%0Nb4g6!hm!6p@X8^Bh^wHVzwiXVCOJloUt
+zVyo##lsl=;-v8<EPfzMAUKjS@>g({z!A%UW6FjObSHdNSric8J5MwPiPGf^y(pRPh
+z#)MZxXTdpzvd$9A)_YlVXUW&0RDt+j@oV+{sCZ;HZxz6apI3OS$Ni0k^UVVew?fPk
+zq}J<gr(4~&9{B*cT-SNcUgf~JX|pOskxsX(Qzb?xcljBzMdK5bEK@`~2u;Shgfo7$
+zs+&~U31_^B?;?_e$!LCPSE*E)$jX`7BSk3IvaMI^Av|N5GlxK?bkj_ZL4M^&<k7be
+z%U6<b=EHB#p-B*<+SaX-OQZbrHnoJGhu+bRg`i1xk)k(!3E>sxB11_ERUA!0qt8iG
+z@v&T#qI-K&M~}o}_2_QWbPT>PEvu<9d%85~Gf~I2LbB*ut$VLtcxu1hus``UAj}W_
+z<|J**dJm~mj$;hyN9q3ie&STw<iXLfYDN+lZnmdu<nW2B{+v8$!g>r+GlP@=Fbt_2
+zYH=HYQWRce5`sY9honaLW93K|+3;LX_>b<Nx4pI~@^JK^_7sSY=V<S*0RHu!0lQ8w
+zew)ilyr6>pDXmgu;t6suS>->W;AVlBDC#E`3%YWmSxQMwxYS`tA-(>*Bkf((pIH+U
+z^%YL%n-}wka=cQA&g#m<1!?$SD?6+!_F_ZppigK^I>4*SRsNfBL*s`F>r+oO-a+XN
+zZSc|7{QOW7BtvNNh&-{W#`p}HV8uILH=>)37EE01BofntfJi6C;SXmAhlX(|4rPuk
+zwno`8K-?%o)?bY<J3}7AO;pnd+mZKJEtwa;wZ{!hE#z-S<1pB^8Tt{T!TJjBa{HOD
+zq`yPMc=n-#{E&^YlGV3bH|dn#OZx*t)8mc7!_@R9{h3@_cc4f6`WvX9TgrH-U*=bb
+zWd=vOUVYA$4IiNAIQm}OHyWV3RYv_PL=pxfe7~vZ(d;j;*43V`E{_d%-1JNW)cg}>
+zUMhNBwf1oOnpFUa$JMWYIwdcV&fndrJ;WdI=vcoj&U&qXG*X{9?H0WBmIv10fFN!a
+zI%gx3xR*RW+Yz|t_^$H+i5y97H<)goj;8FN&mKzCrx9qR+Rd^a0WeDJ|N6WJ$Fw#5
+z*28}F9&m+gz0)dxzMp~VrivTHjf_i&DbxAU_VoI-V^1SHmcSg@ag2=aE5%F$tojv`
+zzT_?-8&qG_=}sSb7RemVBp4KOv={JrQe>SJ+sM=`t#&jg5Tp-ks5L!*2xA%rN*{Jd
+z%mq=&sj(I_Zziu3ozJMBGjF;)sK8crp)sl|@8kJNl-m?>DlgvWOvV~$7T#=TAz++0
+zWE}Bye}R+v^<!LlD5_!tv~7cRsLUR%>-Or(6e`=I`SCh%Y7?GR=1ZZi#X?lGr+$z;
+zn+bA@{FEsxktGnZsz<3_pa=^#Pzb~A5F;rN=4N2q5xAph+T&XkE66v=-M>O2BJ&Dc
+zb?<j24On;a-puu<7uh3REv^l?nO&3tZ>EAv6RjwA&vfz2U@b=;Z|YTPTC~86^%!E6
+zbiud&f%(#YM0Ld(63N{hJ=Rlx;`1vRtOsuRiY?40?c>R|dmw-}-~ooI&wBH%OY!kX
+z7y8A?Td$F&0}ooX)lFkrj1-6AgYk`N5C}}D1=%3tm65J3GXH3af2;@lQslA8B!>4<
+z5N~`YrTt)AWV{d9LA`C%&@h&RoZ}n)-JdNUHGPiFPhIzuA6?0xD{sA8=$pxWS|MrS
+zl9$<W+F`s85~U6&bCTDyVW~@*z%}4YBQbZ1!w~lWPh)2l7U#CCYcvqt9TME#-3jil
+z!M$;ZV8PuzxI=Jvw?=}yyF0;ma^^aFGS^(PyPv-3n|D-KkN;v+jqfXO1}y;=B;GR-
+z8IzubygtyHWIPrZYZvg5Df7^K6Y#}CoRrm3)GvJIuWVWlw>jUv4sgqDl7?PGzZRB^
+zaNAszu-P71SW0kHg5y8X$91%W?$X<h&XoBka?vmAfq7EfU1sW#^6Qnki+O3|XHqGV
+zhFZb%G?oK7c)6?bV9SJ8wKm|uuY32AJzPFnG;#Z~B?-CZEUf~*N=GNkk#8Y%VADhR
+zo4`{redVZaELI8k-*3^sEUjLBw0Mam@UC)u{f4%fE4F4KeD9~>F9X^3V!kMIDuG_X
+zF+>>iYytQ9eNrxAMJU55J$)=7#|(bnci%mmKO0k@M+!^$7KMg>gwQQrbdj#EXNqCh
+zIo7k1D@R;1QOqS&<l*A@(Hp?3vlOf4@w`{u)LD+z%wc(Z&mG(yp8a{3*|R{9e1bbf
+zCK$Bv!k@<wnra~c;L<#NvB9Wc)Woi^i+57%6KO3`4D6-+hzF@NngTD;#9-TszO4%7
+zZ8rzFT0(KEKWJE98fRzABpkn1hKlg__#|B8SK%o2A-o@-$3?K#7<E;R&2a?p6pLvO
+zpF}jWg)hd0XdIu7oa7kKP#SBbZ;}?Xe2M_E{{8l2aM(41rTv&OWun1axZ!J0#_rtE
+z_e^R$z4h7J*7OxE9<u&squT~r9X4?BYqc$DF?PQe4h276SuMtVj{3^?PxD&tl=a8O
+zC@Wl)?Vz?LQkW3rHe2a3ELnJg(OT~g{6crT*u82Cm3KQ<w~>}7Kxd#x#&dgj%)lm1
+z?n=NN%vkSQ?E>g(AYR?Kj`AkTS1Fum@6x><F>mX5y3aI!wm)Rflt(U%C;hSpp(gd@
+zH0LrsqY$rJX5*?Rr#IR!pVT`z@>PJ;VB*p=J7!yn9+;&BNGML*Bb44#_)!2=%0FHy
+z4r6XgukDlDB#DghNX7SR4is5(irmWJOS6>P2VMiK$5Q2EG)+&=`ClHR#*(zZNk)B{
+zo1W||d1z|ed|x{oJkaBD7shL!Zl(pcaIb0VK;^buMALVIP&u_FxIKB!z)%y%6e0UV
+zk@qH!cYvE}tWIpBGr{eFC5DjuooDS1Oaz0AfN>I3^x7nps>v6HEXQ1~j@R{-Tc>?`
+z^%K)+O%Az%lXpjk2U&Pw(PkAs0cD-$Hk<F~=VNa;wX<n?RkVAg5-&{-xPx;OJ$yHF
+zd>Y&r==7|(6s49*^S*9l<v(b-am`z=tXL4fD04$Q%e~g5O$&;xlQo1RUF0t>!CKMI
+z?8UL!>0yj<iba#&F*uueLbqCYFdL`AF_%FOmWjI;N|;tYcAS3CYf>=QI6E76)e4|z
+zMv;m}g7!@&r`3gs!-5o-_6v6T@)&32qUEdwIKDmDcfdeUGNxY2NYF?~x$%16G_d?q
+zStJB7bS@O^gyLE4H=>{}>L>izP{>lnZFPgdSo2ME@Qy9}5$1t$>!q3DG2ytTM0YeC
+zzQOlu_So4mv?_IaN~fd#JXpf|hy<xAZJmNOgxP;&&&N;c^N<0Y#YZ}I96Ej-`S+TI
+z$fAk))JF>ldYh_Z=T_j)V#<?z=Z1UkHm+x@dkzc(xJ{Tld{O;=_>Z8RlnCJd1PJn*
+z6N`P_`WEKn%DSv|Th1yr<_}2g;Y-%eRt^@>9yK-&T<C#LyK&(WV9b@uJQ@onjs*Cr
+z@s<4<fv?j=yX9e<6{QESAD^4cDt7y4A7*$&KTdb1e;N8jS}o-i0MK48L$x5kcNhx%
+z>G=+LE3<koWAzDLA|PI0wNHQvwF^z#AHcgty^<_npaa!|P3S$e%lqK&EE1}jp;QuP
+zAEm%-aZiW&v)yA3wrc#^)D^{DqjaD!=#wDvxd4}#!>9##TG(g)yFnB{()4$TTM8L5
+zvZNzim6Oh&o+Kc}I}eR$n-pzljgDLN#1^~BtjbmA+BK0+#UKW;jM1B=htP(AI^A``
+z)!kR`z=9W=+cen<e<&k7><pKlF1apfnN%S%=c_v79020sGGWSgj;l5@7?g^I-)?D2
+zjh{al*RfVgB>1$tfWB%m!@FIiel-*0xht~p8O^>g3D(yu=X49NGeAC^nb+*1z?SHV
+zPbM=#b1%)iGw2NrM43HF3lohv9mYrq&OQ;0<TXB#u^T?<h0!M&O|sYZGwz-<7=b<Z
+zP+8rwvoKIJQr$=TB}n9oWeeKqzKbPE!Nq0^9+qBu$n=_{o;qkZG`D5RdtLMM=EUOh
+zM7H`gH6cgi!@+{#oi}o3%>nArfsuf~a>Wg#-~`kJR#EvQu=7I5Ah=Yg2_bTz{v434
+zBta~zj2R4!^0tEMX$^3GNpBZi=n>`+to5y9tpRcyHRV)l!PMWC^WvPs8Da!7v)?n&
+zp27M@`0go~bNdp0Tp!(ct#8X;v%YDFH%vRJa3h~DDkch2R5l}*K)FxWAs_S?xrrx7
+zp9i*2!X?wKtd9sDbX52}qaZp~I86=6RpT}#^|=%1Xt76djEIj;YZ<XckaKnjyywzI
+z+x*^7WfRmXwu30H`N24naM?ALVx-N`TxI6g8tlj8XKO5dT;)^23M~x)KKiU=xx~;(
+z1)Hi{ffX+)-G`fHezsQcZqxRYs>~30daw%WGad20T)%FsE!zzXu#x2NgUW|)*Qql`
+z3idR5{5wmu8AFS+?*j5=*~U1z{r86oY=pf*(p5S_E@%nih;|#0xJRn6J10Ctq)+d6
+z^GR3@hFWr!66g3)aI*Vw&zE_V2M56YZG^@bpKe_tgTkRvcI`d{7v{gSUHamG(&ZcN
+ztQu6}5ZW`thnFRq;=4jPlmj`+5D&rVmXFJVn8<;G4p)1HVl;5ugpP`<CE}p8O&&xq
+z=dd<qiqAXU*P}sgs??r4vrx!Zl$2A^+?L^*9I;e@5IR@p`JS9@l7P2y+mqK0L$tAb
+zcUmYo+X&xhfPlM%i5<w{U$HyYo2+3BBn|Jr5)HH>gTeR|eu7V`I|AEE;&ph{S-93>
+z-U?#6M*R-R*Uqxmr<=I*xSsklF6L+ny!v&VYs>av(?yj8xaS$nW{A;b_eqmPvT}r3
+z6pwnvGi0kYmfv~euzqbqeaGqBx<je2M)W0eX3V@u-{2sg<w1{!6X2U)A)lA@+9w10
+zRJ`~c;t%=2OwWgKH%ao;F>#Gr*U>{N$EA!I_2IRNlZ1~6Q_0l&YdAo*-b$|K%3;1!
+zHlf?jpa!`+TT>x~4(q)f7nxyVfGmzqA{K4mxA=EHh%9N`eB)M8=1NOkq(jTRh;5E&
+z0$=ti&goPDXg|wCpVzy>(s>Zu32XRKzbs?0f6)uS4-LI=0vXooGR<woj|`9#6NEWS
+zvZrLFjt``;@KQc95IPX|NuN-1NZjdPK~6DhF%QX+n4*IOuT3nFmK>BgL&ON7`V^*z
+z9$CWtUDF?{9lae-_nG|uN~UJKg4)vy)m^7=V4zC0g4KDo4pYOKX==qWEQ4bW1Qdp)
+zZgk^o1Gxzd0$v25^OxGb-R!Q`+TI_SzWcQl1*Qpr#EvG<!2K{Ue~t$M%fxmHLGWYi
+zrs9KpYrBEb^GzIExwp>uJ3TxM8QuP<qvyFoJKx;zNF7(Xt9%Rm;P9SkZW`N1J>WbD
+z1j$#63VLVyZBh3JjA7~3p!L|Hv@J5p0BloTzzX^i2`u+96Mzn(HC47XL1Y)*ivb$W
+zFcy7$$8s)dPaYuNLqc+**FWy*NBVP9_4aZ|jsNvM=BX3Q6aTA6kmMEUxB2HA?|`vJ
+zwS%X|nl%`{rS6k+&1bxg>)U#PS!Q(|>4e58L7W`pV)38)sfmIqrI(@VH?bqtghm>w
+z6V1uv<poX)HlOY740sldQ_PQUVAA})E#dRrV;$Xi^tHK6qqPbT`tT#KYeVQxqije0
+zTtH?-K-*nfajd!yP1qyR%yE*KqlwMNmY2A+QZJuVRAtPAld-~hrxt3LhbP5)_eIeW
+zCy1T751g>LQZ%s68Kt(N?POO9f17mS=8SmcOE}EqW{r)lww}SY&11m|@HJlX&VlL>
+zv9{S8@$L#;?{-z=5}Vx(!_z5gZ{tQAdxMR<FUP(z9--P~@WONU=F(25%P(1jfom{}
+zgh>{xKt{D8fTO}f5~H#mop@6IMivdFX?9VPDQq--MM8Ryg9+2TW07YI(`$?TY1CBr
+zs!&twxk~I7CjP<6D)84M9q7!>n7AQe_|%=6I$$4Iz6IxyYaO;ZM1u_8p#FhDc76#A
+z1t)yGvSz9}URnyXWRwvV^U6>&9fE7V*QZX$DPnT5sP4eZmwK(#x;?inscCyI+a3U^
+zhvvkL7dFx**VxeyHAY{jAEIhsStX~lqS%8_C>&or?%g4oRW@%CQ33Ug!$v!)adI10
+zc~}bMqf)NaHdYDG&eNgAZVS0Rxj3^feCa8lW99s$n_Xbz6w{~j{HqdBaF6Iwh<Bl-
+zv!2(`aUZt-u%?FYDn+U{fcGf)VCmlqj4+NpiNga~!J=@~k>CLi7f=s`gT`z%nyjHM
+zEABdniPGo%B*_6<>|udLnxlF6_!~%x3X4tXI-+dlN$VK%DZxw5c6DSAO;VITk*5yi
+z`o7A{+F`sba*Qb%TK6QAUyahCQ8j$B7^N5BaEa3d@jKmL59vLXqJ_CsuF2IHLW*dB
+z{AgZ)VdhVVO(hOWMJbxA2@LQf_ifCcEzQsOlwbxHs?oK|G<h|=?%-Bn_`HTiFjhpd
+zqrIR4kK7R3Obs%{?bm)n>834AUC+BjB*(&3(o$PGkM*PLA^EvvsmDld7!QXEWF%Pc
+z-VN}~=gNLeGTZJIpPy5h32=Qc6rgE_&BpC++)5HhdQ70tgg@7_KF(5S2errF_c2qc
+z(}UeSlcAeD8?(p5y>&Gw;s9iAk~a{0&@YwE{5u*d3kEj)l7xH$WsNKyQIFge$Figl
+zWqLpb=R$b%e8C{+Ct~+^Nt&`2c4!LD-$k@ijEmIoBV@|;s(|gM$BpQovqvYk$0-V*
+z6R64$SRgQ{-D*q~dO>{2I4%e58Nm2way3S+G|4N6bru|lxCWW)I6y0*<u&VPEV+_x
+zfwkSo!34IpWX2@ir@)_`&lB7w&#T>sx-#cm=Cg6YFrg2b{p}-$d-GOMT%0@Z0v2>J
+z`o%x)C3Heba<w3897Rha7X!xCO2g@-?I>rdIKEz~*SDx7T#5kIwFo36EE!S5Xors>
+z6(470E(&!Hby0{{%`h%Zdg{ETnqQt_w!W!-S^h#G`fYUYV&gD`xU5jxeZG#k&cZn(
+zrJQ>x%_z7bMYcI`WY(40r+)m00U7-=oE%K&SRU3&3p4q&k|AGiqLN{~d0<u&8x(1|
+zI0??-jSa*g4{P{iGe7{-*OXSbJ>uk9*cxkY+l3EnKXyy3I3L%8A%#_@bfOJIU$m6N
+zXAKiy0AJi?<mT#q{S<krAVv^x6Tz{6c{FvMJdqwBQI`d*`0NIIyZ0$~@6nN8$EO%m
+zUOv8X_;V&@THgRg$iA3;*K`29YYwY@ByoGR<j^giDv~OW7|sb!FISxMex90EUJ4ks
+zhDeLj2`%L`yp)C_4`j@qHG}x-IA_XhljrlA_sfSr8^phFit;yAmv8-Q4*P+EfS|u^
+z5ZnIIm;JLP``dML_V2y{*3n&(5R6D7XIJR@V`Rs4&3^0Mc#t;k7^xDaw9FaNr}zoR
+zT~X(-&nR)gW?+}08gEG`A4`8N9C1B+0VKWvjl74#^!qsZb%V0ye63LnX%=4$?J0uN
+zZG{IB1v%S0*EQbx)3GN{uQW>esN0m-q7Y671~@X0k3u<}T!n|GWw8D0ci>}-cvKpE
+z+cnTI60m(;xyaIP*|=+Yn@$6c&gEWECwi~hXrh?vyfqGG8H4n_jr%mp*)9!f5lg$|
+z=?YQE3&eM|+g|e9TwCUCqk1hbrF~J!@_Afp053_4$Wi(~Gxocs4jIBa4EU8Xr(d7H
+zWQ@)j;7n)is&8#;^&gw+N~*SWk}@<BD&jyTTex%OLD_QUL7-9*ke*iYoL+p?;aXW-
+zf@Vy7SdK;#v_t}wN}N`HkVb(*mX=D2c9M2XT4HAF64Ca?;W``&2kGnt$9x2R{R5hT
+zrPb%pAaNHrE_OFnGV~NbSZA0wz}~dsfB)S?4CI48@E{=XN&o3SfP=BUv$6euyKFO~
+zDdm7WfZTqi7GAIYT@;LtLc^Ie+8mR13ccSmLA;QPlzPI}1th$2UgHetmuL2Z^}*r1
+zD<Q4o$?)Et;1NVX!+s}vpXhi@TCU^qNOxGYn5rj78e4(pQ!!P6JqGVm>}gvg9d$Nq
+znyN(?(d#r_(lYQ_Gn<LAV9)s`QO20A-P_LfyR7+^j*F$v&Ps;IUXX`roJ|M+moHyz
+z?Rhx)IXQW79~$Uy?-0fjBX1vV4)pC?U23D)H#PI>kUhxu9<+;Fo2al4sPOIFJFF|S
+z;`(qmy<z<<dR#TCS3Vl?xbEs{eRE#0YimSO(N?AEvj=-7DI}*KTae?gl5=);PCaRj
+zUkky-+dt*uT;X5kPCm{ckZxak{WRa~vwy#v@riux_yfv`nQH2ZTwI|72TO`kHPug{
+z2|)^`izqv}wyLRLJ}rUd6Q>|g)`9}Zvrj~rc8+a2CDaNbR*#!x-Bh%*n!UO&+Yzdw
+zo+I{6(I&tgxo_IKBFBJA{X(|oL6&-8t3q`!E=CXy)lrys!H-U+b&{gqsJe;WBd#_y
+zG2w6_?J8p3*x^E_7@T4lRXbvYgHzY83cW^D_rdQ*F~z0Cyq_Di;Nqoq&}rWF5fW7D
+z23s<JZqZvb?q3c_nkATzADld_rK5v&QV}RTA#3d{u(7rF%j}hEQ4LW>+lH{qyfY$`
+zhC2k$dAOYU=nD^*PQqqSNQ3*UiS&c`F~@lIN1{^Br}#K+H0Ivkq?R(`lTO$lgYVy$
+zS6kxqdtD|8GQ<>7sdR~~1w+oonrbtbXE~Z5!jaDl`kJw&8~dTxsZ)``sA5_XhAkF-
+z4L|(Zv}Et15jm_mZfJWpr@B2Wdz!s=!X9&(v3dH<dWBU#zYbz9fU{FcMe8bdM$bU6
+z7BNK|+U5)&E`(OLMNp|yQ5h+EFPz@(BGGi+N!;`W25Oh&>jY`XD>~@69#B}wpi-k@
+zSXQIdy=YV#W(f6iOI-={c%o#c1Ouixi!R=wtL7#d6CQBm0%Tms4@~b>?Kz1f1A~=g
+zh<pOi!>Hmup9K23P}Sz;ew$|u?y(azl(6H4%UfHQA;gx8AS&*w!&H8BD6I2o>!hog
+z#}nIum2jR4?~zULw4~L#46V6-+2bj9$PbzoJX&6dc4SgZV7-a~TPX2cT4PWdb@lC;
+z7ciNqjXd!Svdo;r1B6%}ocg&`6liM-nWyV08&G1*(o9gy7jo+(=k<Y&cv6)@j>Ywx
+zPOx#1I@uMCz8Kjyv&Sc#fRCHHw!aI5EF+@bJIN2mPNZf_vhnXiY}(3D*X!<AvW*{p
+z^u}aBS*5j%p%1aBtet5j;#w!)`bPZZbF2Ry8_=yZ!9}Tzp`=2~qflMN?lM61`Ev7x
+z{e(g{1hxpH3GEAeDd_@r2KA^_A4Ima2JZ+FdO{4g<R?<DRRx;zl?|A4#J-PM>>LWJ
+z_7b16XJ)m^$D?l@o}?Yx(Z&u7HZ_-DVf+m$#AAqT85Z4l6m5Gc3T-09fS+_=5J?NC
+z^2N`*3E|!KG)o!`O_Y&oNRrU_x1V5$G+W{<_Rt(vHVxg2ji}gqulm&+49+YaUTd6-
+zgHT@?@@`=oYMF5-rL@n`Z(I!Eu;C-=D3SE*^UurdD&GZk)(lBg&cK>uz@T)grc~EU
+z;M*0IRfC4@EH}&353vYM!HmN%iwVsU(r3Y4M4B#aaila!#Xx?}demFj7#vO*h0-Kq
+z)akjRE(*)IXdNqS)ejq`*94w=Q*#lf)r1e`(P3~)z|vUcATRGh(iFi|f*Q*VLDug0
+z^-z|XttVnj(q|o6@zv7YuLsd<$g!)U`F|9F%ao>!U~U&E>zUecW252LUKgdrC9oRw
+znRyz}3@sTFLnAM(O1IbCWJ}&hODu#&AG09m#1}-)*oNUIhX&WT+=*CP+5L_ZBGR0d
+zO$_^ml8n;tG<I8Zp1{Hfgqp-Vj!HXG7=ik*@3|w(J?W|JX{@S^$JAbQYqDV6T>)mY
+z#33Fxkce3PDtdbMN1fT$LxH#kxc*0lQy?TY=tEyMg(b5QhI{iS!Fs^b*N>ZO+Bijn
+zc~=~%xJri?W)R{j6lOjn5C9%cK7s&LE*$r0kSumJZ28WEp@k;&ur4GX;rIw#yec(A
+zR27s>8=$T?ZB|aGm*bJZ(aKTw8Wyh_28&hZT09Y$%4fb3a7TbhC9!>Q*GY%`!f5jI
+zukIVxd7hA1{8Sppvbi82i<;Y9|H-!AR!c(TrK_au5oAjVhG<M4FSionnnj_mYbZn^
+z$&bzr&h|7JABmyrytkM)cOHQX5yvTO_>{==w#co54hmns*gi&m8T}J^C2$qglIG+>
+z-4MGU&jh!@r4iHDJgS_G>B#D$z6KgqedTN+QG?}t(h;<zZIbxlnLulB(>Nj?Y=F{X
+z!%hesF>Wxf3W7%ugZhrc$phF5mRiS6+iwZVVLnOJ-hbESEI-JZEwuP!;P{%%uKsd=
+zL3dKXEWSM;VB(sX@m#pRrDcSu6E5NyC*VY!ZkoI7ST5rgkQY9^=??MmBO4D7>gnAf
+zY))(ShmraaXb<goKeM67gMA=5C%_L~=_25XpI=Mj0^MKX=wWt9mt2Kg0OPe$8A}sI
+zvWgX%-`*4OE%OT9IXmB;A*Rvz{@}L;JX<{V><9f2?=D(o;SMfnuuTdg0Ik&#OT~L%
+z#A%#)pq+%EnM(EHPFDf-WY9t+JJ==g*kO-uT7Aj2Fq~iL-QXymImx%LFZBmj*5u;c
+znGVWb*2A+2!&U55)Aa=}-H>c2S2{V(5WrFkWtKx=42SR>Iy}Br#!Q01y9b;Fm2)Cz
+zQvLOjndG+cR885tGE8gtrHYXs)M*8$-N)I=T+l&061=EmwGl6S!nX@!Uri|Y@vJCU
+zJ~qh=e`C-5JlC=%=fbCP6xk8L=0;3;`PrMy@Np=8Vn@+LJRqAkP$T-jByCk-BMQw*
+z8<8|(GW|2Km(Y2I5+x1hXCTT8sOVGMh^x||cVRrU1r+Jm%yUWu7-_;~`QTrIPpCj3
+z*|NyjAK8U)+TQgwQ<GwZj;d#p;5&ZoNYFT;ff=l@1pNT$dOP6{@?~|TE9I+E?6Sye
+z^}IfG`yVQpiyy#T%Y+UElvMX?WAkf9t>t|1BKn-??F27k9UP;?m)TlDc9H0HoPO{p
+z`Gia}Rp#x*WX`y5S(m>wTQUj_Sb8I#@r1h)^z)37;16DXoWK8^JSC7miu__k+g)sq
+zfp9Vi_Oss*Kim3)cn$bXJ^Sh9!q&5*Iep4)j;j@G8qJS_5Pe*t4X;O{JT%95;+Qn`
+z;ru>S<Jv_GxN6si!^V+MaQ%3ySF9a9TDhqitTXD;`-?arLf6H{q(wdMNr9)@n*<T_
+z?YJw~L5c*z&Dm(d#BQ3VYQ6~ExqPu7qj7oV_t2Va6qN^mngztobPH_EmBPrma2XTo
+zmO_oy*`(mIUs<S5#fPSbSrlYju;1m^isj$m(kb`dF>(fg8<VrvZ7&daQ_#_hiJbg6
+zYzPv;pu9QcDtPt}f}Ng<j3{D|bNk*`$vCIq5du(=vDKX*$!A7A#sXGZk&^3LI+iMF
+z1c!S)*%3?B;1t8o&!|frOZj~k&Coio30ks2DL#2k++2?etJy2hVY%pNedSDI**Uyi
+zQJp6nR^{L7jR>h@-dV^0Q48kz0Cxj6NYo~Kc<wN4VH{h9gFy{gs;%Z-^Qx{vFn?i3
+zig*RtQO@F4xKx=418A<d(|<L793|%Yiiou>#GQuGZWNW-n)%8?S*kuM0@qvt;Q<5)
+zfGERS5A5rUl(I|Y-z($Q#kP5h9x3G&HIlOmGt_o3*F#orVMXbRv7(6=XV;yVvH_oG
+zAr6G2g;FJt{b|dBW-V#`%dE~v4U;AhBgL{awL0AA*mGnwM_aBsJe^Q1r=)@>>g0rV
+z`kE0%8p26F)O;sccEl-*oO8XKYy;QOiWU=Vfp0vQ)Xo~aq#~VWHj;?7df<8*zDR-H
+z>ckRvY_eAK__)7<%7yq%9wh2#o%S^BC6+_}F%!fm_Zj6Ou<9<4yQcUZ$poBv4#SU<
+z;8OdYlhwN7R`XNqhI=Wm_mCbaUtZjjcu$Gx2PhAWdxF<p3c>YZ7zv3Kz)Q+1w3=57
+z-?5<WB<WgF|D;@ge=p3yjH&;X<jKWyT;$jflwj0sxdi4x6z^jZ9Rvi1uHJ20jBN83
+zFB1#gVO^vi{(&weA9sw@ax5~<oIe6Ic|x<{_#%>(c4?`&+JSZuI7FVPbZ_iCj(K}q
+zkGYbN7dHi$xtH2bd;qM{-t=yBt<YJAMh2G}dq<gxSJC$dZQg-%hbi3}!!=ah27`yf
+zjnt2p@VOqmX4n?jDC&<{431DO8h$3WEonjF_&iU(MSS5&f)>D3#<eQ^tk4&bga=F*
+zx79B?6@zn_PLc2hr?Tq)?cH$D^Vb`8pH1r@b*;N~izH=G9(?%p+XAYKovwf!o@TnQ
+z9)2<tgArAL*SwMRv=$fms?cLChNsgGf-d^^G#(kiQ84T>Zl&Rqpw{G<dB~*eMKDFB
+z?<N;V3<uStLC;rEIMd;uh`Bpc!TTckn@M3@DtHfGe;wvP!3e<r-4F|`UnkPvFC>tY
+z-}k-Wj<kUMW2D93=1}~J`)7p*Jjh#|@LSv;<1Kz6f8QGam&iYj3I96W;t%AnQUgey
+zZ|FZG-zq=;->8dUEBr1x{L2;o$id&uzTXDD{7Yc+zhgcA*ZTVx^|xiizoh;V_wQ8v
+z)%g2u++@FWwf{_gYXkm&%gbL48{hKBQ2x&U|MrdlDI<Tx{&xe5w`?4uzq8-kS^W3h
+z{9RrAmcK&rhW|!u{Ga0fcLJk7xPR<sCdN11f5?sgZ+ZT!*ywGn?tf#x-GF~ekN#8a
+zf9{vR3N7BQv&-@(_P4T&|NaC1E}VD^wqbn({ztj)t&HLq|6h)<`TflQ5%}K=fN%Lw
+zN`L47qa65u%gJ9WWpB}(%5Ttrt(*P#to*%>^%i~m7X7xW_3vVa{AKk50)qJKtq2JM
+K(qr)Z+y4LxZ52cS
+
+diff --git a/README.md b/README.md
+index d7ae9f0..ca7e818 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
+ 
+ ## Estado
+ 
+-**Versión 0.4.0.** Incluye historial local, voz WebRTC con herramientas, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
++**Versión 0.4.1.** Incluye historial local, voz WebRTC con herramientas, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
+ 
+ ## Requisitos
+ 
+diff --git a/atlas-ai-v0.4.0.patch b/atlas-ai-v0.4.0.patch
+deleted file mode 100644
+index 56516a4..0000000
+--- a/atlas-ai-v0.4.0.patch
++++ /dev/null
+@@ -1,1089 +0,0 @@
+-diff --git a/README.md b/README.md
+-index 6a9038e..7021783 100644
+---- a/README.md
+-+++ b/README.md
+-@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
+- 
+- ## Estado
+- 
+--**Versión 0.3.0.** Incluye historial local, voz WebRTC, chat con Responses API, búsqueda web y function calling con herramientas propias y limitadas.
+-+**Versión 0.4.0.** Incluye historial local, voz WebRTC con herramientas (cálculos, hora de Monterrey y listas de tareas), chat con Responses API, búsqueda web y function calling con herramientas propias y limitadas.
+- 
+- ## Requisitos
+- 
+-@@ -28,7 +28,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
+- 
+- ## Capacidades
+- 
+--- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor.
+-+- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La voz usa las mismas herramientas que el chat; el navegador las ejecuta mediante `/api/tool`, que solo acepta funciones de la lista permitida. El tono (grave, sereno, ejecutivo) se define en `voiceInstructions` de `server.mjs`.
+- - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
+- - **Historial local:** las conversaciones se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos ni se guardan en una base de datos.
+- - **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
+-diff --git a/package-lock.json b/package-lock.json
+-new file mode 100644
+-index 0000000..0f75600
+---- /dev/null
+-+++ b/package-lock.json
+-@@ -0,0 +1,878 @@
+-+{
+-+  "name": "atlas-ai",
+-+  "version": "0.4.0",
+-+  "lockfileVersion": 3,
+-+  "requires": true,
+-+  "packages": {
+-+    "": {
+-+      "name": "atlas-ai",
+-+      "version": "0.4.0",
+-+      "dependencies": {
+-+        "dotenv": "^16.4.7",
+-+        "express": "^5.1.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=22.6.0"
+-+      }
+-+    },
+-+    "node_modules/accepts": {
+-+      "version": "2.0.0",
+-+      "resolved": "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz",
+-+      "integrity": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "mime-types": "^3.0.0",
+-+        "negotiator": "^1.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      }
+-+    },
+-+    "node_modules/body-parser": {
+-+      "version": "2.4.0",
+-+      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-2.4.0.tgz",
+-+      "integrity": "sha512-Ifk1KcLrxaGt1occQagQNFNNOqRt1LFuehEnHHzB8Z6cRgIxRU1TBaiIsUiCdA+gy5PL7Y1IX31DNKkRmxtXjQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "bytes": "^3.1.2",
+-+        "content-type": "^2.1.0",
+-+        "debug": "^4.4.3",
+-+        "http-errors": "^2.0.1",
+-+        "iconv-lite": "^0.7.3",
+-+        "on-finished": "^2.4.1",
+-+        "qs": "^6.16.1",
+-+        "raw-body": "^3.0.2",
+-+        "type-is": "^2.1.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/bytes": {
+-+      "version": "3.1.2",
+-+      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
+-+      "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/call-bind-apply-helpers": {
+-+      "version": "1.0.2",
+-+      "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+-+      "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "es-errors": "^1.3.0",
+-+        "function-bind": "^1.1.2"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/call-bound": {
+-+      "version": "1.0.4",
+-+      "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+-+      "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bind-apply-helpers": "^1.0.2",
+-+        "get-intrinsic": "^1.3.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/content-disposition": {
+-+      "version": "2.0.1",
+-+      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-2.0.1.tgz",
+-+      "integrity": "sha512-e+H0ZXHSWYrENhQzw1LPuP4oF5MzVKmDU6d3hxlvaPEYLLg62MxtQNPRx4SYSuYJSBUgnQIG4HIN2tEtNv7Dog==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/content-type": {
+-+      "version": "2.1.0",
+-+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz",
+-+      "integrity": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/cookie": {
+-+      "version": "0.7.2",
+-+      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
+-+      "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      }
+-+    },
+-+    "node_modules/cookie-signature": {
+-+      "version": "1.2.2",
+-+      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.2.2.tgz",
+-+      "integrity": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=6.6.0"
+-+      }
+-+    },
+-+    "node_modules/debug": {
+-+      "version": "4.4.3",
+-+      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+-+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "ms": "^2.1.3"
+-+      },
+-+      "engines": {
+-+        "node": ">=6.0"
+-+      },
+-+      "peerDependenciesMeta": {
+-+        "supports-color": {
+-+          "optional": true
+-+        }
+-+      }
+-+    },
+-+    "node_modules/depd": {
+-+      "version": "2.0.0",
+-+      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+-+      "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/dotenv": {
+-+      "version": "16.6.1",
+-+      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz",
+-+      "integrity": "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==",
+-+      "license": "BSD-2-Clause",
+-+      "engines": {
+-+        "node": ">=12"
+-+      },
+-+      "funding": {
+-+        "url": "https://dotenvx.com"
+-+      }
+-+    },
+-+    "node_modules/dunder-proto": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
+-+      "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bind-apply-helpers": "^1.0.1",
+-+        "es-errors": "^1.3.0",
+-+        "gopd": "^1.2.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/ee-first": {
+-+      "version": "1.1.1",
+-+      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+-+      "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
+-+      "license": "MIT"
+-+    },
+-+    "node_modules/encodeurl": {
+-+      "version": "2.0.1",
+-+      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.1.tgz",
+-+      "integrity": "sha512-Ev/hIyePLZtpL98x562lvPtenrUfGr0lfaf44HFZ+hDEwso7ccV9QAZrEVLg0hxNAzygaAFxy2dYaAKKM0G06A==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/es-define-property": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
+-+      "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/es-errors": {
+-+      "version": "1.3.0",
+-+      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
+-+      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/es-object-atoms": {
+-+      "version": "1.1.2",
+-+      "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz",
+-+      "integrity": "sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "es-errors": "^1.3.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/escape-html": {
+-+      "version": "1.0.3",
+-+      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+-+      "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==",
+-+      "license": "MIT"
+-+    },
+-+    "node_modules/etag": {
+-+      "version": "1.8.1",
+-+      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
+-+      "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      }
+-+    },
+-+    "node_modules/express": {
+-+      "version": "5.3.0",
+-+      "resolved": "https://registry.npmjs.org/express/-/express-5.3.0.tgz",
+-+      "integrity": "sha512-qCqy1xSoaugxOD4IVHb1ZWdkvCF2W3aE2okKouWj8VwJ+ztskSiXoBnCSJqfKT+cVPJhuJqe9YLbY425+Zh00g==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "accepts": "^2.0.0",
+-+        "body-parser": "^2.3.0",
+-+        "content-disposition": "^2.0.1",
+-+        "content-type": "^2.0.0",
+-+        "cookie": "^0.7.1",
+-+        "cookie-signature": "^1.2.1",
+-+        "debug": "^4.4.0",
+-+        "depd": "^2.0.0",
+-+        "encodeurl": "^2.0.0",
+-+        "escape-html": "^1.0.3",
+-+        "etag": "^1.8.1",
+-+        "finalhandler": "^2.1.0",
+-+        "fresh": "^2.0.0",
+-+        "http-errors": "^2.0.0",
+-+        "merge-descriptors": "^2.0.0",
+-+        "mime-types": "^3.0.0",
+-+        "on-finished": "^2.4.1",
+-+        "once": "^1.4.0",
+-+        "parseurl": "^1.3.3",
+-+        "proxy-addr": "^2.0.8",
+-+        "qs": "^6.16.0",
+-+        "range-parser": "^1.2.1",
+-+        "router": "^2.2.0",
+-+        "send": "^1.1.0",
+-+        "serve-static": "^2.2.0",
+-+        "statuses": "^2.0.1",
+-+        "type-is": "^2.1.0",
+-+        "vary": "^1.1.2"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/finalhandler": {
+-+      "version": "2.1.1",
+-+      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-2.1.1.tgz",
+-+      "integrity": "sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "debug": "^4.4.0",
+-+        "encodeurl": "^2.0.0",
+-+        "escape-html": "^1.0.3",
+-+        "on-finished": "^2.4.1",
+-+        "parseurl": "^1.3.3",
+-+        "statuses": "^2.0.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18.0.0"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/forwarded": {
+-+      "version": "0.2.0",
+-+      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
+-+      "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      }
+-+    },
+-+    "node_modules/fresh": {
+-+      "version": "2.0.0",
+-+      "resolved": "https://registry.npmjs.org/fresh/-/fresh-2.0.0.tgz",
+-+      "integrity": "sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/function-bind": {
+-+      "version": "1.1.2",
+-+      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+-+      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+-+      "license": "MIT",
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/get-intrinsic": {
+-+      "version": "1.3.0",
+-+      "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+-+      "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bind-apply-helpers": "^1.0.2",
+-+        "es-define-property": "^1.0.1",
+-+        "es-errors": "^1.3.0",
+-+        "es-object-atoms": "^1.1.1",
+-+        "function-bind": "^1.1.2",
+-+        "get-proto": "^1.0.1",
+-+        "gopd": "^1.2.0",
+-+        "has-symbols": "^1.1.0",
+-+        "hasown": "^2.0.2",
+-+        "math-intrinsics": "^1.1.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/get-proto": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
+-+      "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "dunder-proto": "^1.0.1",
+-+        "es-object-atoms": "^1.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/gopd": {
+-+      "version": "1.2.0",
+-+      "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+-+      "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/has-symbols": {
+-+      "version": "1.1.0",
+-+      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
+-+      "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/hasown": {
+-+      "version": "2.0.4",
+-+      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
+-+      "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "function-bind": "^1.1.2"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/http-errors": {
+-+      "version": "2.0.1",
+-+      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz",
+-+      "integrity": "sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "depd": "~2.0.0",
+-+        "inherits": "~2.0.4",
+-+        "setprototypeof": "~1.2.0",
+-+        "statuses": "~2.0.2",
+-+        "toidentifier": "~1.0.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/iconv-lite": {
+-+      "version": "0.7.3",
+-+      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.7.3.tgz",
+-+      "integrity": "sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "safer-buffer": ">= 2.1.2 < 3.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=0.10.0"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/inherits": {
+-+      "version": "2.0.4",
+-+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+-+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+-+      "license": "ISC"
+-+    },
+-+    "node_modules/ipaddr.js": {
+-+      "version": "1.9.1",
+-+      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
+-+      "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.10"
+-+      }
+-+    },
+-+    "node_modules/is-promise": {
+-+      "version": "4.0.0",
+-+      "resolved": "https://registry.npmjs.org/is-promise/-/is-promise-4.0.0.tgz",
+-+      "integrity": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==",
+-+      "license": "MIT"
+-+    },
+-+    "node_modules/math-intrinsics": {
+-+      "version": "1.1.0",
+-+      "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+-+      "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-+    "node_modules/media-typer": {
+-+      "version": "1.1.1",
+-+      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-1.1.1.tgz",
+-+      "integrity": "sha512-yz3xRaG20c6/BOzvYoDaGtPmGscs7YivItZEEqe6GbwNfHuxu9YNmvnEkMzKldAGY4/80pRcQRZSEnhquk9XuQ==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/merge-descriptors": {
+-+      "version": "2.0.0",
+-+      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-2.0.0.tgz",
+-+      "integrity": "sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/sindresorhus"
+-+      }
+-+    },
+-+    "node_modules/mime-db": {
+-+      "version": "1.54.0",
+-+      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+-+      "integrity": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      }
+-+    },
+-+    "node_modules/mime-types": {
+-+      "version": "3.0.2",
+-+      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-3.0.2.tgz",
+-+      "integrity": "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "mime-db": "^1.54.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/ms": {
+-+      "version": "2.1.3",
+-+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-+      "license": "MIT"
+-+    },
+-+    "node_modules/negotiator": {
+-+      "version": "1.1.0",
+-+      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-1.1.0.tgz",
+-+      "integrity": "sha512-NMPBRMJgiQHjbd8phG3Vebdx4kZ1H121rbl5IkMqeOsahptB9BKo/d7oJ3zTXqTgagn2bWlNSXkh0QUGM31RYg==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "content-type": "^2.1.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/object-inspect": {
+-+      "version": "1.13.4",
+-+      "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+-+      "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/on-finished": {
+-+      "version": "2.4.2",
+-+      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.2.tgz",
+-+      "integrity": "sha512-ATWUv387i+nLD49EiDoOft5scf32Vsdz3ktrQJG9bi7jRFmaXTssvyvj1EmeKVVgvesbqUtvQQvaS2TpTukAZQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "ee-first": "1.1.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/once": {
+-+      "version": "1.4.0",
+-+      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+-+      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+-+      "license": "ISC",
+-+      "dependencies": {
+-+        "wrappy": "1"
+-+      }
+-+    },
+-+    "node_modules/parseurl": {
+-+      "version": "1.3.3",
+-+      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
+-+      "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/path-to-regexp": {
+-+      "version": "8.4.2",
+-+      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-8.4.2.tgz",
+-+      "integrity": "sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==",
+-+      "license": "MIT",
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/proxy-addr": {
+-+      "version": "2.0.8",
+-+      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.8.tgz",
+-+      "integrity": "sha512-5nnx0yGyVUcY6t9RnWcARWtwT9F1D8O9rt08htPvnd49W1IgZtmLkhu9WfMzQj1cFxjHIO6connUNVW5k7AVyQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "forwarded": "0.2.0",
+-+        "ipaddr.js": "1.9.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.10"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/qs": {
+-+      "version": "6.17.1",
+-+      "resolved": "https://registry.npmjs.org/qs/-/qs-6.17.1.tgz",
+-+      "integrity": "sha512-jd3COkaKVgGUW+ZHyEHCG9bH7RoaaiWuMgzsIBjUMVjLAaWGWpoUAVwljVvBHxRu/2qEHnadLGZrkutYUBPQJA==",
+-+      "license": "BSD-3-Clause",
+-+      "dependencies": {
+-+        "es-define-property": "^1.0.1",
+-+        "side-channel": "^1.1.1"
+-+      },
+-+      "engines": {
+-+        "node": ">=0.6"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/range-parser": {
+-+      "version": "1.3.0",
+-+      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.3.0.tgz",
+-+      "integrity": "sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.6"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/raw-body": {
+-+      "version": "3.0.2",
+-+      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-3.0.2.tgz",
+-+      "integrity": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "bytes": "~3.1.2",
+-+        "http-errors": "~2.0.1",
+-+        "iconv-lite": "~0.7.0",
+-+        "unpipe": "~1.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.10"
+-+      }
+-+    },
+-+    "node_modules/router": {
+-+      "version": "2.2.0",
+-+      "resolved": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
+-+      "integrity": "sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "debug": "^4.4.0",
+-+        "depd": "^2.0.0",
+-+        "is-promise": "^4.0.0",
+-+        "parseurl": "^1.3.3",
+-+        "path-to-regexp": "^8.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18"
+-+      }
+-+    },
+-+    "node_modules/safer-buffer": {
+-+      "version": "2.1.2",
+-+      "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
+-+      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
+-+      "license": "MIT"
+-+    },
+-+    "node_modules/send": {
+-+      "version": "1.2.1",
+-+      "resolved": "https://registry.npmjs.org/send/-/send-1.2.1.tgz",
+-+      "integrity": "sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "debug": "^4.4.3",
+-+        "encodeurl": "^2.0.0",
+-+        "escape-html": "^1.0.3",
+-+        "etag": "^1.8.1",
+-+        "fresh": "^2.0.0",
+-+        "http-errors": "^2.0.1",
+-+        "mime-types": "^3.0.2",
+-+        "ms": "^2.1.3",
+-+        "on-finished": "^2.4.1",
+-+        "range-parser": "^1.2.1",
+-+        "statuses": "^2.0.2"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/serve-static": {
+-+      "version": "2.2.1",
+-+      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-2.2.1.tgz",
+-+      "integrity": "sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "encodeurl": "^2.0.0",
+-+        "escape-html": "^1.0.3",
+-+        "parseurl": "^1.3.3",
+-+        "send": "^1.2.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/setprototypeof": {
+-+      "version": "1.2.0",
+-+      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
+-+      "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
+-+      "license": "ISC"
+-+    },
+-+    "node_modules/side-channel": {
+-+      "version": "1.1.1",
+-+      "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
+-+      "integrity": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "es-errors": "^1.3.0",
+-+        "object-inspect": "^1.13.4",
+-+        "side-channel-list": "^1.0.1",
+-+        "side-channel-map": "^1.0.1",
+-+        "side-channel-weakmap": "^1.0.2"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/side-channel-list": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz",
+-+      "integrity": "sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "es-errors": "^1.3.0",
+-+        "object-inspect": "^1.13.4"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/side-channel-map": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
+-+      "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bound": "^1.0.2",
+-+        "es-errors": "^1.3.0",
+-+        "get-intrinsic": "^1.2.5",
+-+        "object-inspect": "^1.13.3"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/side-channel-weakmap": {
+-+      "version": "1.0.2",
+-+      "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
+-+      "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bound": "^1.0.2",
+-+        "es-errors": "^1.3.0",
+-+        "get-intrinsic": "^1.2.5",
+-+        "object-inspect": "^1.13.3",
+-+        "side-channel-map": "^1.0.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-+    "node_modules/statuses": {
+-+      "version": "2.0.2",
+-+      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz",
+-+      "integrity": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/toidentifier": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
+-+      "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=0.6"
+-+      }
+-+    },
+-+    "node_modules/type-is": {
+-+      "version": "2.1.0",
+-+      "resolved": "https://registry.npmjs.org/type-is/-/type-is-2.1.0.tgz",
+-+      "integrity": "sha512-faYHw0anBbc/kWF3zFTEnxSFOAGUX9GFbOBthvDdLsIlEoWOFOtS0zgCiQYwIskL9iGXZL3kAXD8OoZ4GmMATA==",
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "content-type": "^2.0.0",
+-+        "media-typer": "^1.1.0",
+-+        "mime-types": "^3.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">= 18"
+-+      },
+-+      "funding": {
+-+        "type": "opencollective",
+-+        "url": "https://opencollective.com/express"
+-+      }
+-+    },
+-+    "node_modules/unpipe": {
+-+      "version": "1.0.0",
+-+      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
+-+      "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/vary": {
+-+      "version": "1.1.2",
+-+      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
+-+      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.8"
+-+      }
+-+    },
+-+    "node_modules/wrappy": {
+-+      "version": "1.0.2",
+-+      "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+-+      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+-+      "license": "ISC"
+-+    }
+-+  }
+-+}
+-diff --git a/package.json b/package.json
+-index c3dfcbe..327f338 100644
+---- a/package.json
+-+++ b/package.json
+-@@ -1,6 +1,6 @@
+- {
+-   "name": "atlas-ai",
+--  "version": "0.3.0",
+-+  "version": "0.4.0",
+-   "private": true,
+-   "description": "ATLAS-AI — voice-first personal AI assistant",
+-   "type": "module",
+-diff --git a/public/app.js b/public/app.js
+-index dd7bf6d..5149074 100644
+---- a/public/app.js
+-+++ b/public/app.js
+-@@ -164,6 +164,34 @@ function setStatus(message, state = "idle") {
+-   orbCaption.textContent = state === "connected" ? "ATLAS ESTÁ ESCUCHANDO" : state === "connecting" ? "ESTABLECIENDO ENLACE" : "ATLAS ESTÁ LISTO";
+- }
+- 
+-+const handledToolCalls = new Set();
+-+
+-+async function handleToolCalls(response) {
+-+  const calls = (response?.output || []).filter((item) => item.type === "function_call" && !handledToolCalls.has(item.call_id));
+-+  if (!calls.length || channel?.readyState !== "open") return;
+-+  orbCaption.textContent = "EJECUTANDO HERRAMIENTA";
+-+  for (const call of calls) {
+-+    handledToolCalls.add(call.call_id);
+-+    let result;
+-+    try {
+-+      const toolResponse = await fetch("/api/tool", {
+-+        method: "POST",
+-+        headers: { "Content-Type": "application/json" },
+-+        body: JSON.stringify({ name: call.name, arguments: JSON.parse(call.arguments || "{}") })
+-+      });
+-+      result = await toolResponse.json();
+-+    } catch {
+-+      result = { ok: false, error: "No se pudo ejecutar la herramienta." };
+-+    }
+-+    if (channel?.readyState !== "open") return;
+-+    channel.send(JSON.stringify({
+-+      type: "conversation.item.create",
+-+      item: { type: "function_call_output", call_id: call.call_id, output: JSON.stringify(result) }
+-+    }));
+-+  }
+-+  if (channel?.readyState === "open") channel.send(JSON.stringify({ type: "response.create" }));
+-+}
+-+
+- function handleEvent(event) {
+-   if (event.type === "input_audio_buffer.speech_started") {
+-     orbCaption.textContent = "TE ESTÁ ESCUCHANDO";
+-@@ -180,6 +208,7 @@ function handleEvent(event) {
+-   if (event.type === "response.done") {
+-     orbCaption.textContent = "ATLAS ESTÁ ESCUCHANDO";
+-     orb.classList.remove("speaking");
+-+    handleToolCalls(event.response);
+-   }
+-   if (event.type === "conversation.item.input_audio_transcription.completed") {
+-     addMessage("user", event.transcript);
+-@@ -243,6 +272,7 @@ async function endConversation(updateStatus = true) {
+-   if (channel) channel.close();
+-   if (peer) peer.close();
+-   if (localStream) localStream.getTracks().forEach((track) => track.stop());
+-+  handledToolCalls.clear();
+-   channel = null;
+-   peer = null;
+-   localStream = null;
+-diff --git a/public/index.html b/public/index.html
+-index 2dbb524..09322b2 100644
+---- a/public/index.html
+-+++ b/public/index.html
+-@@ -72,7 +72,7 @@
+-       </aside>
+-     </section>
+- 
+--    <footer><span>ATLAS-AI <span class="footer-version">v0.2.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+-+    <footer><span>ATLAS-AI <span class="footer-version">v0.4.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+-   </main>
+-   <audio id="remote-audio" autoplay></audio>
+-   <script type="module" src="/app.js"></script>
+-diff --git a/server.mjs b/server.mjs
+-index 8049cd5..d062c0e 100644
+---- a/server.mjs
+-+++ b/server.mjs
+-@@ -2,7 +2,7 @@ import "dotenv/config";
+- import express from "express";
+- import path from "node:path";
+- import { fileURLToPath } from "node:url";
+--import { ATLAS_FUNCTION_TOOLS, executeAtlasTool } from "./src/atlas-tools.mjs";
+-+import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
+- 
+- const app = express();
+- const port = Number(process.env.PORT || 3000);
+-@@ -41,6 +41,17 @@ const assistantInstructions = [
+-   "No inventes acceso a datos privados. No solicites ni reveles claves, contraseñas o secretos."
+- ].join(" ");
+- 
+-+// Instrucciones específicas para voz: tono ejecutivo, sereno y breve al hablar.
+-+const voiceInstructions = [
+-+  assistantInstructions,
+-+  "Estás en una conversación hablada en vivo.",
+-+  "Voz: masculina, grave, serena y elegante, con ritmo pausado y dicción clara, como la de un asistente ejecutivo de alto nivel.",
+-+  "Trata al usuario de usted, con cortesía natural y sin exagerar. Saluda con naturalidad según la hora del día cuando el usuario te salude.",
+-+  "Responde en frases cortas, de una a tres oraciones, sin listas ni formato de texto. Ofrece ampliar solo si el usuario lo pide.",
+-+  "Para cualquier cálculo usa la herramienta calculate, para la fecha u hora usa get_local_datetime y para organizar pendientes usa make_checklist. Al leer una lista de tareas, enuméralas de forma breve.",
+-+  "Si el usuario te interrumpe, detente y atiende lo nuevo."
+-+].join(" ");
+-+
+- async function callResponsesAPI(input, tools) {
+-   const response = await fetch("https://api.openai.com/v1/responses", {
+-     method: "POST",
+-@@ -115,7 +126,9 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
+-         session: {
+-           type: "realtime",
+-           model: "gpt-realtime",
+--          instructions: assistantInstructions,
+-+          instructions: voiceInstructions,
+-+          tools: ATLAS_REALTIME_TOOLS,
+-+          tool_choice: "auto",
+-           audio: {
+-             input: { transcription: { model: "gpt-live-transcribe", languages: ["es"] } },
+-             output: { voice: "ash" }
+-@@ -138,6 +151,23 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
+-   }
+- });
+- 
+-+// Ejecuta herramientas solicitadas por el modelo de voz. Solo funciones de la lista permitida.
+-+app.post("/api/tool", rateLimit(40, 60_000), (req, res) => {
+-+  const { name, arguments: args } = req.body || {};
+-+  res.set("Cache-Control", "no-store");
+-+  if (typeof name !== "string" || !ATLAS_TOOL_NAMES.includes(name)) {
+-+    return res.status(400).json({ ok: false, error: "La herramienta solicitada no está autorizada." });
+-+  }
+-+  if (args !== undefined && (typeof args !== "object" || args === null || Array.isArray(args))) {
+-+    return res.status(400).json({ ok: false, error: "Argumentos no válidos." });
+-+  }
+-+  try {
+-+    res.json(executeAtlasTool(name, args || {}));
+-+  } catch (error) {
+-+    res.json({ ok: false, error: error.message || "No se pudo ejecutar la herramienta." });
+-+  }
+-+});
+-+
+- app.post("/api/assistant", rateLimit(20, 60_000), async (req, res) => {
+-   if (!apiKey) {
+-     return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
+-diff --git a/src/atlas-tools.mjs b/src/atlas-tools.mjs
+-index 3f9b528..6baecd9 100644
+---- a/src/atlas-tools.mjs
+-+++ b/src/atlas-tools.mjs
+-@@ -42,6 +42,11 @@ export const ATLAS_FUNCTION_TOOLS = [
+-   }
+- ];
+- 
+-+// Realtime API usa la misma definición, pero sin el campo "strict" (exclusivo de Responses API).
+-+export const ATLAS_REALTIME_TOOLS = ATLAS_FUNCTION_TOOLS.map(({ strict, ...tool }) => tool);
+-+
+-+export const ATLAS_TOOL_NAMES = ATLAS_FUNCTION_TOOLS.map((tool) => tool.name);
+-+
+- function tokenize(expression) {
+-   if (typeof expression !== "string" || expression.length > 120) {
+-     throw new Error("La operación debe ser texto de hasta 120 caracteres.");
+-diff --git a/test/atlas-tools.test.mjs b/test/atlas-tools.test.mjs
+-index bce0355..626643e 100644
+---- a/test/atlas-tools.test.mjs
+-+++ b/test/atlas-tools.test.mjs
+-@@ -1,6 +1,6 @@
+- import test from "node:test";
+- import assert from "node:assert/strict";
+--import { calculateExpression, executeAtlasTool, ATLAS_FUNCTION_TOOLS } from "../src/atlas-tools.mjs";
+-+import { calculateExpression, executeAtlasTool, ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES } from "../src/atlas-tools.mjs";
+- 
+- test("calcula operaciones con precedencia y paréntesis", () => {
+-   assert.equal(calculateExpression("(1250 * 0.16) + 1250"), 1450);
+-@@ -35,3 +35,8 @@ test("declara funciones en modo estricto", () => {
+-   assert.equal(ATLAS_FUNCTION_TOOLS.length, 3);
+-   assert.ok(ATLAS_FUNCTION_TOOLS.every((tool) => tool.strict === true));
+- });
+-+
+-+test("las herramientas de voz coinciden con las de chat y no incluyen strict", () => {
+-+  assert.deepEqual(ATLAS_REALTIME_TOOLS.map((tool) => tool.name), ATLAS_TOOL_NAMES);
+-+  assert.ok(ATLAS_REALTIME_TOOLS.every((tool) => tool.type === "function" && !("strict" in tool)));
+-+});
+diff --git a/package-lock.json b/package-lock.json
+new file mode 100644
+index 0000000..0f75600
+--- /dev/null
++++ b/package-lock.json
+@@ -0,0 +1,878 @@
++{
++  "name": "atlas-ai",
++  "version": "0.4.0",
++  "lockfileVersion": 3,
++  "requires": true,
++  "packages": {
++    "": {
++      "name": "atlas-ai",
++      "version": "0.4.0",
++      "dependencies": {
++        "dotenv": "^16.4.7",
++        "express": "^5.1.0"
++      },
++      "engines": {
++        "node": ">=22.6.0"
++      }
++    },
++    "node_modules/accepts": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz",
++      "integrity": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==",
++      "license": "MIT",
++      "dependencies": {
++        "mime-types": "^3.0.0",
++        "negotiator": "^1.0.0"
++      },
++      "engines": {
++        "node": ">= 0.6"
++      }
++    },
++    "node_modules/body-parser": {
++      "version": "2.4.0",
++      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-2.4.0.tgz",
++      "integrity": "sha512-Ifk1KcLrxaGt1occQagQNFNNOqRt1LFuehEnHHzB8Z6cRgIxRU1TBaiIsUiCdA+gy5PL7Y1IX31DNKkRmxtXjQ==",
++      "license": "MIT",
++      "dependencies": {
++        "bytes": "^3.1.2",
++        "content-type": "^2.1.0",
++        "debug": "^4.4.3",
++        "http-errors": "^2.0.1",
++        "iconv-lite": "^0.7.3",
++        "on-finished": "^2.4.1",
++        "qs": "^6.16.1",
++        "raw-body": "^3.0.2",
++        "type-is": "^2.1.0"
++      },
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/bytes": {
++      "version": "3.1.2",
++      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
++      "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/call-bind-apply-helpers": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
++      "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0",
++        "function-bind": "^1.1.2"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/call-bound": {
++      "version": "1.0.4",
++      "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
++      "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
++      "license": "MIT",
++      "dependencies": {
++        "call-bind-apply-helpers": "^1.0.2",
++        "get-intrinsic": "^1.3.0"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/content-disposition": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-2.0.1.tgz",
++      "integrity": "sha512-e+H0ZXHSWYrENhQzw1LPuP4oF5MzVKmDU6d3hxlvaPEYLLg62MxtQNPRx4SYSuYJSBUgnQIG4HIN2tEtNv7Dog==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/content-type": {
++      "version": "2.1.0",
++      "resolved": "https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz",
++      "integrity": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/cookie": {
++      "version": "0.7.2",
++      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
++      "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.6"
++      }
++    },
++    "node_modules/cookie-signature": {
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.2.2.tgz",
++      "integrity": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.6.0"
++      }
++    },
++    "node_modules/debug": {
++      "version": "4.4.3",
++      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
++      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
++      "license": "MIT",
++      "dependencies": {
++        "ms": "^2.1.3"
++      },
++      "engines": {
++        "node": ">=6.0"
++      },
++      "peerDependenciesMeta": {
++        "supports-color": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/depd": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
++      "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/dotenv": {
++      "version": "16.6.1",
++      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz",
++      "integrity": "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==",
++      "license": "BSD-2-Clause",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://dotenvx.com"
++      }
++    },
++    "node_modules/dunder-proto": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
++      "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
++      "license": "MIT",
++      "dependencies": {
++        "call-bind-apply-helpers": "^1.0.1",
++        "es-errors": "^1.3.0",
++        "gopd": "^1.2.0"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/ee-first": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
++      "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
++      "license": "MIT"
++    },
++    "node_modules/encodeurl": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.1.tgz",
++      "integrity": "sha512-Ev/hIyePLZtpL98x562lvPtenrUfGr0lfaf44HFZ+hDEwso7ccV9QAZrEVLg0hxNAzygaAFxy2dYaAKKM0G06A==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/es-define-property": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
++      "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/es-errors": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
++      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/es-object-atoms": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz",
++      "integrity": "sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==",
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/escape-html": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
++      "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==",
++      "license": "MIT"
++    },
++    "node_modules/etag": {
++      "version": "1.8.1",
++      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
++      "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.6"
++      }
++    },
++    "node_modules/express": {
++      "version": "5.3.0",
++      "resolved": "https://registry.npmjs.org/express/-/express-5.3.0.tgz",
++      "integrity": "sha512-qCqy1xSoaugxOD4IVHb1ZWdkvCF2W3aE2okKouWj8VwJ+ztskSiXoBnCSJqfKT+cVPJhuJqe9YLbY425+Zh00g==",
++      "license": "MIT",
++      "dependencies": {
++        "accepts": "^2.0.0",
++        "body-parser": "^2.3.0",
++        "content-disposition": "^2.0.1",
++        "content-type": "^2.0.0",
++        "cookie": "^0.7.1",
++        "cookie-signature": "^1.2.1",
++        "debug": "^4.4.0",
++        "depd": "^2.0.0",
++        "encodeurl": "^2.0.0",
++        "escape-html": "^1.0.3",
++        "etag": "^1.8.1",
++        "finalhandler": "^2.1.0",
++        "fresh": "^2.0.0",
++        "http-errors": "^2.0.0",
++        "merge-descriptors": "^2.0.0",
++        "mime-types": "^3.0.0",
++        "on-finished": "^2.4.1",
++        "once": "^1.4.0",
++        "parseurl": "^1.3.3",
++        "proxy-addr": "^2.0.8",
++        "qs": "^6.16.0",
++        "range-parser": "^1.2.1",
++        "router": "^2.2.0",
++        "send": "^1.1.0",
++        "serve-static": "^2.2.0",
++        "statuses": "^2.0.1",
++        "type-is": "^2.1.0",
++        "vary": "^1.1.2"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/finalhandler": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-2.1.1.tgz",
++      "integrity": "sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==",
++      "license": "MIT",
++      "dependencies": {
++        "debug": "^4.4.0",
++        "encodeurl": "^2.0.0",
++        "escape-html": "^1.0.3",
++        "on-finished": "^2.4.1",
++        "parseurl": "^1.3.3",
++        "statuses": "^2.0.1"
++      },
++      "engines": {
++        "node": ">= 18.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/forwarded": {
++      "version": "0.2.0",
++      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
++      "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.6"
++      }
++    },
++    "node_modules/fresh": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/fresh/-/fresh-2.0.0.tgz",
++      "integrity": "sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/function-bind": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
++      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
++      "license": "MIT",
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/get-intrinsic": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
++      "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
++      "license": "MIT",
++      "dependencies": {
++        "call-bind-apply-helpers": "^1.0.2",
++        "es-define-property": "^1.0.1",
++        "es-errors": "^1.3.0",
++        "es-object-atoms": "^1.1.1",
++        "function-bind": "^1.1.2",
++        "get-proto": "^1.0.1",
++        "gopd": "^1.2.0",
++        "has-symbols": "^1.1.0",
++        "hasown": "^2.0.2",
++        "math-intrinsics": "^1.1.0"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/get-proto": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
++      "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
++      "license": "MIT",
++      "dependencies": {
++        "dunder-proto": "^1.0.1",
++        "es-object-atoms": "^1.0.0"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/gopd": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
++      "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/has-symbols": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
++      "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/hasown": {
++      "version": "2.0.4",
++      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
++      "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
++      "license": "MIT",
++      "dependencies": {
++        "function-bind": "^1.1.2"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/http-errors": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz",
++      "integrity": "sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==",
++      "license": "MIT",
++      "dependencies": {
++        "depd": "~2.0.0",
++        "inherits": "~2.0.4",
++        "setprototypeof": "~1.2.0",
++        "statuses": "~2.0.2",
++        "toidentifier": "~1.0.1"
++      },
++      "engines": {
++        "node": ">= 0.8"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/iconv-lite": {
++      "version": "0.7.3",
++      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.7.3.tgz",
++      "integrity": "sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==",
++      "license": "MIT",
++      "dependencies": {
++        "safer-buffer": ">= 2.1.2 < 3.0.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/inherits": {
++      "version": "2.0.4",
++      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
++      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
++      "license": "ISC"
++    },
++    "node_modules/ipaddr.js": {
++      "version": "1.9.1",
++      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
++      "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.10"
++      }
++    },
++    "node_modules/is-promise": {
++      "version": "4.0.0",
++      "resolved": "https://registry.npmjs.org/is-promise/-/is-promise-4.0.0.tgz",
++      "integrity": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==",
++      "license": "MIT"
++    },
++    "node_modules/math-intrinsics": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
++      "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/media-typer": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-1.1.1.tgz",
++      "integrity": "sha512-yz3xRaG20c6/BOzvYoDaGtPmGscs7YivItZEEqe6GbwNfHuxu9YNmvnEkMzKldAGY4/80pRcQRZSEnhquk9XuQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/merge-descriptors": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-2.0.0.tgz",
++      "integrity": "sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/mime-db": {
++      "version": "1.54.0",
++      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
++      "integrity": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.6"
++      }
++    },
++    "node_modules/mime-types": {
++      "version": "3.0.2",
++      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-3.0.2.tgz",
++      "integrity": "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A==",
++      "license": "MIT",
++      "dependencies": {
++        "mime-db": "^1.54.0"
++      },
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/ms": {
++      "version": "2.1.3",
++      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
++      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
++      "license": "MIT"
++    },
++    "node_modules/negotiator": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-1.1.0.tgz",
++      "integrity": "sha512-NMPBRMJgiQHjbd8phG3Vebdx4kZ1H121rbl5IkMqeOsahptB9BKo/d7oJ3zTXqTgagn2bWlNSXkh0QUGM31RYg==",
++      "license": "MIT",
++      "dependencies": {
++        "content-type": "^2.1.0"
++      },
++      "engines": {
++        "node": ">=18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/object-inspect": {
++      "version": "1.13.4",
++      "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
++      "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/on-finished": {
++      "version": "2.4.2",
++      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.2.tgz",
++      "integrity": "sha512-ATWUv387i+nLD49EiDoOft5scf32Vsdz3ktrQJG9bi7jRFmaXTssvyvj1EmeKVVgvesbqUtvQQvaS2TpTukAZQ==",
++      "license": "MIT",
++      "dependencies": {
++        "ee-first": "1.1.1"
++      },
++      "engines": {
++        "node": ">= 0.8"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/once": {
++      "version": "1.4.0",
++      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
++      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
++      "license": "ISC",
++      "dependencies": {
++        "wrappy": "1"
++      }
++    },
++    "node_modules/parseurl": {
++      "version": "1.3.3",
++      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
++      "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/path-to-regexp": {
++      "version": "8.4.2",
++      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-8.4.2.tgz",
++      "integrity": "sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==",
++      "license": "MIT",
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/proxy-addr": {
++      "version": "2.0.8",
++      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.8.tgz",
++      "integrity": "sha512-5nnx0yGyVUcY6t9RnWcARWtwT9F1D8O9rt08htPvnd49W1IgZtmLkhu9WfMzQj1cFxjHIO6connUNVW5k7AVyQ==",
++      "license": "MIT",
++      "dependencies": {
++        "forwarded": "0.2.0",
++        "ipaddr.js": "1.9.1"
++      },
++      "engines": {
++        "node": ">= 0.10"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/qs": {
++      "version": "6.17.1",
++      "resolved": "https://registry.npmjs.org/qs/-/qs-6.17.1.tgz",
++      "integrity": "sha512-jd3COkaKVgGUW+ZHyEHCG9bH7RoaaiWuMgzsIBjUMVjLAaWGWpoUAVwljVvBHxRu/2qEHnadLGZrkutYUBPQJA==",
++      "license": "BSD-3-Clause",
++      "dependencies": {
++        "es-define-property": "^1.0.1",
++        "side-channel": "^1.1.1"
++      },
++      "engines": {
++        "node": ">=0.6"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/range-parser": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.3.0.tgz",
++      "integrity": "sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.6"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/raw-body": {
++      "version": "3.0.2",
++      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-3.0.2.tgz",
++      "integrity": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==",
++      "license": "MIT",
++      "dependencies": {
++        "bytes": "~3.1.2",
++        "http-errors": "~2.0.1",
++        "iconv-lite": "~0.7.0",
++        "unpipe": "~1.0.0"
++      },
++      "engines": {
++        "node": ">= 0.10"
++      }
++    },
++    "node_modules/router": {
++      "version": "2.2.0",
++      "resolved": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
++      "integrity": "sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==",
++      "license": "MIT",
++      "dependencies": {
++        "debug": "^4.4.0",
++        "depd": "^2.0.0",
++        "is-promise": "^4.0.0",
++        "parseurl": "^1.3.3",
++        "path-to-regexp": "^8.0.0"
++      },
++      "engines": {
++        "node": ">= 18"
++      }
++    },
++    "node_modules/safer-buffer": {
++      "version": "2.1.2",
++      "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
++      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
++      "license": "MIT"
++    },
++    "node_modules/send": {
++      "version": "1.2.1",
++      "resolved": "https://registry.npmjs.org/send/-/send-1.2.1.tgz",
++      "integrity": "sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==",
++      "license": "MIT",
++      "dependencies": {
++        "debug": "^4.4.3",
++        "encodeurl": "^2.0.0",
++        "escape-html": "^1.0.3",
++        "etag": "^1.8.1",
++        "fresh": "^2.0.0",
++        "http-errors": "^2.0.1",
++        "mime-types": "^3.0.2",
++        "ms": "^2.1.3",
++        "on-finished": "^2.4.1",
++        "range-parser": "^1.2.1",
++        "statuses": "^2.0.2"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/serve-static": {
++      "version": "2.2.1",
++      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-2.2.1.tgz",
++      "integrity": "sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==",
++      "license": "MIT",
++      "dependencies": {
++        "encodeurl": "^2.0.0",
++        "escape-html": "^1.0.3",
++        "parseurl": "^1.3.3",
++        "send": "^1.2.0"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/setprototypeof": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
++      "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
++      "license": "ISC"
++    },
++    "node_modules/side-channel": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
++      "integrity": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0",
++        "object-inspect": "^1.13.4",
++        "side-channel-list": "^1.0.1",
++        "side-channel-map": "^1.0.1",
++        "side-channel-weakmap": "^1.0.2"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/side-channel-list": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz",
++      "integrity": "sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==",
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0",
++        "object-inspect": "^1.13.4"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/side-channel-map": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
++      "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
++      "license": "MIT",
++      "dependencies": {
++        "call-bound": "^1.0.2",
++        "es-errors": "^1.3.0",
++        "get-intrinsic": "^1.2.5",
++        "object-inspect": "^1.13.3"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/side-channel-weakmap": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
++      "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
++      "license": "MIT",
++      "dependencies": {
++        "call-bound": "^1.0.2",
++        "es-errors": "^1.3.0",
++        "get-intrinsic": "^1.2.5",
++        "object-inspect": "^1.13.3",
++        "side-channel-map": "^1.0.1"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/statuses": {
++      "version": "2.0.2",
++      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz",
++      "integrity": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/toidentifier": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
++      "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.6"
++      }
++    },
++    "node_modules/type-is": {
++      "version": "2.1.0",
++      "resolved": "https://registry.npmjs.org/type-is/-/type-is-2.1.0.tgz",
++      "integrity": "sha512-faYHw0anBbc/kWF3zFTEnxSFOAGUX9GFbOBthvDdLsIlEoWOFOtS0zgCiQYwIskL9iGXZL3kAXD8OoZ4GmMATA==",
++      "license": "MIT",
++      "dependencies": {
++        "content-type": "^2.0.0",
++        "media-typer": "^1.1.0",
++        "mime-types": "^3.0.0"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
++    },
++    "node_modules/unpipe": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
++      "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/vary": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
++      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.8"
++      }
++    },
++    "node_modules/wrappy": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
++      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
++      "license": "ISC"
++    }
++  }
++}
+diff --git a/package.json b/package.json
+index 327f338..8ae3f18 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "atlas-ai",
+-  "version": "0.4.0",
++  "version": "0.4.1",
+   "private": true,
+   "description": "ATLAS-AI — voice-first personal AI assistant",
+   "type": "module",
+diff --git a/public/app.js b/public/app.js
+index 3c50862..201c68b 100644
+--- a/public/app.js
++++ b/public/app.js
+@@ -167,6 +167,8 @@ function setStatus(message, state = "idle") {
+ const handledToolCalls = new Set();
+ 
+ async function handleToolCalls(response) {
++  // Una respuesta cancelada (por ejemplo, si el usuario interrumpe) puede traer argumentos incompletos.
++  if (response?.status !== "completed") return;
+   const calls = (response?.output || []).filter((item) => item.type === "function_call" && !handledToolCalls.has(item.call_id));
+   if (!calls.length || channel?.readyState !== "open") return;
+   orbCaption.textContent = "EJECUTANDO HERRAMIENTA";
+diff --git a/public/index.html b/public/index.html
+index 09322b2..e9f4221 100644
+--- a/public/index.html
++++ b/public/index.html
+@@ -72,7 +72,7 @@
+       </aside>
+     </section>
+ 
+-    <footer><span>ATLAS-AI <span class="footer-version">v0.4.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
++    <footer><span>ATLAS-AI <span class="footer-version">v0.4.1</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+   </main>
+   <audio id="remote-audio" autoplay></audio>
+   <script type="module" src="/app.js"></script>
+diff --git a/src/atlas-tools.mjs b/src/atlas-tools.mjs
+index cf17614..fc739e3 100644
+--- a/src/atlas-tools.mjs
++++ b/src/atlas-tools.mjs
+@@ -195,8 +195,11 @@ export function executeAtlasTool(name, args = {}, now = new Date()) {
+   }
+ 
+   if (name === "convert_units") {
+-    const result = convertUnits(args);
+-    return { ok: true, ...args, result };
++    // Realtime no aplica el modo estricto: acepta números enviados como texto ("5").
++    const value = typeof args.value === "string" && args.value.trim() !== "" ? Number(args.value) : args.value;
++    const { category, from_unit, to_unit } = args;
++    const result = convertUnits({ category, value, from_unit, to_unit });
++    return { ok: true, category, value, from_unit, to_unit, result };
+   }
+ 
+   throw new Error("La herramienta solicitada no está autorizada.");
+diff --git a/test/atlas-tools.test.mjs b/test/atlas-tools.test.mjs
+index 3f210e5..dac3d34 100644
+--- a/test/atlas-tools.test.mjs
++++ b/test/atlas-tools.test.mjs
+@@ -54,3 +54,8 @@ test("Realtime comparte las herramientas pero omite strict", () => {
+   assert.deepEqual(ATLAS_REALTIME_TOOLS.map((tool) => tool.name), ATLAS_TOOL_NAMES);
+   assert.ok(ATLAS_REALTIME_TOOLS.every((tool) => tool.type === "function" && !("strict" in tool)));
+ });
++
++test("convert_units acepta números como texto y no refleja campos ajenos", () => {
++  const result = executeAtlasTool("convert_units", { category: "longitud", value: "1", from_unit: "km", to_unit: "m", ok: false, extra: "x" });
++  assert.deepEqual(result, { ok: true, category: "longitud", value: 1, from_unit: "km", to_unit: "m", result: 1000 });
++});
