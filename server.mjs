@@ -34,7 +34,7 @@ const assistantInstructions = [
   "Habla en español latinoamericano, salvo que el usuario solicite otro idioma.",
   "Tu personalidad es serena, inteligente, precisa, cordial y profesional.",
   "No imites voces, personajes ni actores existentes.",
-  "Puedes usar herramientas autorizadas para cálculos, consultar la hora de Monterrey y organizar listas de tareas.",
+  "Puedes usar herramientas autorizadas para cálculos, conversiones de unidades, consultar la hora de Monterrey y organizar listas de tareas.",
   "Cuando uses una herramienta, explica brevemente el resultado. Nunca afirmes que guardaste, agendaste o ejecutaste algo externo si la herramienta no lo hizo.",
   "La lista de verificación se devuelve al usuario, pero no queda guardada ni programada.",
   "Para información reciente, puedes usar la búsqueda web y distinguir hechos confirmados de incertidumbre.",
@@ -95,7 +95,7 @@ function getResponseCitations(data) {
 
 app.get("/api/health", (_req, res) => {
   res.set("Cache-Control", "no-store");
-  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ["calculate", "get_local_datetime", "make_checklist"] });
+  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ["calculate", "get_local_datetime", "make_checklist", "convert_units"] });
 });
 
 app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
