@@ -341,14 +341,14 @@ function showAuth(message = "") {
   accountEmail.textContent = "";
 }
 async function enterAccount(user) {
-  accountEmail.textContent = user.email;
-  authPanel.hidden = true;
-  appShell.hidden = false;
   const response = await fetch("/api/conversations");
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || "No se pudo cargar el historial.");
   conversations = Array.isArray(data.conversations) ? data.conversations : [];
   currentConversationId = conversations[0]?.id || null;
+  accountEmail.textContent = user.email;
+  authPanel.hidden = true;
+  appShell.hidden = false;
   if (!currentConversation()) createConversation();
   else { renderConversation(); renderHistory(); }
 }
