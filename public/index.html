@@ -31,6 +31,8 @@
         <button class="voice-button" type="submit">Crear cuenta</button>
       </form>
       <button class="text-button auth-toggle" id="auth-toggle" type="button">¿No tienes cuenta? Crear una</button>
+      <div class="auth-actions"><button class="text-button" id="forgot-toggle" type="button">Olvidé mi contraseña</button><button class="text-button" id="resend-verification" type="button">Reenviar verificación</button></div>
+      <form id="reset-form" class="auth-form" hidden><label for="reset-password">Nueva contraseña (mínimo 12 caracteres)</label><input id="reset-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required><button class="voice-button" type="submit">Actualizar contraseña</button></form>
       <p class="status-message" id="auth-status" role="status"></p>
       <p class="privacy-note">Tus conversaciones se almacenan en el servidor y se asocian únicamente a tu cuenta.</p>
     </div>
@@ -120,7 +122,7 @@
       </aside>
     </section>
 
-    <footer><span>ATLAS-AI <span class="footer-version">v0.6.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+    <footer><span>ATLAS-AI <span class="footer-version">v0.7.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
   </main>
   <audio id="remote-audio" autoplay></audio>
   <script type="module" src="/app.js"></script>

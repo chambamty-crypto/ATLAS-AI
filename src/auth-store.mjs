@@ -18,6 +18,14 @@ db.exec(`
     password_hash TEXT NOT NULL,
     created_at TEXT NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS account_tokens (
+    token_hash TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    purpose TEXT NOT NULL CHECK (purpose IN ('verify_email','reset_password')),
+    expires_at INTEGER NOT NULL,
+    created_at INTEGER NOT NULL
+  );
+  CREATE INDEX IF NOT EXISTS account_tokens_user_purpose_idx ON account_tokens(user_id,purpose);
   CREATE TABLE IF NOT EXISTS sessions (
     token_hash TEXT PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -35,6 +43,9 @@ db.exec(`
   );
   CREATE INDEX IF NOT EXISTS conversations_user_updated_idx ON conversations(user_id, updated_at DESC);
 `);
+
+const userColumns = db.prepare("PRAGMA table_info(users)").all().map((column) => column.name);
+if (!userColumns.includes("email_verified")) db.exec("ALTER TABLE users ADD COLUMN email_verified INTEGER NOT NULL DEFAULT 0");
 
 const SCRYPT_OPTIONS = { N: 1 << 17, r: 8, p: 1, maxmem: 256 * 1024 * 1024 };
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -58,11 +69,11 @@ export function createUserRecord(email, passwordHash) {
   const id = randomBytes(16).toString("hex");
   const createdAt = new Date().toISOString();
   db.prepare("INSERT INTO users (id,email,password_hash,created_at) VALUES (?,?,?,?)").run(id, email, passwordHash, createdAt);
-  return { id, email, createdAt };
+  return { id, email, createdAt, emailVerified: false };
 }
 
 export function findUserByEmail(email) {
-  return db.prepare("SELECT id,email,password_hash,created_at FROM users WHERE email = ?").get(email);
+  return db.prepare("SELECT id,email,password_hash,created_at,email_verified FROM users WHERE email = ?").get(email);
 }
 
 export function createSession(userId) {
@@ -122,4 +133,40 @@ export function replaceConversations(userId, conversations) {
 
 export function clearConversations(userId) {
   db.prepare("DELETE FROM conversations WHERE user_id = ?").run(userId);
+}
+
+
+export function createAccountToken(userId, purpose, ttlMs) {
+  if (!["verify_email", "reset_password"].includes(purpose)) throw new Error("Token purpose not allowed.");
+  const token = randomBytes(32).toString("base64url");
+  const now = Date.now();
+  db.prepare("DELETE FROM account_tokens WHERE user_id = ? AND purpose = ?").run(userId, purpose);
+  db.prepare("INSERT INTO account_tokens (token_hash,user_id,purpose,expires_at,created_at) VALUES (?,?,?,?,?)")
+    .run(tokenDigest(token), userId, purpose, now + ttlMs, now);
+  db.prepare("DELETE FROM account_tokens WHERE expires_at <= ?").run(now);
+  return token;
+}
+
+export function consumeAccountToken(token, purpose) {
+  if (typeof token !== "string" || token.length < 20 || token.length > 128) return null;
+  const digest = tokenDigest(token);
+  const row = db.prepare("SELECT users.id,users.email FROM account_tokens JOIN users ON users.id=account_tokens.user_id WHERE account_tokens.token_hash=? AND account_tokens.purpose=? AND account_tokens.expires_at>?")
+    .get(digest, purpose, Date.now());
+  if (!row) return null;
+  db.prepare("DELETE FROM account_tokens WHERE token_hash=?").run(digest);
+  if (purpose === "verify_email") db.prepare("UPDATE users SET email_verified=1 WHERE id=?").run(row.id);
+  return row;
+}
+
+export function updatePasswordAndRevokeSessions(userId, passwordHash) {
+  db.exec("BEGIN IMMEDIATE");
+  try {
+    db.prepare("UPDATE users SET password_hash=? WHERE id=?").run(passwordHash, userId);
+    db.prepare("DELETE FROM sessions WHERE user_id=?").run(userId);
+    db.prepare("DELETE FROM account_tokens WHERE user_id=?").run(userId);
+    db.exec("COMMIT");
+  } catch (error) {
+    db.exec("ROLLBACK");
+    throw error;
+  }
 }

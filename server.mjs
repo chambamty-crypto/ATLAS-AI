@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, replaceConversations, clearConversations } from "./src/auth-store.mjs";
 import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 import { USER_HISTORY_TOOL, buildUserContext, executeUserTool, getPreferences, listMemories, addMemory, deleteMemory, savePreferences } from "./src/user-context.mjs";
+import { createAccountToken, consumeAccountToken, updatePasswordAndRevokeSessions } from "./src/auth-store.mjs";
+import { emailDeliveryConfigured, sendAccountEmail } from "./src/mailer.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -159,6 +161,70 @@ function getResponseCitations(data) {
     .slice(0, 8);
 }
 
+function accountLink(req, token, purpose) {
+  const base = process.env.APP_URL || `http://localhost:${port}`;
+  const url = new URL("/", base);
+  url.searchParams.set(purpose === "verify_email" ? "verify" : "reset", token);
+  return url.toString();
+}
+
+async function sendVerification(req, user) {
+  const token = createAccountToken(user.id, "verify_email", 24 * 60 * 60_000);
+  const link = accountLink(req, token, "verify_email");
+  try {
+    return await sendAccountEmail({ to: user.email, subject: "Verifica tu correo de ATLAS-AI", text: `Para verificar tu correo, abre este enlace (válido durante 24 horas): ${link}\\n\\nSi no solicitaste esta cuenta, ignora este mensaje.`, html: `<p>Confirma tu dirección de correo para activar tu cuenta de ATLAS-AI.</p><p><a href="${link}">Verificar mi correo</a></p><p>Este enlace vence en 24 horas. Si no solicitaste esta cuenta, ignora este mensaje.</p>` });
+  } catch (error) {
+    console.error("Verification email delivery failed:", error.message);
+    return { sent: false, configured: emailDeliveryConfigured() };
+  }
+}
+
+app.post("/api/auth/verify-email", csrfGuard, rateLimit(10, 15 * 60_000), (req, res) => {
+  const user = consumeAccountToken(req.body?.token, "verify_email");
+  if (!user) return res.status(400).json({ error: "El enlace no es válido o ya venció. Solicita uno nuevo." });
+  const session = createSession(user.id);
+  res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
+  return res.json({ user: { id: user.id, email: user.email }, message: "Correo verificado. Tu cuenta está activa." });
+});
+
+app.post("/api/auth/resend-verification", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
+  const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+  const user = findUserByEmail(email);
+  if (user && !user.email_verified) {
+    try { await sendVerification(req, user); }
+    catch (error) { console.error("Verification email delivery failed:", error.message); }
+  }
+  res.status(202).json({ message: "Si la cuenta existe y aún no está verificada, enviaremos un enlace cuando el correo esté configurado." });
+});
+
+app.post("/api/auth/forgot-password", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
+  const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+  const user = findUserByEmail(email);
+  if (user && user.email_verified) {
+    const token = createAccountToken(user.id, "reset_password", 60 * 60_000);
+    const link = accountLink(req, token, "reset_password");
+    try {
+      await sendAccountEmail({ to: user.email, subject: "Restablece tu contraseña de ATLAS-AI", text: `Para elegir una nueva contraseña, abre este enlace (válido durante una hora): ${link}\\n\\nSi no solicitaste el cambio, ignora este mensaje.`, html: `<p>Recibimos una solicitud para restablecer tu contraseña.</p><p><a href="${link}">Crear una nueva contraseña</a></p><p>Este enlace vence en una hora. Si no solicitaste el cambio, ignora este mensaje.</p>` });
+    } catch (error) { console.error("Password reset email delivery failed:", error.message); }
+  }
+  res.status(202).json({ message: "Si existe una cuenta verificada con ese correo y el servicio de correo está disponible, recibirás instrucciones." });
+});
+
+app.post("/api/auth/reset-password", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
+  const password = req.body?.password;
+  if (typeof password !== "string" || password.length < 12 || password.length > 128) return res.status(400).json({ error: "La contraseña debe tener entre 12 y 128 caracteres." });
+  try {
+    const passwordHash = await hashPassword(password);
+    const user = consumeAccountToken(req.body?.token, "reset_password");
+    if (!user) return res.status(400).json({ error: "El enlace no es válido o ya venció. Solicita otro." });
+    updatePasswordAndRevokeSessions(user.id, passwordHash);
+    return res.json({ message: "Contraseña actualizada. Inicia sesión nuevamente." });
+  } catch (error) {
+    console.error("Password reset failed:", error.message);
+    return res.status(500).json({ error: "No se pudo actualizar la contraseña." });
+  }
+});
+
 app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
   const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
   const password = req.body?.password;
@@ -169,9 +235,8 @@ app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req,
   try {
     const passwordHash = await hashPassword(password);
     const user = createUserRecord(email, passwordHash);
-    const session = createSession(user.id);
-    res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
-    return res.status(201).json({ user: { id: user.id, email: user.email } });
+    const delivery = await sendVerification(req, user);
+    return res.status(202).json({ pendingVerification: true, emailConfigured: delivery.configured, message: delivery.sent ? "Cuenta creada. Revisa tu correo para verificarla." : "Cuenta creada, pero el correo aún no está configurado o no pudo enviarse. Configura SMTP y solicita un nuevo enlace." });
   } catch (error) {
     if (String(error.message).includes("UNIQUE")) return res.status(409).json({ error: "No se pudo crear la cuenta con esos datos." });
     console.error("Registration failed:", error.message);
@@ -186,6 +251,7 @@ app.post("/api/auth/login", csrfGuard, rateLimit(5, 15 * 60_000), async (req, re
   try {
     const user = findUserByEmail(email);
     if (!user || !(await verifyPassword(password, user.password_hash))) return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+    if (!user.email_verified) return res.status(403).json({ error: "Verifica tu correo antes de iniciar sesión. Puedes solicitar un nuevo enlace." });
     const session = createSession(user.id);
     res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
     return res.json({ user: { id: user.id, email: user.email } });

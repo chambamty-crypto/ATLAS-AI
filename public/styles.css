@@ -53,3 +53,5 @@ footer{padding:24px 3px 0;color:#61758a;font-size:9px}.footer-version{color:#8aa
   .top-meta #profile-toggle { order: 3; }
   .memory-item { flex-direction: column; }
 }
+
+.auth-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}.auth-actions .text-button{font-size:10px;padding:7px 8px}.auth-actions button:disabled{opacity:.5;cursor:wait}
