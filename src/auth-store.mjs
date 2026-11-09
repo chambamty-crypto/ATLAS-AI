@@ -97,9 +97,10 @@ export function replaceConversations(userId, conversations) {
     ON CONFLICT(id) DO UPDATE SET title=excluded.title, messages_json=excluded.messages_json, updated_at=excluded.updated_at
     WHERE conversations.user_id=excluded.user_id
   `);
-  const transaction = db.transaction((items) => {
+  db.exec("BEGIN IMMEDIATE");
+  try {
     const ids = [];
-    for (const item of items) {
+    for (const item of conversations) {
       insert.run(item.id, userId, item.title, JSON.stringify(item.messages), item.updatedAt);
       ids.push(item.id);
     }
@@ -109,8 +110,11 @@ export function replaceConversations(userId, conversations) {
     } else {
       db.prepare("DELETE FROM conversations WHERE user_id = ?").run(userId);
     }
-  });
-  transaction(conversations);
+    db.exec("COMMIT");
+  } catch (error) {
+    db.exec("ROLLBACK");
+    throw error;
+  }
   return listConversations(userId);
 }
 
