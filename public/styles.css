@@ -30,3 +30,26 @@ footer{padding:24px 3px 0;color:#61758a;font-size:9px}.footer-version{color:#8aa
 .auth-card .status-message { min-height: 20px; margin: 12px 0; color: #ffb5a8; }
 #account-email { color: #9fb0cb; font-size: .75rem; margin-left: 12px; }
 @media (max-width: 560px) { .auth-card { padding: 28px 22px; } .top-meta { flex-wrap: wrap; justify-content: flex-end; } }
+
+
+.profile-panel { margin: 28px 0; padding: 26px; border: 1px solid rgba(133,161,207,.2); border-radius: 18px; background: rgba(11,18,33,.78); }
+.profile-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.profile-heading h2 { margin: 6px 0 12px; }
+.preferences-form, .memory-form { display: grid; gap: 10px; max-width: 620px; margin-top: 18px; }
+.preferences-form label, .memory-form label { color: #b9c7df; font-size: .84rem; }
+.preferences-form select, .memory-form select, .memory-form textarea { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid rgba(145,169,207,.25); border-radius: 9px; background: rgba(3,8,17,.72); color: #f3f6fc; font: inherit; }
+.memory-form textarea { resize: vertical; }
+.memory-switch { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.memory-switch input { accent-color: #77a9ff; width: 17px; height: 17px; }
+.memory-manager { border-top: 1px solid rgba(133,161,207,.18); margin-top: 24px; padding-top: 18px; }
+.memory-manager h3 { margin: 0; }
+.memory-list { display: grid; gap: 9px; margin-top: 16px; }
+.memory-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid rgba(133,161,207,.14); border-radius: 10px; background: rgba(3,8,17,.42); }
+.memory-item p { margin: 4px 0 0; color: #d8e2f4; white-space: pre-wrap; overflow-wrap: anywhere; }
+.memory-item small { color: #8fa2c1; text-transform: uppercase; letter-spacing: .06em; font-size: .65rem; }
+.memory-delete { color: #ffb5a8; white-space: nowrap; }
+@media (max-width: 700px) {
+  .profile-panel { padding: 18px; }
+  .top-meta #profile-toggle { order: 3; }
+  .memory-item { flex-direction: column; }
+}

@@ -14,6 +14,10 @@ const chatInput = document.querySelector("#chat-input");
 const sendButton = document.querySelector("#send-button");
 const newChatButton = document.querySelector("#new-chat-button");
 const clearHistoryButton = document.querySelector("#clear-history-button");
+const profilePanel = document.querySelector("#profile-panel");
+const profileToggle = document.querySelector("#profile-toggle");
+const memoryList = document.querySelector("#memory-list");
+const preferencesStatus = document.querySelector("#preferences-status");
 
 const MAX_CONVERSATIONS = 40;
 const MAX_MESSAGES = 100;
@@ -340,6 +344,114 @@ function showAuth(message = "") {
   authStatus.textContent = message;
   accountEmail.textContent = "";
 }
+function renderMemories(memories) {
+  memoryList.replaceChildren();
+  if (!memories.length) {
+    const empty = document.createElement("p");
+    empty.className = "history-empty";
+    empty.textContent = "Todavía no has guardado recuerdos. Puedes agregar solo lo que quieras que ATLAS tenga presente.";
+    memoryList.append(empty);
+    return;
+  }
+  for (const memory of memories) {
+    const item = document.createElement("article");
+    item.className = "memory-item";
+    const content = document.createElement("div");
+    const category = document.createElement("small");
+    category.textContent = memory.category;
+    const paragraph = document.createElement("p");
+    paragraph.textContent = memory.content;
+    content.append(category, paragraph);
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "text-button memory-delete";
+    remove.textContent = "Eliminar";
+    remove.addEventListener("click", async () => {
+      if (!window.confirm("¿Eliminar este recuerdo de tu cuenta?")) return;
+      const response = await fetch(`/api/memory/${encodeURIComponent(memory.id)}`, { method: "DELETE" });
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        preferencesStatus.textContent = result.error || "No se pudo eliminar el recuerdo.";
+        return;
+      }
+      await loadProfile();
+    });
+    item.append(content, remove);
+    memoryList.append(item);
+  }
+}
+
+async function loadProfile() {
+  const response = await fetch("/api/profile");
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "No se pudo cargar tu perfil.");
+  document.querySelector("#pref-language").value = data.preferences.language;
+  document.querySelector("#pref-tone").value = data.preferences.response_tone;
+  document.querySelector("#pref-length").value = data.preferences.response_length;
+  document.querySelector("#pref-memory-enabled").checked = data.preferences.memory_enabled;
+  renderMemories(data.memories || []);
+}
+
+profileToggle.addEventListener("click", () => {
+  profilePanel.hidden = !profilePanel.hidden;
+  if (!profilePanel.hidden) profilePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+document.querySelector("#profile-close").addEventListener("click", () => { profilePanel.hidden = true; });
+
+document.querySelector("#preferences-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = event.currentTarget.querySelector('button[type="submit"]');
+  button.disabled = true;
+  preferencesStatus.textContent = "Guardando…";
+  try {
+    const response = await fetch("/api/preferences", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        language: document.querySelector("#pref-language").value,
+        response_tone: document.querySelector("#pref-tone").value,
+        response_length: document.querySelector("#pref-length").value,
+        memory_enabled: document.querySelector("#pref-memory-enabled").checked
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "No se pudieron guardar las preferencias.");
+    preferencesStatus.textContent = "Preferencias guardadas.";
+  } catch (error) {
+    preferencesStatus.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+document.querySelector("#memory-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
+  const content = document.querySelector("#memory-content");
+  button.disabled = true;
+  preferencesStatus.textContent = "Guardando recuerdo…";
+  try {
+    const response = await fetch("/api/memory", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        category: document.querySelector("#memory-category").value,
+        content: content.value.trim()
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "No se pudo guardar el recuerdo.");
+    content.value = "";
+    preferencesStatus.textContent = "Recuerdo guardado en tu cuenta.";
+    await loadProfile();
+  } catch (error) {
+    preferencesStatus.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
 async function enterAccount(user) {
   const response = await fetch("/api/conversations");
   const data = await response.json();
@@ -351,6 +463,7 @@ async function enterAccount(user) {
   appShell.hidden = false;
   if (!currentConversation()) createConversation();
   else { renderConversation(); renderHistory(); }
+  await loadProfile();
 }
 async function submitAuth(event, mode) {
   event.preventDefault();
