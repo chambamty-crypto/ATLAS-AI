@@ -285,7 +285,7 @@ app.delete("/api/conversations", csrfGuard, requireAuth, (req, res) => {
 
 app.get("/api/health", (_req, res) => {
   res.set("Cache-Control", "no-store");
-  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ATLAS_TOOL_NAMES });
+  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name] });
 });
 
 app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (req, res) => {
