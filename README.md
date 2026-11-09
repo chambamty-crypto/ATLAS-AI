@@ -22,7 +22,8 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
    `npm install`
 4. Copia `.env.example` como `.env`.
 5. Abre `.env` y agrega tu clave en `OPENAI_API_KEY`.
-6. Configura `APP_URL` con el origen público de ATLAS y completa las variables SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) para enviar verificación y recuperación. En producción, `APP_URL` debe usar HTTPS.\n7. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
+6. Configura `APP_URL` con el origen público de ATLAS y completa las variables SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) para enviar verificación y recuperación. En producción, `APP_URL` debe usar HTTPS.
+7. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
 8. Inicia el servidor:
    `npm run dev`
 9. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
@@ -31,7 +32,9 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 - **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
 - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
-- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.\n- **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.\n- **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
+- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
+- **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.
+- **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
 - **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
 - **Historial privado:** conversaciones persistidas en SQLite y vinculadas al ID de usuario. Las consultas y escrituras se limitan al usuario autenticado; máximo 40 conversaciones y 100 mensajes por conversación.
 - **Memoria personal:** el usuario agrega y elimina recuerdos explícitamente; máximo 50 recuerdos por cuenta. Puede desactivar su uso sin borrar lo guardado.
