@@ -6,8 +6,10 @@ import path from "node:path";
 
 const scrypt = promisify(scryptCallback);
 const dbPath = path.resolve(process.env.ATLAS_DB_PATH || "./data/atlas.sqlite");
-fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+process.umask(0o077);
+fs.mkdirSync(path.dirname(dbPath), { recursive: true, mode: 0o700 });
 export const db = new DatabaseSync(dbPath);
+try { fs.chmodSync(dbPath, 0o600); } catch { /* Some mounted filesystems do not support chmod. */ }
 db.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;");
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
