@@ -41,13 +41,40 @@
         <span class="brand-mark"><span></span><span></span><span></span></span>
         <span>ATLAS<span class="brand-dash">—</span>AI</span>
       </a>
-      <div class="top-meta"><span class="status-dot"></span><span id="system-status">SISTEMA EN ESPERA</span><span id="account-email"></span><button class="text-button" id="logout-button" type="button">Cerrar sesión</button></div>
+      <div class="top-meta"><span class="status-dot"></span><span id="system-status">SISTEMA EN ESPERA</span><span id="account-email"></span><button class="text-button" id="profile-toggle" type="button">Memoria y preferencias</button><button class="text-button" id="logout-button" type="button">Cerrar sesión</button></div>
     </header>
 
     <section class="hero">
       <p class="eyebrow">ASISTENTE INTELIGENTE PERSONAL</p>
       <h1>Siempre atento.<br><span>Listo para ayudarte.</span></h1>
       <p class="intro">Tu espacio de inteligencia personal. Habla con ATLAS o escríbele cuando lo necesites.</p>
+    </section>
+
+    <section class="profile-panel" id="profile-panel" hidden aria-labelledby="profile-title">
+      <div class="profile-heading"><div><span class="micro-label">PERSONALIZACIÓN</span><h2 id="profile-title">Tu memoria y preferencias</h2></div><button class="text-button" id="profile-close" type="button">Cerrar</button></div>
+      <p class="privacy-note">Tú decides qué recuerda ATLAS. Los recuerdos se guardan solo cuando los agregas aquí y puedes eliminarlos cuando quieras.</p>
+      <form id="preferences-form" class="preferences-form">
+        <label for="pref-language">Idioma</label>
+        <select id="pref-language" name="language"><option value="es-MX">Español latinoamericano</option><option value="es-ES">Español de España</option><option value="en">English</option></select>
+        <label for="pref-tone">Tono de respuesta</label>
+        <select id="pref-tone" name="response_tone"><option value="professional">Profesional y cordial</option><option value="warm">Cálido y cercano</option><option value="direct">Directo y conciso</option></select>
+        <label for="pref-length">Nivel de detalle</label>
+        <select id="pref-length" name="response_length"><option value="concise">Breve</option><option value="balanced">Equilibrado</option><option value="detailed">Detallado</option></select>
+        <label class="memory-switch"><input id="pref-memory-enabled" type="checkbox"> Usar mis recuerdos y buscar en mi historial al responder</label>
+        <button class="voice-button" type="submit">Guardar preferencias</button>
+        <p class="status-message" id="preferences-status" role="status"></p>
+      </form>
+      <div class="memory-manager">
+        <h3>Recuerdos guardados</h3>
+        <form id="memory-form" class="memory-form">
+          <label for="memory-category">Categoría</label>
+          <select id="memory-category"><option value="preferences">Preferencias</option><option value="work">Trabajo y proyectos</option><option value="interests">Intereses</option><option value="goals">Metas</option><option value="personal">Información personal</option><option value="other">Otros</option></select>
+          <label for="memory-content">¿Qué quieres que ATLAS recuerde?</label>
+          <textarea id="memory-content" rows="2" maxlength="500" placeholder="Ej. Prefiero que las explicaciones incluyan ejemplos prácticos." required></textarea>
+          <button class="text-button" type="submit">＋ Guardar recuerdo</button>
+        </form>
+        <div id="memory-list" class="memory-list" aria-live="polite"></div>
+      </div>
     </section>
 
     <section class="console" aria-label="Consola de voz">
@@ -87,13 +114,13 @@
       </section>
 
       <aside class="history-panel">
-        <div class="history-heading"><div><span class="micro-label">ARCHIVO LOCAL</span><h2>Historial</h2></div></div>
+        <div class="history-heading"><div><span class="micro-label">ARCHIVO PRIVADO</span><h2>Historial</h2></div></div>
         <div id="history-list" class="history-list"></div>
         <button class="clear-history-button" id="clear-history-button" type="button">Borrar historial</button>
       </aside>
     </section>
 
-    <footer><span>ATLAS-AI <span class="footer-version">v0.5.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+    <footer><span>ATLAS-AI <span class="footer-version">v0.6.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
   </main>
   <audio id="remote-audio" autoplay></audio>
   <script type="module" src="/app.js"></script>
