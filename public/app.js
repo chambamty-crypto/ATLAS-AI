@@ -539,6 +539,11 @@ resetForm.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(data.error || "No se pudo actualizar la contraseña.");
     history.replaceState({}, "", "/");
     resetForm.hidden = true;
+    loginForm.hidden = false;
+    authToggle.hidden = false;
+    forgotToggle.hidden = false;
+    resendVerification.hidden = false;
+    document.querySelector("#auth-title").textContent = "Tu espacio de inteligencia.";
     authStatus.textContent = data.message;
   } catch (error) { authStatus.textContent = error.message; }
   finally { button.disabled = false; }
@@ -553,6 +558,28 @@ document.querySelector("#logout-button").addEventListener("click", async () => {
 });
 async function initializeAuth() {
   try {
+    const params = new URLSearchParams(location.search);
+    const verificationToken = params.get("verify");
+    const resetToken = params.get("reset");
+    if (verificationToken) {
+      const verifyResponse = await fetch("/api/auth/verify-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: verificationToken }) });
+      const verifyData = await verifyResponse.json();
+      history.replaceState({}, "", "/");
+      if (verifyResponse.ok) { await enterAccount(verifyData.user); authStatus.textContent = verifyData.message; return; }
+      showAuth(verifyData.error || "No se pudo verificar el correo.");
+      return;
+    }
+    if (resetToken) {
+      resetForm.hidden = false;
+      loginForm.hidden = true;
+      registerForm.hidden = true;
+      authToggle.hidden = true;
+      forgotToggle.hidden = true;
+      resendVerification.hidden = true;
+      document.querySelector("#auth-title").textContent = "Crea una nueva contraseña.";
+      authStatus.textContent = "Elige una contraseña nueva para tu cuenta.";
+      return;
+    }
     localStorage.removeItem("atlas-ai.conversations.v1");
     const response = await fetch("/api/auth/me");
     if (!response.ok) return showAuth();
