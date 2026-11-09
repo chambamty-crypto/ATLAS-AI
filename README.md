@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.6.0 (en desarrollo; PR #2).** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.6.0.** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
@@ -57,7 +57,7 @@ Ejecuta las pruebas unitarias:
 npm test
 ```
 
-Estas pruebas no sustituyen una prueba de integración con una API key real ni una prueba manual de voz en navegador.
+La suite se ejecuta en GitHub Actions; la validación de CI del PR #2 terminó correctamente. Estas pruebas no sustituyen una prueba de integración con una API key real ni una prueba manual de voz en navegador.
 
 ## Seguridad y límites
 
