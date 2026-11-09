@@ -14,13 +14,34 @@
 <body>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
-  <main class="shell">
+  <section class="auth-panel" id="auth-panel" aria-labelledby="auth-title">
+    <div class="auth-card">
+      <div class="brand auth-brand"><span class="brand-mark"><span></span><span></span><span></span></span><span>ATLAS<span class="brand-dash">—</span>AI</span></div>
+      <p class="eyebrow">ESPACIO PERSONAL SEGURO</p>
+      <h1 id="auth-title">Tu espacio de inteligencia.</h1>
+      <p class="intro">Inicia sesión para acceder a tus conversaciones privadas desde tu cuenta.</p>
+      <form id="login-form" class="auth-form">
+        <label for="login-email">Correo electrónico</label><input id="login-email" type="email" autocomplete="email" maxlength="254" required>
+        <label for="login-password">Contraseña</label><input id="login-password" type="password" autocomplete="current-password" required>
+        <button class="voice-button" type="submit">Iniciar sesión</button>
+      </form>
+      <form id="register-form" class="auth-form" hidden>
+        <label for="register-email">Correo electrónico</label><input id="register-email" type="email" autocomplete="email" maxlength="254" required>
+        <label for="register-password">Crea una contraseña (mínimo 12 caracteres)</label><input id="register-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+        <button class="voice-button" type="submit">Crear cuenta</button>
+      </form>
+      <button class="text-button auth-toggle" id="auth-toggle" type="button">¿No tienes cuenta? Crear una</button>
+      <p class="status-message" id="auth-status" role="status"></p>
+      <p class="privacy-note">Tus conversaciones se almacenan en el servidor y se asocian únicamente a tu cuenta.</p>
+    </div>
+  </section>
+  <main class="shell" id="app-shell" hidden>
     <header class="topbar">
       <a class="brand" href="/" aria-label="ATLAS-AI inicio">
         <span class="brand-mark"><span></span><span></span><span></span></span>
         <span>ATLAS<span class="brand-dash">—</span>AI</span>
       </a>
-      <div class="top-meta"><span class="status-dot"></span><span id="system-status">SISTEMA EN ESPERA</span></div>
+      <div class="top-meta"><span class="status-dot"></span><span id="system-status">SISTEMA EN ESPERA</span><span id="account-email"></span><button class="text-button" id="logout-button" type="button">Cerrar sesión</button></div>
     </header>
 
     <section class="hero">
@@ -62,7 +83,7 @@
           <textarea id="chat-input" rows="1" maxlength="4000" placeholder="Escribe tu mensaje para ATLAS…" required></textarea>
           <button class="send-button" id="send-button" type="submit" aria-label="Enviar mensaje">Enviar <span>➤</span></button>
         </form>
-        <p class="privacy-note composer-note">El historial se guarda localmente en este navegador.</p>
+        <p class="privacy-note composer-note">El historial está protegido por tu cuenta y se sincroniza con el servidor.</p>
       </section>
 
       <aside class="history-panel">
@@ -72,7 +93,7 @@
       </aside>
     </section>
 
-    <footer><span>ATLAS-AI <span class="footer-version">v0.4.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+    <footer><span>ATLAS-AI <span class="footer-version">v0.5.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
   </main>
   <audio id="remote-audio" autoplay></audio>
   <script type="module" src="/app.js"></script>
