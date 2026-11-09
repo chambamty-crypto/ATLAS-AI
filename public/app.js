@@ -7,10 +7,154 @@ const orbCaption = document.querySelector("#orb-caption");
 const orb = document.querySelector("#orb");
 const transcript = document.querySelector("#transcript");
 const remoteAudio = document.querySelector("#remote-audio");
+const historyList = document.querySelector("#history-list");
+const conversationTitle = document.querySelector("#conversation-title");
+const chatForm = document.querySelector("#chat-form");
+const chatInput = document.querySelector("#chat-input");
+const sendButton = document.querySelector("#send-button");
+const newChatButton = document.querySelector("#new-chat-button");
+const clearHistoryButton = document.querySelector("#clear-history-button");
 
+const STORAGE_KEY = "atlas-ai.conversations.v1";
+const MAX_CONVERSATIONS = 40;
+const MAX_MESSAGES = 100;
 let peer = null;
 let channel = null;
 let localStream = null;
+let sendingMessage = false;
+
+function loadConversations() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (!Array.isArray(saved)) return [];
+    return saved.filter((item) => item && typeof item.id === "string" &&
+      typeof item.title === "string" && Array.isArray(item.messages))
+      .slice(0, MAX_CONVERSATIONS);
+  } catch {
+    return [];
+  }
+}
+
+let conversations = loadConversations();
+let currentConversationId = conversations[0]?.id || null;
+
+function persistConversations() {
+  conversations = conversations.slice(0, MAX_CONVERSATIONS);
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
+  } catch {
+    setStatus("No se pudo guardar el historial. Revisa el espacio disponible del navegador.");
+  }
+}
+
+function currentConversation() {
+  return conversations.find((item) => item.id === currentConversationId) || null;
+}
+
+function createConversation() {
+  const conversation = {
+    id: crypto.randomUUID(),
+    title: "Nueva conversación",
+    updatedAt: new Date().toISOString(),
+    messages: []
+  };
+  conversations.unshift(conversation);
+  currentConversationId = conversation.id;
+  persistConversations();
+  renderConversation();
+  renderHistory();
+  chatInput.focus();
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("es-MX", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }).format(date);
+}
+
+function renderHistory() {
+  historyList.replaceChildren();
+  if (!conversations.length) {
+    const empty = document.createElement("p");
+    empty.className = "history-empty";
+    empty.textContent = "Tus conversaciones guardadas aparecerán aquí.";
+    historyList.append(empty);
+    return;
+  }
+  for (const conversation of conversations) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `history-item${conversation.id === currentConversationId ? " active" : ""}`;
+    const title = document.createElement("strong");
+    title.textContent = conversation.title;
+    const date = document.createElement("small");
+    date.textContent = formatDate(conversation.updatedAt);
+    button.append(title, date);
+    button.addEventListener("click", () => {
+      currentConversationId = conversation.id;
+      renderConversation();
+      renderHistory();
+    });
+    historyList.append(button);
+  }
+}
+
+function renderConversation() {
+  transcript.replaceChildren();
+  const conversation = currentConversation();
+  conversationTitle.textContent = conversation?.title || "Nueva conversación";
+  if (!conversation || !conversation.messages.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "Aquí aparecerán tus mensajes. Puedes escribir abajo o hablar con ATLAS.";
+    transcript.append(empty);
+    return;
+  }
+  for (const message of conversation.messages) renderMessage(message);
+  transcript.scrollTop = transcript.scrollHeight;
+}
+
+function renderMessage(message) {
+  const item = document.createElement("div");
+  item.className = `line ${message.role === "user" ? "user" : "atlas"}`;
+  const label = document.createElement("strong");
+  label.textContent = message.role === "user" ? "TÚ" : "ATLAS";
+  const content = document.createElement("span");
+  content.textContent = message.content;
+  item.append(label, content);
+  if (Array.isArray(message.citations)) {
+    for (const citation of message.citations.slice(0, 8)) {
+      if (!citation || !/^https?:\/\//i.test(citation.url || "")) continue;
+      const link = document.createElement("a");
+      link.href = citation.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = citation.title || citation.url;
+      item.append(link);
+    }
+  }
+  transcript.append(item);
+}
+
+function addMessage(role, content, citations = []) {
+  if (!content?.trim()) return;
+  if (!currentConversation()) createConversation();
+  const conversation = currentConversation();
+  const message = { role, content: content.trim(), createdAt: new Date().toISOString() };
+  if (citations.length) message.citations = citations;
+  conversation.messages.push(message);
+  conversation.messages = conversation.messages.slice(-MAX_MESSAGES);
+  if (role === "user" && conversation.title === "Nueva conversación") {
+    conversation.title = content.trim().replace(/\s+/g, " ").slice(0, 48) || "Nueva conversación";
+  }
+  conversation.updatedAt = new Date().toISOString();
+  conversations.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  persistConversations();
+  renderMessage(message);
+  conversationTitle.textContent = conversation.title;
+  renderHistory();
+  transcript.scrollTop = transcript.scrollHeight;
+}
 
 function setStatus(message, state = "idle") {
   statusMessage.textContent = message;
@@ -18,21 +162,6 @@ function setStatus(message, state = "idle") {
   connectionLabel.textContent = state === "connected" ? "CONECTADO" : state === "connecting" ? "CONECTANDO" : "DESCONECTADO";
   document.querySelector(".console").classList.toggle("connected", state === "connected");
   orbCaption.textContent = state === "connected" ? "ATLAS ESTÁ ESCUCHANDO" : state === "connecting" ? "ESTABLECIENDO ENLACE" : "ATLAS ESTÁ LISTO";
-}
-
-function addTranscript(role, text) {
-  if (!text?.trim()) return;
-  const empty = transcript.querySelector(".empty-state");
-  if (empty) empty.remove();
-  const item = document.createElement("div");
-  item.className = `line ${role === "TÚ" ? "user" : "atlas"}`;
-  const label = document.createElement("strong");
-  label.textContent = role;
-  const content = document.createElement("span");
-  content.textContent = text;
-  item.append(label, content);
-  transcript.append(item);
-  transcript.scrollTop = transcript.scrollHeight;
 }
 
 function handleEvent(event) {
@@ -53,10 +182,10 @@ function handleEvent(event) {
     orb.classList.remove("speaking");
   }
   if (event.type === "conversation.item.input_audio_transcription.completed") {
-    addTranscript("TÚ", event.transcript);
+    addMessage("user", event.transcript);
   }
   if (event.type === "response.output_audio_transcript.done") {
-    addTranscript("ATLAS", event.transcript);
+    addMessage("assistant", event.transcript);
   }
   if (event.type === "error") {
     setStatus(event.error?.message || "Ocurrió un error en la conversación.", "connected");
@@ -84,7 +213,7 @@ async function startConversation() {
     localStream.getTracks().forEach((track) => peer.addTrack(track, localStream));
     channel = peer.createDataChannel("oai-events");
     channel.addEventListener("message", (message) => {
-      try { handleEvent(JSON.parse(message.data)); } catch { /* Ignore malformed events. */ }
+      try { handleEvent(JSON.parse(message.data)); } catch { /* Ignora eventos malformados. */ }
     });
 
     const offer = await peer.createOffer();
@@ -100,7 +229,6 @@ async function startConversation() {
     if (!answerResponse.ok) throw new Error("OpenAI no pudo establecer la conexión de voz.");
     const answerSdp = await answerResponse.text();
     await peer.setRemoteDescription({ type: "answer", sdp: answerSdp });
-
     endButton.disabled = false;
   } catch (error) {
     console.error(error);
@@ -124,5 +252,55 @@ async function endConversation(updateStatus = true) {
   if (updateStatus) setStatus("La conversación ha finalizado.");
 }
 
+async function sendChatMessage(event) {
+  event.preventDefault();
+  const content = chatInput.value.trim();
+  if (!content || sendingMessage) return;
+  if (!currentConversation()) createConversation();
+  addMessage("user", content);
+  chatInput.value = "";
+  sendingMessage = true;
+  sendButton.disabled = true;
+  chatInput.disabled = true;
+  setStatus("ATLAS está preparando una respuesta…", "connecting");
+  try {
+    const messages = currentConversation().messages
+      .filter((message) => ["user", "assistant"].includes(message.role))
+      .slice(-12)
+      .map(({ role, content }) => ({ role, content }));
+    const response = await fetch("/api/assistant", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "No se pudo completar la consulta.");
+    addMessage("assistant", data.text, data.citations || []);
+    setStatus("Respuesta recibida. ATLAS está listo.");
+  } catch (error) {
+    setStatus(error.message || "No se pudo contactar con ATLAS.");
+  } finally {
+    sendingMessage = false;
+    sendButton.disabled = false;
+    chatInput.disabled = false;
+    chatInput.focus();
+  }
+}
+
 startButton.addEventListener("click", startConversation);
 endButton.addEventListener("click", () => endConversation());
+chatForm.addEventListener("submit", sendChatMessage);
+newChatButton.addEventListener("click", createConversation);
+clearHistoryButton.addEventListener("click", () => {
+  if (!conversations.length || !window.confirm("¿Quieres borrar todas las conversaciones guardadas en este navegador?")) return;
+  conversations = [];
+  currentConversationId = null;
+  persistConversations();
+  createConversation();
+});
+
+if (!currentConversation()) createConversation();
+else {
+  renderConversation();
+  renderHistory();
+}
