@@ -4,3 +4,8 @@ node_modules/
 !.env.example
 .DS_Store
 npm-debug.log*
+
+# User accounts, sessions and private conversation data
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
