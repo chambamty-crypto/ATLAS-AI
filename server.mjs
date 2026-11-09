@@ -334,6 +334,9 @@ app.post("/api/tool", csrfGuard, requireAuth, rateLimit(40, 60_000), (req, res) 
   const { name, arguments: args } = req.body || {};
   res.set("Cache-Control", "no-store");
   const allowedTools = [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name];
+  if (name === USER_HISTORY_TOOL.name && !getPreferences(req.user.id).memory_enabled) {
+    return res.status(403).json({ ok: false, error: "La búsqueda de historial está desactivada en tus preferencias." });
+  }
   if (typeof name !== "string" || !allowedTools.includes(name)) {
     return res.status(400).json({ ok: false, error: "La herramienta solicitada no está autorizada." });
   }
