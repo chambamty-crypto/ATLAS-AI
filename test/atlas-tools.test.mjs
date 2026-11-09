@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calculateExpression, convertUnits, executeAtlasTool, ATLAS_FUNCTION_TOOLS } from "../src/atlas-tools.mjs";
+import { calculateExpression, convertUnits, executeAtlasTool, ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES } from "../src/atlas-tools.mjs";
 
 test("calcula operaciones con precedencia y paréntesis", () => {
   assert.equal(calculateExpression("(1250 * 0.16) + 1250"), 1450);
@@ -48,4 +48,9 @@ test("rechaza nombres de herramientas no autorizados", () => {
 test("declara funciones en modo estricto", () => {
   assert.equal(ATLAS_FUNCTION_TOOLS.length, 4);
   assert.ok(ATLAS_FUNCTION_TOOLS.every((tool) => tool.strict === true));
+});
+
+test("Realtime comparte las herramientas pero omite strict", () => {
+  assert.deepEqual(ATLAS_REALTIME_TOOLS.map((tool) => tool.name), ATLAS_TOOL_NAMES);
+  assert.ok(ATLAS_REALTIME_TOOLS.every((tool) => tool.type === "function" && !("strict" in tool)));
 });
