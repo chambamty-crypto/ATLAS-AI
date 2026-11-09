@@ -9,6 +9,13 @@ const databasePath = path.join(tmpdir(), `atlas-auth-${randomUUID()}.sqlite`);
 process.env.ATLAS_DB_PATH = databasePath;
 const store = await import("../src/auth-store.mjs");
 
+test("passwords are stored as salted scrypt hashes and verified safely", async () => {
+  const encoded = await store.hashPassword("una contraseña larga y segura");
+  assert.match(encoded, /^scrypt:[a-f0-9]{32}:[a-f0-9]{128}$/);
+  assert.equal(await store.verifyPassword("una contraseña larga y segura", encoded), true);
+  assert.equal(await store.verifyPassword("otra contraseña", encoded), false);
+});
+
 test("sessions are opaque and resolve only to their account", () => {
   const first = store.createUserRecord("one@example.test", "test-hash");
   const second = store.createUserRecord("two@example.test", "test-hash");
