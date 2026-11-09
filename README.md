@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.6.0.** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.7.0.** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
@@ -22,16 +22,16 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
    `npm install`
 4. Copia `.env.example` como `.env`.
 5. Abre `.env` y agrega tu clave en `OPENAI_API_KEY`.
-6. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
-7. Inicia el servidor:
+6. Configura `APP_URL` con el origen público de ATLAS y completa las variables SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) para enviar verificación y recuperación. En producción, `APP_URL` debe usar HTTPS.\n7. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
+8. Inicia el servidor:
    `npm run dev`
-8. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
+9. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
 
 ## Capacidades
 
 - **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
 - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
-- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
+- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.\n- **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.\n- **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
 - **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
 - **Historial privado:** conversaciones persistidas en SQLite y vinculadas al ID de usuario. Las consultas y escrituras se limitan al usuario autenticado; máximo 40 conversaciones y 100 mensajes por conversación.
 - **Memoria personal:** el usuario agrega y elimina recuerdos explícitamente; máximo 50 recuerdos por cuenta. Puede desactivar su uso sin borrar lo guardado.
@@ -65,7 +65,7 @@ La suite se ejecuta en GitHub Actions; la validación de CI del PR #2 terminó c
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
 - Los endpoints sensibles exigen sesión autenticada; las operaciones de escritura comprueban el origen. Se añaden cabeceras de seguridad y límites básicos por IP en memoria.
 - SQLite es apropiado para una instancia única con disco persistente. En plataformas con disco efímero o varias réplicas, configura un volumen persistente o migra a PostgreSQL antes de escalar. Conserva copias de seguridad cifradas del archivo de base de datos.
-- La autenticación local no incluye verificación de correo, recuperación de contraseña, MFA ni eliminación de cuenta. No la consideres lista para un lanzamiento público amplio sin esos controles, monitoreo, límites distribuidos y revisión de seguridad.
+- La autenticación incluye verificación de correo y recuperación por SMTP, pero todavía no incorpora MFA ni eliminación de cuenta. Configura y prueba SMTP antes de producción; sin SMTP, las cuentas nuevas quedan pendientes de verificación y no pueden iniciar sesión. No consideres el servicio listo para un lanzamiento público amplio sin MFA, monitoreo, límites distribuidos y revisión de seguridad.
 - En producción sirve ATLAS exclusivamente detrás de HTTPS y define `NODE_ENV=production`; el proxy TLS debe conservar el host original.
 - Aunque las herramientas actuales son de solo cálculo/lectura, mantén autenticación, HTTPS, límites distribuidos, monitoreo y controles de costos antes de una exposición pública.
 - Antes de incorporar acciones con efectos reales, exige permisos por usuario, confirmación explícita y registro de auditoría.
