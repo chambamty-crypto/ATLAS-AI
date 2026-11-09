@@ -115,14 +115,18 @@
         <p class="privacy-note composer-note">El historial está protegido por tu cuenta y se sincroniza con el servidor.</p>
       </section>
 
-      <aside class="history-panel">
-        <div class="history-heading"><div><span class="micro-label">ARCHIVO PRIVADO</span><h2>Historial</h2></div></div>
-        <div id="history-list" class="history-list"></div>
-        <button class="clear-history-button" id="clear-history-button" type="button">Borrar historial</button>
+      <aside class="history-panel" aria-label="Historial de conversaciones">
+        <div class="history-heading">
+          <div><span class="micro-label">ARCHIVO PRIVADO</span><h2>Historial <span class="history-count" id="history-count">0</span></h2></div>
+        </div>
+        <label class="sr-only" for="history-search">Buscar en tus conversaciones</label>
+        <input class="history-search" id="history-search" type="search" maxlength="100" placeholder="Buscar conversaciones…" autocomplete="off">
+        <div id="history-list" class="history-list" aria-live="polite"></div>
+        <button class="clear-history-button" id="clear-history-button" type="button">Borrar todo el historial</button>
       </aside>
     </section>
 
-    <footer><span>ATLAS-AI <span class="footer-version">v0.7.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
+    <footer><span>ATLAS-AI <span class="footer-version">v0.8.0</span></span><span>DISEÑADO PARA ASISTIR</span></footer>
   </main>
   <audio id="remote-audio" autoplay></audio>
   <script type="module" src="/app.js"></script>
