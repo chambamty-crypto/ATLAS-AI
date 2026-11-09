@@ -164,6 +164,35 @@ function setStatus(message, state = "idle") {
   orbCaption.textContent = state === "connected" ? "ATLAS ESTÁ ESCUCHANDO" : state === "connecting" ? "ESTABLECIENDO ENLACE" : "ATLAS ESTÁ LISTO";
 }
 
+const handledToolCalls = new Set();
+
+async function handleToolCalls(response) {
+  const calls = (response?.output || []).filter((item) => item.type === "function_call" && !handledToolCalls.has(item.call_id));
+  if (!calls.length || channel?.readyState !== "open") return;
+  orbCaption.textContent = "EJECUTANDO HERRAMIENTA";
+  for (const call of calls) {
+    handledToolCalls.add(call.call_id);
+    let result;
+    try {
+      const toolResponse = await fetch("/api/tool", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: call.name, arguments: JSON.parse(call.arguments || "{}") })
+      });
+      result = await toolResponse.json();
+      if (!toolResponse.ok) result = { ok: false, error: result.error || "No se pudo ejecutar la herramienta." };
+    } catch {
+      result = { ok: false, error: "No se pudo ejecutar la herramienta." };
+    }
+    if (channel?.readyState !== "open") return;
+    channel.send(JSON.stringify({
+      type: "conversation.item.create",
+      item: { type: "function_call_output", call_id: call.call_id, output: JSON.stringify(result) }
+    }));
+  }
+  if (channel?.readyState === "open") channel.send(JSON.stringify({ type: "response.create" }));
+}
+
 function handleEvent(event) {
   if (event.type === "input_audio_buffer.speech_started") {
     orbCaption.textContent = "TE ESTÁ ESCUCHANDO";
@@ -180,6 +209,7 @@ function handleEvent(event) {
   if (event.type === "response.done") {
     orbCaption.textContent = "ATLAS ESTÁ ESCUCHANDO";
     orb.classList.remove("speaking");
+    handleToolCalls(event.response);
   }
   if (event.type === "conversation.item.input_audio_transcription.completed") {
     addMessage("user", event.transcript);
@@ -243,6 +273,7 @@ async function endConversation(updateStatus = true) {
   if (channel) channel.close();
   if (peer) peer.close();
   if (localStream) localStream.getTracks().forEach((track) => track.stop());
+  handledToolCalls.clear();
   channel = null;
   peer = null;
   localStream = null;
