@@ -15,25 +15,12 @@ const sendButton = document.querySelector("#send-button");
 const newChatButton = document.querySelector("#new-chat-button");
 const clearHistoryButton = document.querySelector("#clear-history-button");
 
-const STORAGE_KEY = "atlas-ai.conversations.v1";
 const MAX_CONVERSATIONS = 40;
 const MAX_MESSAGES = 100;
 let peer = null;
 let channel = null;
 let localStream = null;
 let sendingMessage = false;
-
-function loadConversations() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    if (!Array.isArray(saved)) return [];
-    return saved.filter((item) => item && typeof item.id === "string" &&
-      typeof item.title === "string" && Array.isArray(item.messages))
-      .slice(0, MAX_CONVERSATIONS);
-  } catch {
-    return [];
-  }
-}
 
 let conversations = [];
 let currentConversationId = conversations[0]?.id || null;
@@ -407,6 +394,7 @@ document.querySelector("#logout-button").addEventListener("click", async () => {
 });
 async function initializeAuth() {
   try {
+    localStorage.removeItem("atlas-ai.conversations.v1");
     const response = await fetch("/api/auth/me");
     if (!response.ok) return showAuth();
     const data = await response.json();
