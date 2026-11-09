@@ -59,6 +59,10 @@ export const ATLAS_FUNCTION_TOOLS = [
   }
 ];
 
+// Realtime usa las mismas funciones sin el indicador strict propio de Responses.
+export const ATLAS_REALTIME_TOOLS = ATLAS_FUNCTION_TOOLS.map(({ strict, ...tool }) => tool);
+export const ATLAS_TOOL_NAMES = ATLAS_FUNCTION_TOOLS.map((tool) => tool.name);
+
 function tokenize(expression) {
   if (typeof expression !== "string" || expression.length > 120) {
     throw new Error("La operación debe ser texto de hasta 120 caracteres.");
