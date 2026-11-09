@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.4.0.** Incluye historial local, voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
+**Versión 0.4.0.** Incluye historial local, voz WebRTC con herramientas, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
 
 ## Requisitos
 
@@ -28,32 +28,30 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Capacidades
 
-- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor.
+- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
 - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
 - **Historial local:** las conversaciones se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos ni se guardan en una base de datos.
 - **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
 - **Fecha y hora:** consulta la hora local de Monterrey, Nuevo León.
-- **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta primera versión no las agenda ni las persiste.
+- **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta versión no las agenda ni las persiste.
 - **Conversión de unidades:** longitud (m, km, cm, mi, ft), masa (kg, g, lb, oz), temperatura (°C, °F, K) y volumen (L, mL, galón estadounidense).
 - **Citas web:** muestra enlaces de fuentes cuando Responses API devuelve anotaciones.
 
 ## Arquitectura de herramientas
 
-El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. El servidor valida los argumentos, ejecuta una función de la lista permitida y devuelve el resultado a Responses API. Las definiciones usan JSON Schema en modo estricto y el servidor limita el ciclo a dos rondas de herramientas por petición.
+El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. Responses API y Realtime comparten la misma lista permitida; para Realtime se omite el indicador `strict`, mientras Responses conserva JSON Schema estricto. El servidor valida y ejecuta cada función. El ciclo de Responses se limita a dos rondas por petición.
 
-Las conversiones verifican que las unidades pertenezcan a la categoría seleccionada, rechazan valores no finitos y respetan el cero absoluto. La calculadora usa un analizador aritmético propio; no evalúa JavaScript.
-
-No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura. Para añadir una acción con efectos reales se requerirá autenticación, permisos por usuario, confirmación explícita y registro de auditoría.
+La ruta `/api/tool` solo permite nombres incluidos en la lista blanca. Las funciones actuales son cálculos, fecha/hora, listas no persistentes y conversiones: no realizan cambios externos. No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura.
 
 ## Pruebas
 
-Ejecuta las pruebas unitarias de las herramientas:
+Ejecuta las pruebas unitarias:
 
 ```bash
 npm test
 ```
 
-Estas pruebas no sustituyen una prueba de integración con una API key real ni validan la conexión de voz en un navegador.
+Estas pruebas no sustituyen una prueba de integración con una API key real ni una prueba manual de voz en navegador.
 
 ## Seguridad y límites
 
@@ -61,7 +59,8 @@ Estas pruebas no sustituyen una prueba de integración con una API key real ni v
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
 - El historial se almacena en el navegador del usuario. Borrar los datos del sitio o usar otro navegador/perfil puede eliminar o separar ese historial.
 - Los endpoints tienen límites básicos por dirección IP en memoria. No sustituyen autenticación ni protección contra abuso en producción.
-- Antes de desplegar públicamente, agrega autenticación, límites distribuidos, HTTPS, monitoreo, controles de costos y almacenamiento seguro por usuario. No expongas el servidor sin esas medidas.
+- Aunque las herramientas actuales son de solo cálculo/lectura, `/api/tool` no sustituye autenticación. No expongas el servidor públicamente sin autenticación, HTTPS, límites distribuidos, monitoreo y controles de costos.
+- Antes de incorporar acciones con efectos reales, exige permisos por usuario, confirmación explícita y registro de auditoría.
 
 ## Estructura
 
@@ -86,9 +85,9 @@ ATLAS-AI/
 
 - [Function calling](https://developers.openai.com/api/docs/guides/function-calling)
 - [Responses API y herramientas](https://developers.openai.com/api/docs/guides/tools)
-- [Búsqueda web](https://developers.openai.com/api/docs/guides/tools-web-search)
-- [Realtime API](https://developers.openai.com/api/docs/guides/realtime)
-- [WebRTC para voz](https://developers.openai.com/api/docs/guides/realtime-webrtc)
+- [Realtime con herramientas](https://developers.openai.com/api/docs/guides/realtime-mcp)
+- [Conversaciones Realtime](https://developers.openai.com/api/docs/guides/realtime-conversations)
+- [WebRTC para voz](https://developers.openai.com/api/docs/guides/voice-webrtc)
 
 ## Próximas etapas
 
