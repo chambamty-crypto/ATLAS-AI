@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { ATLAS_FUNCTION_TOOLS, executeAtlasTool } from "./src/atlas-tools.mjs";
+import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -39,6 +39,16 @@ const assistantInstructions = [
   "La lista de verificación se devuelve al usuario, pero no queda guardada ni programada.",
   "Para información reciente, puedes usar la búsqueda web y distinguir hechos confirmados de incertidumbre.",
   "No inventes acceso a datos privados. No solicites ni reveles claves, contraseñas o secretos."
+].join(" ");
+
+const voiceInstructions = [
+  assistantInstructions,
+  "Estás en una conversación hablada en vivo.",
+  "Voz: masculina, grave, serena y elegante, con ritmo pausado y dicción clara, como la de un asistente ejecutivo de alto nivel.",
+  "Trata al usuario de usted, con cortesía natural y sin exagerar. Saluda con naturalidad según la hora del día cuando el usuario te salude.",
+  "Responde en frases cortas, de una a tres oraciones, sin listas ni formato de texto. Ofrece ampliar solo si el usuario lo pide.",
+  "Para cálculos usa calculate; para conversiones usa convert_units; para la fecha u hora usa get_local_datetime; para organizar pendientes usa make_checklist.",
+  "Si el usuario te interrumpe, detente y atiende lo nuevo."
 ].join(" ");
 
 async function callResponsesAPI(input, tools) {
@@ -95,7 +105,7 @@ function getResponseCitations(data) {
 
 app.get("/api/health", (_req, res) => {
   res.set("Cache-Control", "no-store");
-  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ["calculate", "get_local_datetime", "make_checklist", "convert_units"] });
+  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ATLAS_TOOL_NAMES });
 });
 
 app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
@@ -115,7 +125,9 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
         session: {
           type: "realtime",
           model: "gpt-realtime",
-          instructions: assistantInstructions,
+          instructions: voiceInstructions,
+          tools: ATLAS_REALTIME_TOOLS,
+          tool_choice: "auto",
           audio: {
             input: { transcription: { model: "gpt-live-transcribe", languages: ["es"] } },
             output: { voice: "ash" }
@@ -135,6 +147,22 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
   } catch (error) {
     console.error("Session creation failed:", error.message);
     res.status(500).json({ error: "Error interno al preparar la sesión de voz." });
+  }
+});
+
+app.post("/api/tool", rateLimit(40, 60_000), (req, res) => {
+  const { name, arguments: args } = req.body || {};
+  res.set("Cache-Control", "no-store");
+  if (typeof name !== "string" || !ATLAS_TOOL_NAMES.includes(name)) {
+    return res.status(400).json({ ok: false, error: "La herramienta solicitada no está autorizada." });
+  }
+  if (args !== undefined && (typeof args !== "object" || args === null || Array.isArray(args))) {
+    return res.status(400).json({ ok: false, error: "Argumentos no válidos." });
+  }
+  try {
+    res.json(executeAtlasTool(name, args || {}));
+  } catch (error) {
+    res.status(400).json({ ok: false, error: error.message || "No se pudo ejecutar la herramienta." });
   }
 });
 
@@ -163,12 +191,10 @@ app.post("/api/assistant", rateLimit(20, 60_000), async (req, res) => {
     let input = safeMessages;
     let data = await callResponsesAPI(input, tools);
 
-    // Maximum of two tool rounds per request to limit loops and API usage.
     for (let round = 0; round < 2; round += 1) {
       const calls = (data.output || []).filter((item) => item.type === "function_call");
       if (!calls.length) break;
 
-      // Preserve the complete model output (including reasoning items) before tool results.
       input = [...input, ...data.output];
       for (const call of calls) {
         let output;
