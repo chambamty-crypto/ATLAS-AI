@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.3.0.** Incluye historial local, voz WebRTC, chat con Responses API, búsqueda web y function calling con herramientas propias y limitadas.
+**Versión 0.4.0.** Incluye historial local, voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
 
 ## Requisitos
 
@@ -34,11 +34,14 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 - **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
 - **Fecha y hora:** consulta la hora local de Monterrey, Nuevo León.
 - **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta primera versión no las agenda ni las persiste.
+- **Conversión de unidades:** longitud (m, km, cm, mi, ft), masa (kg, g, lb, oz), temperatura (°C, °F, K) y volumen (L, mL, galón estadounidense).
 - **Citas web:** muestra enlaces de fuentes cuando Responses API devuelve anotaciones.
 
 ## Arquitectura de herramientas
 
-El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. El servidor valida los argumentos, ejecuta una función de la lista permitida y devuelve el resultado a Responses API. Se limita el ciclo a dos rondas de herramientas por petición.
+El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. El servidor valida los argumentos, ejecuta una función de la lista permitida y devuelve el resultado a Responses API. Las definiciones usan JSON Schema en modo estricto y el servidor limita el ciclo a dos rondas de herramientas por petición.
+
+Las conversiones verifican que las unidades pertenezcan a la categoría seleccionada, rechazan valores no finitos y respetan el cero absoluto. La calculadora usa un analizador aritmético propio; no evalúa JavaScript.
 
 No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura. Para añadir una acción con efectos reales se requerirá autenticación, permisos por usuario, confirmación explícita y registro de auditoría.
 
@@ -50,7 +53,7 @@ Ejecuta las pruebas unitarias de las herramientas:
 npm test
 ```
 
-Estas pruebas no sustituyen una prueba de integración con una API key real.
+Estas pruebas no sustituyen una prueba de integración con una API key real ni validan la conexión de voz en un navegador.
 
 ## Seguridad y límites
 
