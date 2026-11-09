@@ -60,12 +60,11 @@ Estas pruebas no sustituyen una prueba de integración con una API key real ni u
 
 - La API key principal solo se utiliza en el servidor; el frontend recibe un client secret temporal exclusivamente para iniciar Realtime.
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
-- El historial se almacena en el navegador del usuario. Borrar los datos del sitio o usar otro navegador/perfil puede eliminar o separar ese historial.
 - Los endpoints sensibles exigen sesión autenticada; las operaciones de escritura comprueban el origen. Se añaden cabeceras de seguridad y límites básicos por IP en memoria.
 - SQLite es apropiado para una instancia única con disco persistente. En plataformas con disco efímero o varias réplicas, configura un volumen persistente o migra a PostgreSQL antes de escalar. Conserva copias de seguridad cifradas del archivo de base de datos.
 - La autenticación local no incluye verificación de correo, recuperación de contraseña, MFA ni eliminación de cuenta. No la consideres lista para un lanzamiento público amplio sin esos controles, monitoreo, límites distribuidos y revisión de seguridad.
 - En producción sirve ATLAS exclusivamente detrás de HTTPS y define `NODE_ENV=production`; el proxy TLS debe conservar el host original.
-- Aunque las herramientas actuales son de solo cálculo/lectura, `/api/tool` no sustituye autenticación. No expongas el servidor públicamente sin autenticación, HTTPS, límites distribuidos, monitoreo y controles de costos.
+- Aunque las herramientas actuales son de solo cálculo/lectura, mantén autenticación, HTTPS, límites distribuidos, monitoreo y controles de costos antes de una exposición pública.
 - Antes de incorporar acciones con efectos reales, exige permisos por usuario, confirmación explícita y registro de auditoría.
 
 ## Estructura
@@ -77,9 +76,12 @@ ATLAS-AI/
 │   ├── index.html
 │   └── styles.css
 ├── src/
-│   └── atlas-tools.mjs
+│   ├── atlas-tools.mjs
+│   └── auth-store.mjs
 ├── test/
-│   └── atlas-tools.test.mjs
+│   ├── atlas-tools.test.mjs
+│   └── auth-store.test.mjs
+├── .github/workflows/test.yml
 ├── .env.example
 ├── .gitignore
 ├── package.json
