@@ -4,11 +4,11 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.5.0 (en preparación).** Añade cuentas con contraseña, sesiones seguras y almacenamiento SQLite del historial por usuario, además de voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias.
+**Versión 0.5.0 (en revisión; PR #1).** Añade cuentas con contraseña, sesiones seguras y almacenamiento SQLite del historial por usuario, además de voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias.
 
 ## Requisitos
 
-- Node.js 22.13 o posterior (incluye `node:sqlite`).
+- Node.js 22.13 o posterior (incluye `node:sqlite`; en Node 22 esta API sigue marcada como experimental).
 - Una API key de OpenAI con acceso a Responses API y Realtime API.
 - Navegador moderno con permiso de micrófono para la función de voz.
 
