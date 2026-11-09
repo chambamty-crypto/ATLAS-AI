@@ -235,9 +235,8 @@ app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req,
   try {
     const passwordHash = await hashPassword(password);
     const user = createUserRecord(email, passwordHash);
-    const session = createSession(user.id);
-    res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
-    return res.status(201).json({ user: { id: user.id, email: user.email } });
+    const delivery = await sendVerification(req, user);
+    return res.status(202).json({ pendingVerification: true, emailConfigured: delivery.configured, message: delivery.sent ? "Cuenta creada. Revisa tu correo para verificarla." : "Cuenta creada, pero el correo aún no está configurado o no pudo enviarse. Configura SMTP y solicita un nuevo enlace." });
   } catch (error) {
     if (String(error.message).includes("UNIQUE")) return res.status(409).json({ error: "No se pudo crear la cuenta con esos datos." });
     console.error("Registration failed:", error.message);
@@ -252,6 +251,7 @@ app.post("/api/auth/login", csrfGuard, rateLimit(5, 15 * 60_000), async (req, re
   try {
     const user = findUserByEmail(email);
     if (!user || !(await verifyPassword(password, user.password_hash))) return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+    if (!user.email_verified) return res.status(403).json({ error: "Verifica tu correo antes de iniciar sesión. Puedes solicitar un nuevo enlace." });
     const session = createSession(user.id);
     res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
     return res.json({ user: { id: user.id, email: user.email } });
