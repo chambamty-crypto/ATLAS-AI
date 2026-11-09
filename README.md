@@ -96,6 +96,7 @@ ATLAS-AI/
 │   ├── atlas-tools.test.mjs
 │   ├── auth-store.test.mjs
 │   ├── conversation-validation.test.mjs
+│   ├── frontend-history.test.mjs
 │   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
