@@ -162,7 +162,7 @@ function getResponseCitations(data) {
 }
 
 function accountLink(req, token, purpose) {
-  const base = process.env.APP_URL || `${req.protocol}://${req.get("host")}`;
+  const base = process.env.APP_URL || `http://localhost:${port}`;
   const url = new URL("/", base);
   url.searchParams.set(purpose === "verify_email" ? "verify" : "reset", token);
   return url.toString();
@@ -171,7 +171,12 @@ function accountLink(req, token, purpose) {
 async function sendVerification(req, user) {
   const token = createAccountToken(user.id, "verify_email", 24 * 60 * 60_000);
   const link = accountLink(req, token, "verify_email");
-  return sendAccountEmail({ to: user.email, subject: "Verifica tu correo de ATLAS-AI", text: `Para verificar tu correo, abre este enlace (válido durante 24 horas): ${link}\\n\\nSi no solicitaste esta cuenta, ignora este mensaje.`, html: `<p>Confirma tu dirección de correo para activar tu cuenta de ATLAS-AI.</p><p><a href="${link}">Verificar mi correo</a></p><p>Este enlace vence en 24 horas. Si no solicitaste esta cuenta, ignora este mensaje.</p>` });
+  try {
+    return await sendAccountEmail({ to: user.email, subject: "Verifica tu correo de ATLAS-AI", text: `Para verificar tu correo, abre este enlace (válido durante 24 horas): ${link}\\n\\nSi no solicitaste esta cuenta, ignora este mensaje.`, html: `<p>Confirma tu dirección de correo para activar tu cuenta de ATLAS-AI.</p><p><a href="${link}">Verificar mi correo</a></p><p>Este enlace vence en 24 horas. Si no solicitaste esta cuenta, ignora este mensaje.</p>` });
+  } catch (error) {
+    console.error("Verification email delivery failed:", error.message);
+    return { sent: false, configured: emailDeliveryConfigured() };
+  }
 }
 
 app.post("/api/auth/verify-email", csrfGuard, rateLimit(10, 15 * 60_000), (req, res) => {
