@@ -484,6 +484,7 @@ async function submitAuth(event, mode) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "No se pudo validar la cuenta.");
+    if (data.pendingVerification) { authStatus.textContent = data.message; return; }
     await enterAccount(data.user);
   } catch (error) {
     authStatus.textContent = error.message || "No se pudo completar el acceso.";
