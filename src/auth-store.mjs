@@ -107,22 +107,14 @@ export function listConversations(userId) {
 export function saveConversation(userId, conversation) {
   db.exec("BEGIN IMMEDIATE");
   try {
-    db.prepare(\`
-      INSERT INTO conversations (id,user_id,title,messages_json,updated_at) VALUES (?,?,?,?,?)
-      ON CONFLICT(id) DO UPDATE SET title=excluded.title, messages_json=excluded.messages_json, updated_at=excluded.updated_at
-      WHERE conversations.user_id=excluded.user_id
-    \`).run(userId ? conversation.id : conversation.id, userId, conversation.title, JSON.stringify(conversation.messages), conversation.updatedAt);
+    db.prepare("INSERT INTO conversations (id,user_id,title,messages_json,updated_at) VALUES (?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET title=excluded.title, messages_json=excluded.messages_json, updated_at=excluded.updated_at WHERE conversations.user_id=excluded.user_id")
+      .run(conversation.id, userId, conversation.title, JSON.stringify(conversation.messages), conversation.updatedAt);
 
     const owned = db.prepare("SELECT id FROM conversations WHERE id = ? AND user_id = ?").get(conversation.id, userId);
     if (!owned) throw new Error("La conversación no pertenece a esta cuenta.");
 
-    db.prepare(\`
-      DELETE FROM conversations
-      WHERE user_id = ?
-      AND id NOT IN (
-        SELECT id FROM conversations WHERE user_id = ? ORDER BY updated_at DESC, id DESC LIMIT 40
-      )
-    \`).run(userId, userId);
+    db.prepare("DELETE FROM conversations WHERE user_id = ? AND id NOT IN (SELECT id FROM conversations WHERE user_id = ? ORDER BY updated_at DESC, id DESC LIMIT 40)")
+      .run(userId, userId);
     db.exec("COMMIT");
   } catch (error) {
     db.exec("ROLLBACK");
