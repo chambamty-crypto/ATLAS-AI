@@ -333,7 +333,8 @@ app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (re
 app.post("/api/tool", csrfGuard, requireAuth, rateLimit(40, 60_000), (req, res) => {
   const { name, arguments: args } = req.body || {};
   res.set("Cache-Control", "no-store");
-  const allowedTools = [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name];\n  if (typeof name !== "string" || !allowedTools.includes(name)) {
+  const allowedTools = [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name];
+  if (typeof name !== "string" || !allowedTools.includes(name)) {
     return res.status(400).json({ ok: false, error: "La herramienta solicitada no está autorizada." });
   }
   if (args !== undefined && (typeof args !== "object" || args === null || Array.isArray(args))) {
