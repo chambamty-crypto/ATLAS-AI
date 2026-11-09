@@ -55,3 +55,16 @@ footer{padding:24px 3px 0;color:#61758a;font-size:9px}.footer-version{color:#8aa
 }
 
 .auth-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}.auth-actions .text-button{font-size:10px;padding:7px 8px}.auth-actions button:disabled{opacity:.5;cursor:wait}
+
+
+/* Searchable, independently manageable conversation history */
+.history-heading h2 { display: flex; align-items: center; gap: 8px; }
+.history-count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border: 1px solid rgba(104,217,245,.24); border-radius: 999px; color: var(--cyan); font: 10px "DM Mono",monospace; }
+.history-search { width: 100%; min-height: 39px; margin: 0 0 12px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; outline: none; background: rgba(3,8,17,.55); color: var(--text); font: 11px Manrope,system-ui,sans-serif; }
+.history-search::placeholder { color: #657b90; }
+.history-search:focus { border-color: rgba(104,217,245,.65); box-shadow: 0 0 0 3px rgba(104,217,245,.08); }
+.history-item-row { display: flex; align-items: stretch; gap: 5px; }
+.history-item-row .history-item { min-width: 0; flex: 1; }
+.history-delete { flex: 0 0 30px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: #8294a9; font-size: 18px; cursor: pointer; }
+.history-delete:hover,.history-delete:focus-visible { border-color: rgba(255,150,150,.35); color: #ffb5a8; outline: none; }
+.clear-history-button:disabled { opacity: .55; cursor: wait; }
