@@ -4,11 +4,11 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.4.0.** Incluye historial local, voz WebRTC con herramientas, chat con Responses API, búsqueda web y cuatro herramientas propias con validación estricta.
+**Versión 0.5.0 (en preparación).** Añade cuentas con contraseña, sesiones seguras y almacenamiento SQLite del historial por usuario, además de voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias.
 
 ## Requisitos
 
-- Node.js 22.6 o posterior.
+- Node.js 22.13 o posterior (incluye `node:sqlite`).
 - Una API key de OpenAI con acceso a Responses API y Realtime API.
 - Navegador moderno con permiso de micrófono para la función de voz.
 
@@ -22,15 +22,18 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
    `npm install`
 4. Copia `.env.example` como `.env`.
 5. Abre `.env` y agrega tu clave en `OPENAI_API_KEY`.
-6. Inicia el servidor:
+6. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
+7. Inicia el servidor:
    `npm run dev`
-7. Abre [http://localhost:3000](http://localhost:3000).
+8. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
 
 ## Capacidades
 
 - **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
 - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
-- **Historial local:** las conversaciones se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos ni se guardan en una base de datos.
+- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
+- **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
+- **Historial privado:** conversaciones persistidas en SQLite y vinculadas al ID de usuario. Las consultas y escrituras se limitan al usuario autenticado; máximo 40 conversaciones y 100 mensajes por conversación.
 - **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
 - **Fecha y hora:** consulta la hora local de Monterrey, Nuevo León.
 - **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta versión no las agenda ni las persiste.
@@ -58,7 +61,10 @@ Estas pruebas no sustituyen una prueba de integración con una API key real ni u
 - La API key principal solo se utiliza en el servidor; el frontend recibe un client secret temporal exclusivamente para iniciar Realtime.
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
 - El historial se almacena en el navegador del usuario. Borrar los datos del sitio o usar otro navegador/perfil puede eliminar o separar ese historial.
-- Los endpoints tienen límites básicos por dirección IP en memoria. No sustituyen autenticación ni protección contra abuso en producción.
+- Los endpoints sensibles exigen sesión autenticada; las operaciones de escritura comprueban el origen. Se añaden cabeceras de seguridad y límites básicos por IP en memoria.
+- SQLite es apropiado para una instancia única con disco persistente. En plataformas con disco efímero o varias réplicas, configura un volumen persistente o migra a PostgreSQL antes de escalar. Conserva copias de seguridad cifradas del archivo de base de datos.
+- La autenticación local no incluye verificación de correo, recuperación de contraseña, MFA ni eliminación de cuenta. No la consideres lista para un lanzamiento público amplio sin esos controles, monitoreo, límites distribuidos y revisión de seguridad.
+- En producción sirve ATLAS exclusivamente detrás de HTTPS y define `NODE_ENV=production`; el proxy TLS debe conservar el host original.
 - Aunque las herramientas actuales son de solo cálculo/lectura, `/api/tool` no sustituye autenticación. No expongas el servidor públicamente sin autenticación, HTTPS, límites distribuidos, monitoreo y controles de costos.
 - Antes de incorporar acciones con efectos reales, exige permisos por usuario, confirmación explícita y registro de auditoría.
 
@@ -91,7 +97,8 @@ ATLAS-AI/
 
 ## Próximas etapas
 
-- Autenticación y sincronización segura del historial.
+- Verificación de correo, recuperación de cuenta y MFA.
+- Migración a PostgreSQL para despliegues multi-instancia.
 - Recordatorios persistentes con confirmación del usuario.
 - Integraciones externas con permisos granulares.
 - Herramientas para archivos y calendario con control de acceso.
