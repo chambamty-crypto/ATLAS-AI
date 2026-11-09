@@ -72,7 +72,7 @@ export function deleteMemory(userId, memoryId) {
 
 export function buildUserContext(userId) {
   const preferences = getPreferences(userId);
-  const memories = preferences.memory_enabled ? listMemories(userId) : [];
+  const memories = preferences.memory_enabled ? listMemories(userId).slice(0, 20) : [];
   return { preferences, memories };
 }
 
@@ -81,7 +81,7 @@ export function searchUserHistory(userId, query) {
     throw new Error("La búsqueda debe tener entre 2 y 100 caracteres.");
   }
   const needle = query.trim().toLocaleLowerCase();
-  const conversations = db.prepare("SELECT id,title,updated_at AS updatedAt,messages_json AS messagesJson FROM conversations WHERE user_id = ? ORDER BY updated_at DESC LIMIT 40").all(userId);
+  const conversations = db.prepare("SELECT id,title,updated_at AS updatedAt,messages_json AS messagesJson FROM conversations WHERE user_id = ? ORDER BY updated_at DESC LIMIT 20").all(userId);
   const matches = [];
   for (const conversation of conversations) {
     let messages;
