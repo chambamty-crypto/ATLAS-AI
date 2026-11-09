@@ -1,6 +1,6 @@
 {
   "name": "atlas-ai",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "ATLAS-AI — voice-first personal AI assistant",
   "type": "module",
