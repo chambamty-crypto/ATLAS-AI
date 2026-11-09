@@ -2,11 +2,12 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, replaceConversations, clearConversations } from "./src/auth-store.mjs";
+import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, saveConversation, deleteConversation, replaceConversations, clearConversations } from "./src/auth-store.mjs";
 import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 import { USER_HISTORY_TOOL, buildUserContext, executeUserTool, getPreferences, listMemories, addMemory, deleteMemory, savePreferences } from "./src/user-context.mjs";
 import { createAccountToken, consumeAccountToken, updatePasswordAndRevokeSessions } from "./src/auth-store.mjs";
 import { emailDeliveryConfigured, sendAccountEmail } from "./src/mailer.mjs";
+import { normalizeConversation } from "./src/conversation-validation.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   next();
 });
-app.use(express.json({ limit: "64kb" }));
+app.use(express.json({ limit: "2mb" }));
 app.use(express.static(path.join(__dirname, "public"), { etag: true, maxAge: process.env.NODE_ENV === "production" ? "1h" : 0 }));
 
 function readCookie(req, name) {
@@ -316,31 +317,34 @@ app.get("/api/conversations", requireAuth, (req, res) => {
   catch (error) { console.error("History read failed:", error.message); res.status(500).json({ error: "No se pudo cargar el historial." }); }
 });
 
-app.put("/api/conversations", csrfGuard, requireAuth, (req, res) => {
-  const items = req.body?.conversations;
-  if (!Array.isArray(items) || items.length > 40) return res.status(400).json({ error: "El historial debe contener hasta 40 conversaciones." });
-  const safe = [];
-  for (const item of items) {
-    if (!item || typeof item.id !== "string" || !/^[a-f0-9-]{16,64}$/i.test(item.id) ||
-        typeof item.title !== "string" || !item.title.trim() || item.title.length > 100 ||
-        typeof item.updatedAt !== "string" || !Number.isFinite(Date.parse(item.updatedAt)) ||
-        !Array.isArray(item.messages) || item.messages.length > 100) {
-      return res.status(400).json({ error: "Una conversación contiene datos no válidos." });
+app.put("/api/conversations/:id", csrfGuard, requireAuth, rateLimit(60, 60_000), (req, res) => {
+  try {
+    const conversation = normalizeConversation(req.body?.conversation);
+    if (conversation.id !== req.params.id) {
+      return res.status(400).json({ error: "El identificador de la conversación no coincide." });
     }
-    const messages = [];
-    for (const message of item.messages) {
-      if (!message || !["user", "assistant"].includes(message.role) || typeof message.content !== "string" ||
-          !message.content.trim() || message.content.length > 8000) {
-        return res.status(400).json({ error: "Un mensaje del historial no es válido." });
-      }
-      const clean = { role: message.role, content: message.content.trim() };
-      if (Array.isArray(message.citations)) clean.citations = message.citations.slice(0, 8)
-        .filter((c) => c && typeof c.url === "string" && /^https?:\/\//i.test(c.url))
-        .map((c) => ({ url: c.url.slice(0, 2048), title: typeof c.title === "string" ? c.title.slice(0, 300) : c.url.slice(0, 300) }));
-      messages.push(clean);
-    }
-    safe.push({ id: item.id, title: item.title.trim(), updatedAt: item.updatedAt, messages });
+    res.json({ conversation: saveConversation(req.user.id, conversation) });
+  } catch (error) {
+    const status = error.message.includes("no pertenece") ? 404 : 400;
+    res.status(status).json({ error: error.message || "No se pudo guardar la conversación." });
   }
+});
+
+app.delete("/api/conversations/:id", csrfGuard, requireAuth, rateLimit(20, 60_000), (req, res) => {
+  const deleted = deleteConversation(req.user.id, req.params.id);
+  if (!deleted) return res.status(404).json({ error: "No se encontró esa conversación en tu cuenta." });
+  res.json({ ok: true });
+});
+
+// Legacy bulk endpoint retained for older clients. The current interface saves one conversation at a time.
+app.put("/api/conversations", csrfGuard, requireAuth, rateLimit(10, 60_000), (req, res) => {
+  const items = req.body?.conversations;
+  if (!Array.isArray(items) || items.length > 40) {
+    return res.status(400).json({ error: "El historial debe contener hasta 40 conversaciones." });
+  }
+  let safe;
+  try { safe = items.map(normalizeConversation); }
+  catch (error) { return res.status(400).json({ error: error.message || "Una conversación contiene datos no válidos." }); }
   try { res.json({ conversations: replaceConversations(req.user.id, safe) }); }
   catch (error) { console.error("History save failed:", error.message); res.status(500).json({ error: "No se pudo guardar el historial." }); }
 });
