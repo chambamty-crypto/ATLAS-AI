@@ -27,6 +27,7 @@ let peer = null;
 let channel = null;
 let localStream = null;
 let sendingMessage = false;
+let voiceConversationId = null;
 
 let conversations = [];
 let currentConversationId = conversations[0]?.id || null;
@@ -187,10 +188,16 @@ function renderMessage(message) {
   transcript.append(item);
 }
 
-function addMessage(role, content, citations = []) {
+function addMessage(role, content, citations = [], targetConversationId = currentConversationId) {
   if (!content?.trim()) return;
-  if (!currentConversation()) createConversation();
-  const conversation = currentConversation();
+  let conversation = conversations.find((item) => item.id === targetConversationId) || null;
+  if (!conversation) {
+    if (targetConversationId && targetConversationId !== currentConversationId) return;
+    if (!currentConversation()) createConversation();
+    conversation = currentConversation();
+  }
+  if (!conversation) return;
+
   const message = { role, content: content.trim(), createdAt: new Date().toISOString() };
   if (citations.length) message.citations = citations;
   conversation.messages.push(message);
@@ -201,10 +208,13 @@ function addMessage(role, content, citations = []) {
   conversation.updatedAt = new Date().toISOString();
   conversations.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
   persistConversation(conversation);
-  renderMessage(message);
-  conversationTitle.textContent = conversation.title;
+
+  if (conversation.id === currentConversationId) {
+    renderMessage(message);
+    conversationTitle.textContent = conversation.title;
+    transcript.scrollTop = transcript.scrollHeight;
+  }
   renderHistory();
-  transcript.scrollTop = transcript.scrollHeight;
 }
 
 function setStatus(message, state = "idle") {
@@ -263,10 +273,10 @@ function handleEvent(event) {
     handleToolCalls(event.response);
   }
   if (event.type === "conversation.item.input_audio_transcription.completed") {
-    addMessage("user", event.transcript);
+    addMessage("user", event.transcript, [], voiceConversationId || currentConversationId);
   }
   if (event.type === "response.output_audio_transcript.done") {
-    addMessage("assistant", event.transcript);
+    addMessage("assistant", event.transcript, [], voiceConversationId || currentConversationId);
   }
   if (event.type === "error") {
     setStatus(event.error?.message || "Ocurrió un error en la conversación.", "connected");
@@ -274,6 +284,8 @@ function handleEvent(event) {
 }
 
 async function startConversation() {
+  if (!currentConversation()) createConversation();
+  voiceConversationId = currentConversationId;
   startButton.disabled = true;
   setStatus("Solicitando acceso al micrófono y preparando una conexión segura…", "connecting");
   try {
@@ -328,6 +340,7 @@ async function endConversation(updateStatus = true) {
   channel = null;
   peer = null;
   localStream = null;
+  voiceConversationId = null;
   remoteAudio.srcObject = null;
   orb.classList.remove("speaking");
   endButton.disabled = true;
@@ -339,14 +352,17 @@ async function sendChatMessage(event) {
   const content = chatInput.value.trim();
   if (!content || sendingMessage) return;
   if (!currentConversation()) createConversation();
-  addMessage("user", content);
+  const conversationId = currentConversationId;
+  addMessage("user", content, [], conversationId);
   chatInput.value = "";
   sendingMessage = true;
   sendButton.disabled = true;
   chatInput.disabled = true;
   setStatus("ATLAS está preparando una respuesta…", "connecting");
   try {
-    const messages = currentConversation().messages
+    const conversation = conversations.find((item) => item.id === conversationId);
+    if (!conversation) throw new Error("La conversación ya no está disponible.");
+    const messages = conversation.messages
       .filter((message) => ["user", "assistant"].includes(message.role))
       .slice(-12)
       .map(({ role, content }) => ({ role, content }));
@@ -357,7 +373,7 @@ async function sendChatMessage(event) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "No se pudo completar la consulta.");
-    addMessage("assistant", data.text, data.citations || []);
+    addMessage("assistant", data.text, data.citations || [], conversationId);
     setStatus("Respuesta recibida. ATLAS está listo.");
   } catch (error) {
     setStatus(error.message || "No se pudo contactar con ATLAS.");
@@ -526,6 +542,7 @@ async function enterAccount(user) {
   if (!response.ok) throw new Error(data.error || "No se pudo cargar el historial.");
   conversations = Array.isArray(data.conversations) ? data.conversations : [];
   currentConversationId = conversations[0]?.id || null;
+  historySearch.value = "";
   accountEmail.textContent = user.email;
   authPanel.hidden = true;
   appShell.hidden = false;
