@@ -1,6 +1,6 @@
 {
   "name": "atlas-ai",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "description": "ATLAS-AI — voice-first personal AI assistant",
   "type": "module",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "nodemailer": "^6.10.1"
   }
 }
