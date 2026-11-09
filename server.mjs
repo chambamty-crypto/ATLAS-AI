@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { randomUUID } from "node:crypto";
+import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, replaceConversations, clearConversations } from "./src/auth-store.mjs";
 import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 
 const app = express();
@@ -11,8 +13,47 @@ const model = process.env.OPENAI_MODEL || "gpt-5.4";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
-app.use(express.json({ limit: "32kb" }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Permissions-Policy", "camera=(), geolocation=(), microphone=(self)");
+  if (process.env.NODE_ENV === "production") res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  next();
+});
+app.use(express.json({ limit: "64kb" }));
+app.use(express.static(path.join(__dirname, "public"), { etag: true, maxAge: process.env.NODE_ENV === "production" ? "1h" : 0 }));
+
+function readCookie(req, name) {
+  const raw = req.headers.cookie || "";
+  const item = raw.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`));
+  return item ? decodeURIComponent(item.slice(name.length + 1)) : "";
+}
+const SESSION_COOKIE = "atlas_session";
+const cookieOptions = () => `Path=/; HttpOnly; SameSite=Strict; Max-Age=604800${process.env.NODE_ENV === "production" ? "; Secure" : ""}`;
+function csrfGuard(req, res, next) {
+  const origin = req.get("origin");
+  if (origin) {
+    try {
+      if (new URL(origin).host !== req.get("host")) return res.status(403).json({ error: "Origen no autorizado." });
+    } catch { return res.status(403).json({ error: "Origen no autorizado." }); }
+  } else if (req.get("sec-fetch-site") === "cross-site") {
+    return res.status(403).json({ error: "Solicitud de origen cruzado bloqueada." });
+  }
+  next();
+}
+function requireAuth(req, res, next) {
+  const token = readCookie(req, SESSION_COOKIE);
+  const user = findSessionUser(token);
+  if (!user) {
+    res.set("Cache-Control", "no-store");
+    return res.status(401).json({ error: "Inicia sesión para continuar." });
+  }
+  req.user = user;
+  req.sessionToken = token;
+  next();
+}
+app.use("/api", (req, res, next) => { res.set("Cache-Control", "no-store"); next(); });
 
 const requestBuckets = new Map();
 function rateLimit(maxRequests, windowMs) {
@@ -103,12 +144,97 @@ function getResponseCitations(data) {
     .slice(0, 8);
 }
 
+app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
+  const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+  const password = req.body?.password;
+  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 254 ||
+      typeof password !== "string" || password.length < 12 || password.length > 128) {
+    return res.status(400).json({ error: "Usa un correo válido y una contraseña de 12 a 128 caracteres." });
+  }
+  try {
+    const passwordHash = await hashPassword(password);
+    const user = createUserRecord(email, passwordHash);
+    const session = createSession(user.id);
+    res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
+    return res.status(201).json({ user: { id: user.id, email: user.email } });
+  } catch (error) {
+    if (String(error.message).includes("UNIQUE")) return res.status(409).json({ error: "No se pudo crear la cuenta con esos datos." });
+    console.error("Registration failed:", error.message);
+    return res.status(500).json({ error: "No se pudo crear la cuenta." });
+  }
+});
+
+app.post("/api/auth/login", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
+  const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+  const password = req.body?.password;
+  if (!email || typeof password !== "string" || password.length > 128) return res.status(400).json({ error: "Credenciales no válidas." });
+  try {
+    const user = findUserByEmail(email);
+    if (!user || !(await verifyPassword(password, user.password_hash))) return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+    const session = createSession(user.id);
+    res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
+    return res.json({ user: { id: user.id, email: user.email } });
+  } catch (error) {
+    console.error("Login failed:", error.message);
+    return res.status(500).json({ error: "No se pudo iniciar sesión." });
+  }
+});
+
+app.post("/api/auth/logout", csrfGuard, (req, res) => {
+  revokeSession(readCookie(req, SESSION_COOKIE));
+  res.setHeader("Set-Cookie", `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${process.env.NODE_ENV === "production" ? "; Secure" : ""}`);
+  res.json({ ok: true });
+});
+
+app.get("/api/auth/me", requireAuth, (req, res) => {
+  res.json({ user: { id: req.user.id, email: req.user.email } });
+});
+
+app.get("/api/conversations", requireAuth, (req, res) => {
+  try { res.json({ conversations: listConversations(req.user.id) }); }
+  catch (error) { console.error("History read failed:", error.message); res.status(500).json({ error: "No se pudo cargar el historial." }); }
+});
+
+app.put("/api/conversations", csrfGuard, requireAuth, (req, res) => {
+  const items = req.body?.conversations;
+  if (!Array.isArray(items) || items.length > 40) return res.status(400).json({ error: "El historial debe contener hasta 40 conversaciones." });
+  const safe = [];
+  for (const item of items) {
+    if (!item || typeof item.id !== "string" || !/^[a-f0-9-]{16,64}$/i.test(item.id) ||
+        typeof item.title !== "string" || !item.title.trim() || item.title.length > 100 ||
+        typeof item.updatedAt !== "string" || !Number.isFinite(Date.parse(item.updatedAt)) ||
+        !Array.isArray(item.messages) || item.messages.length > 100) {
+      return res.status(400).json({ error: "Una conversación contiene datos no válidos." });
+    }
+    const messages = [];
+    for (const message of item.messages) {
+      if (!message || !["user", "assistant"].includes(message.role) || typeof message.content !== "string" ||
+          !message.content.trim() || message.content.length > 8000) {
+        return res.status(400).json({ error: "Un mensaje del historial no es válido." });
+      }
+      const clean = { role: message.role, content: message.content.trim() };
+      if (Array.isArray(message.citations)) clean.citations = message.citations.slice(0, 8)
+        .filter((c) => c && typeof c.url === "string" && /^https?:\\/\\//i.test(c.url))
+        .map((c) => ({ url: c.url.slice(0, 2048), title: typeof c.title === "string" ? c.title.slice(0, 300) : c.url.slice(0, 300) }));
+      messages.push(clean);
+    }
+    safe.push({ id: item.id, title: item.title.trim(), updatedAt: item.updatedAt, messages });
+  }
+  try { res.json({ conversations: replaceConversations(req.user.id, safe) }); }
+  catch (error) { console.error("History save failed:", error.message); res.status(500).json({ error: "No se pudo guardar el historial." }); }
+});
+
+app.delete("/api/conversations", csrfGuard, requireAuth, (req, res) => {
+  clearConversations(req.user.id);
+  res.json({ ok: true });
+});
+
 app.get("/api/health", (_req, res) => {
   res.set("Cache-Control", "no-store");
   res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: ATLAS_TOOL_NAMES });
 });
 
-app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
+app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (_req, res) => {
   if (!apiKey) {
     return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
   }
@@ -150,7 +276,7 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
   }
 });
 
-app.post("/api/tool", rateLimit(40, 60_000), (req, res) => {
+app.post("/api/tool", csrfGuard, requireAuth, rateLimit(40, 60_000), (req, res) => {
   const { name, arguments: args } = req.body || {};
   res.set("Cache-Control", "no-store");
   if (typeof name !== "string" || !ATLAS_TOOL_NAMES.includes(name)) {
@@ -166,7 +292,7 @@ app.post("/api/tool", rateLimit(40, 60_000), (req, res) => {
   }
 });
 
-app.post("/api/assistant", rateLimit(20, 60_000), async (req, res) => {
+app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async (req, res) => {
   if (!apiKey) {
     return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
   }
