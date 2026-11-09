@@ -43,6 +43,32 @@ test("conversation history is isolated by account", () => {
   assert.equal(store.listConversations(first.id).length, 0);
 });
 
+test("single-conversation writes preserve other chats and enforce account ownership", () => {
+  const first = store.createUserRecord("single-history-one@example.test", "test-hash");
+  const second = store.createUserRecord("single-history-two@example.test", "test-hash");
+  const one = {
+    id: randomUUID(),
+    title: "Primera",
+    updatedAt: new Date().toISOString(),
+    messages: [{ role: "user", content: "Uno" }]
+  };
+  const two = {
+    id: randomUUID(),
+    title: "Segunda",
+    updatedAt: new Date(Date.now() + 1000).toISOString(),
+    messages: [{ role: "user", content: "Dos" }]
+  };
+
+  store.saveConversation(first.id, one);
+  store.saveConversation(first.id, two);
+  assert.equal(store.listConversations(first.id).length, 2);
+  assert.equal(store.listConversations(second.id).length, 0);
+  assert.throws(() => store.saveConversation(second.id, one), /no pertenece/);
+  assert.equal(store.deleteConversation(second.id, one.id), false);
+  assert.equal(store.deleteConversation(first.id, one.id), true);
+  assert.equal(store.listConversations(first.id).length, 1);
+});
+
 test.after(() => {
   store.db.close();
   for (const suffix of ["", "-shm", "-wal"]) {
