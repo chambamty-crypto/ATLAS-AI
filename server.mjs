@@ -306,7 +306,7 @@ app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (re
           type: "realtime",
           model: "gpt-realtime",
           instructions: [voiceInstructions, buildPersonalizedInstructions(req.user.id)].join(" "),
-          tools: [...ATLAS_REALTIME_TOOLS, (({ strict, ...tool }) => tool)(USER_HISTORY_TOOL)],
+          tools: [...ATLAS_REALTIME_TOOLS, ...(getPreferences(req.user.id).memory_enabled ? [(({ strict, ...tool }) => tool)(USER_HISTORY_TOOL)] : [])],
           tool_choice: "auto",
           audio: {
             input: { transcription: { model: "gpt-live-transcribe", languages: ["es"] } },
