@@ -46,6 +46,7 @@ function tokenize(expression) {
   if (typeof expression !== "string" || expression.length > 120) {
     throw new Error("La operación debe ser texto de hasta 120 caracteres.");
   }
+  if (/\d\s+\d/.test(expression)) throw new Error("No se permiten espacios entre dígitos.");
   const tokens = expression.match(/\s*\d+(?:\.\d+)?\s*|\s*[()+\-*/]\s*/g);
   if (!tokens) throw new Error("La operación contiene caracteres no permitidos.");
   const compact = tokens.map((token) => token.trim()).filter(Boolean);
