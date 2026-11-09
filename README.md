@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.7.0.** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.7.0.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
