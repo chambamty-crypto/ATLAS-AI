@@ -53,6 +53,7 @@ function currentConversation() {
 }
 
 function createConversation() {
+  historySearch.value = "";
   const conversation = {
     id: crypto.randomUUID(),
     title: "Nueva conversación",
