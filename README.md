@@ -45,7 +45,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Arquitectura de herramientas
 
-El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. Responses API y Realtime comparten la misma lista permitida; para Realtime se omite el indicador `strict`, mientras Responses conserva JSON Schema estricto. El servidor valida y ejecuta cada función. El ciclo de Responses se limita a dos rondas por petición.
+El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs` y la herramienta de contexto personal `search_my_history` de `src/user-context.mjs`. El servidor valida y ejecuta cada función con el ID de usuario obtenido de la sesión; para Realtime se omite el indicador `strict`, mientras Responses conserva JSON Schema estricto. El ciclo de Responses se limita a dos rondas por petición.
 
 La ruta `/api/tool` solo permite nombres incluidos en la lista blanca. Las funciones actuales incluyen cálculos, fecha/hora, listas no persistentes, conversiones y búsqueda de solo lectura en el historial privado del usuario autenticado. No realizan cambios externos. No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura.
 
@@ -80,7 +80,8 @@ ATLAS-AI/
 │   └── styles.css
 ├── src/
 │   ├── atlas-tools.mjs
-│   └── auth-store.mjs
+│   ├── auth-store.mjs
+│   └── user-context.mjs
 ├── test/
 │   ├── atlas-tools.test.mjs
 │   ├── auth-store.test.mjs
