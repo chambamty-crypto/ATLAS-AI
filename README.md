@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.5.0 (en revisión; PR #1).** Añade cuentas con contraseña, sesiones seguras y almacenamiento SQLite del historial por usuario, además de voz WebRTC, chat con Responses API, búsqueda web y cuatro herramientas propias.
+**Versión 0.6.0 (en desarrollo; PR #2).** Añade memoria personal administrable, preferencias por cuenta y búsqueda privada del historial, además de cuentas, sesiones seguras, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
@@ -34,6 +34,9 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 - **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
 - **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
 - **Historial privado:** conversaciones persistidas en SQLite y vinculadas al ID de usuario. Las consultas y escrituras se limitan al usuario autenticado; máximo 40 conversaciones y 100 mensajes por conversación.
+- **Memoria personal:** el usuario agrega y elimina recuerdos explícitamente; máximo 50 recuerdos por cuenta. Puede desactivar su uso sin borrar lo guardado.
+- **Preferencias individuales:** idioma, tono y nivel de detalle se guardan por cuenta y personalizan chat y voz.
+- **Búsqueda en el historial:** `search_my_history` encuentra coincidencias únicamente en las conversaciones de la cuenta autenticada. Es una herramienta de lectura; no modifica mensajes ni comparte datos entre usuarios.
 - **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
 - **Fecha y hora:** consulta la hora local de Monterrey, Nuevo León.
 - **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta versión no las agenda ni las persiste.
@@ -44,7 +47,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. Responses API y Realtime comparten la misma lista permitida; para Realtime se omite el indicador `strict`, mientras Responses conserva JSON Schema estricto. El servidor valida y ejecuta cada función. El ciclo de Responses se limita a dos rondas por petición.
 
-La ruta `/api/tool` solo permite nombres incluidos en la lista blanca. Las funciones actuales son cálculos, fecha/hora, listas no persistentes y conversiones: no realizan cambios externos. No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura.
+La ruta `/api/tool` solo permite nombres incluidos en la lista blanca. Las funciones actuales incluyen cálculos, fecha/hora, listas no persistentes, conversiones y búsqueda de solo lectura en el historial privado del usuario autenticado. No realizan cambios externos. No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura.
 
 ## Pruebas
 
@@ -80,7 +83,8 @@ ATLAS-AI/
 │   └── auth-store.mjs
 ├── test/
 │   ├── atlas-tools.test.mjs
-│   └── auth-store.test.mjs
+│   ├── auth-store.test.mjs
+│   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
 ├── .gitignore
