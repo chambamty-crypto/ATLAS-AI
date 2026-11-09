@@ -11,6 +11,7 @@ test("calcula operaciones con precedencia y paréntesis", () => {
 test("rechaza expresiones peligrosas y división entre cero", () => {
   assert.throws(() => calculateExpression("process.exit()"));
   assert.throws(() => calculateExpression("5 / 0"), /cero/);
+  assert.throws(() => calculateExpression("1 2"));
 });
 
 test("consulta fecha y hora en la zona Monterrey", () => {
