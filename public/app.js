@@ -15,7 +15,6 @@ const sendButton = document.querySelector("#send-button");
 const newChatButton = document.querySelector("#new-chat-button");
 const clearHistoryButton = document.querySelector("#clear-history-button");
 
-const STORAGE_KEY = "atlas-ai.conversations.v1";
 const MAX_CONVERSATIONS = 40;
 const MAX_MESSAGES = 100;
 let peer = null;
@@ -23,28 +22,21 @@ let channel = null;
 let localStream = null;
 let sendingMessage = false;
 
-function loadConversations() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    if (!Array.isArray(saved)) return [];
-    return saved.filter((item) => item && typeof item.id === "string" &&
-      typeof item.title === "string" && Array.isArray(item.messages))
-      .slice(0, MAX_CONVERSATIONS);
-  } catch {
-    return [];
-  }
-}
-
-let conversations = loadConversations();
+let conversations = [];
 let currentConversationId = conversations[0]?.id || null;
 
+let saveQueue = Promise.resolve();
 function persistConversations() {
   conversations = conversations.slice(0, MAX_CONVERSATIONS);
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
-  } catch {
-    setStatus("No se pudo guardar el historial. Revisa el espacio disponible del navegador.");
-  }
+  const snapshot = JSON.stringify({ conversations });
+  saveQueue = saveQueue.then(async () => {
+    const response = await fetch("/api/conversations", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: snapshot
+    });
+    if (!response.ok) throw new Error("No se pudo guardar el historial en el servidor.");
+  }).catch((error) => setStatus(error.message || "No se pudo guardar el historial."));
 }
 
 function currentConversation() {
@@ -323,15 +315,92 @@ endButton.addEventListener("click", () => endConversation());
 chatForm.addEventListener("submit", sendChatMessage);
 newChatButton.addEventListener("click", createConversation);
 clearHistoryButton.addEventListener("click", () => {
-  if (!conversations.length || !window.confirm("¿Quieres borrar todas las conversaciones guardadas en este navegador?")) return;
-  conversations = [];
-  currentConversationId = null;
-  persistConversations();
-  createConversation();
+  if (!conversations.length || !window.confirm("¿Quieres borrar todas las conversaciones de tu cuenta?")) return;
+  fetch("/api/conversations", { method: "DELETE" }).then((response) => {
+    if (!response.ok) throw new Error("No se pudo borrar el historial.");
+    conversations = [];
+    currentConversationId = null;
+    renderConversation();
+    renderHistory();
+  }).catch((error) => setStatus(error.message));
 });
 
-if (!currentConversation()) createConversation();
-else {
-  renderConversation();
-  renderHistory();
+const authPanel = document.querySelector("#auth-panel");
+const appShell = document.querySelector("#app-shell");
+const loginForm = document.querySelector("#login-form");
+const registerForm = document.querySelector("#register-form");
+const authToggle = document.querySelector("#auth-toggle");
+const authStatus = document.querySelector("#auth-status");
+const accountEmail = document.querySelector("#account-email");
+let showingRegister = false;
+
+function showAuth(message = "") {
+  authPanel.hidden = false;
+  appShell.hidden = true;
+  authStatus.textContent = message;
+  accountEmail.textContent = "";
 }
+async function enterAccount(user) {
+  const response = await fetch("/api/conversations");
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "No se pudo cargar el historial.");
+  conversations = Array.isArray(data.conversations) ? data.conversations : [];
+  currentConversationId = conversations[0]?.id || null;
+  accountEmail.textContent = user.email;
+  authPanel.hidden = true;
+  appShell.hidden = false;
+  if (!currentConversation()) createConversation();
+  else { renderConversation(); renderHistory(); }
+}
+async function submitAuth(event, mode) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const email = form.querySelector('input[type="email"]').value.trim();
+  const password = form.querySelector('input[type="password"]').value;
+  const submit = form.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  authStatus.textContent = "Verificando acceso…";
+  try {
+    const response = await fetch(`/api/auth/${mode}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "No se pudo validar la cuenta.");
+    await enterAccount(data.user);
+  } catch (error) {
+    authStatus.textContent = error.message || "No se pudo completar el acceso.";
+  } finally {
+    submit.disabled = false;
+  }
+}
+loginForm.addEventListener("submit", (event) => submitAuth(event, "login"));
+registerForm.addEventListener("submit", (event) => submitAuth(event, "register"));
+authToggle.addEventListener("click", () => {
+  showingRegister = !showingRegister;
+  loginForm.hidden = showingRegister;
+  registerForm.hidden = !showingRegister;
+  document.querySelector("#auth-title").textContent = showingRegister ? "Crea tu cuenta ATLAS." : "Tu espacio de inteligencia.";
+  authToggle.textContent = showingRegister ? "¿Ya tienes cuenta? Iniciar sesión" : "¿No tienes cuenta? Crear una";
+  authStatus.textContent = "";
+});
+document.querySelector("#logout-button").addEventListener("click", async () => {
+  await endConversation(false);
+  await fetch("/api/auth/logout", { method: "POST" });
+  conversations = [];
+  currentConversationId = null;
+  showAuth("Has cerrado sesión.");
+});
+async function initializeAuth() {
+  try {
+    localStorage.removeItem("atlas-ai.conversations.v1");
+    const response = await fetch("/api/auth/me");
+    if (!response.ok) return showAuth();
+    const data = await response.json();
+    await enterAccount(data.user);
+  } catch {
+    showAuth("No se pudo conectar con el servidor.");
+  }
+}
+initializeAuth();

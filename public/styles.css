@@ -13,3 +13,20 @@ button,textarea{font:inherit}.ambient{position:fixed;width:420px;height:420px;bo
 footer{padding:24px 3px 0;color:#61758a;font-size:9px}.footer-version{color:#8aa2b8;margin-left:8px}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 55px rgba(66,194,235,.55),inset 0 0 24px rgba(179,244,255,.4)}}
 @media(max-width:760px){.workspace{grid-template-columns:1fr}.history-panel{order:2}.history-list{max-height:180px}.hero{padding-top:55px}}@media(max-width:600px){.shell{width:calc(100% - 26px);padding-top:22px}.hero{padding:52px 8px 25px}.console{padding:19px 15px}.console-head{align-items:flex-start}.orb-stage{height:220px}.transcript-panel,.history-panel{padding:18px 15px}.top-meta{font-size:8px}.send-button{padding:12px 10px}}
+
+
+[hidden] { display: none !important; }
+.auth-panel { min-height: 100vh; display: grid; place-items: center; padding: 28px 18px; position: relative; z-index: 2; }
+.auth-card { width: min(100%, 440px); padding: 38px; border: 1px solid rgba(133,161,207,.2); border-radius: 22px; background: rgba(11,18,33,.88); box-shadow: 0 24px 80px rgba(0,0,0,.28); backdrop-filter: blur(18px); }
+.auth-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 34px; color: #edf3ff; font-weight: 800; letter-spacing: .14em; }
+.auth-card h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); line-height: 1.1; margin: 12px 0; }
+.auth-card .intro { margin-bottom: 28px; }
+.auth-form { display: grid; gap: 10px; margin-top: 20px; }
+.auth-form label { color: #b9c7df; font-size: .82rem; }
+.auth-form input { width: 100%; min-height: 46px; border: 1px solid rgba(145,169,207,.25); border-radius: 10px; background: rgba(3,8,17,.72); color: #f3f6fc; padding: 0 13px; font: inherit; margin-bottom: 8px; }
+.auth-form input:focus { outline: 2px solid rgba(100,164,255,.55); outline-offset: 2px; }
+.auth-form .voice-button { width: 100%; justify-content: center; margin-top: 8px; }
+.auth-toggle { margin-top: 18px; }
+.auth-card .status-message { min-height: 20px; margin: 12px 0; color: #ffb5a8; }
+#account-email { color: #9fb0cb; font-size: .75rem; margin-left: 12px; }
+@media (max-width: 560px) { .auth-card { padding: 28px 22px; } .top-meta { flex-wrap: wrap; justify-content: flex-end; } }
