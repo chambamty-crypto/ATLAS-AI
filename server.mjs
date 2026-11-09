@@ -117,7 +117,7 @@ app.post("/api/session", rateLimit(8, 60_000), async (_req, res) => {
           model: "gpt-realtime",
           instructions: assistantInstructions,
           audio: {
-            input: { transcription: { model: "gpt-live-transcribe", language: "es" } },
+            input: { transcription: { model: "gpt-live-transcribe", languages: ["es"] } },
             output: { voice: "ash" }
           }
         }
