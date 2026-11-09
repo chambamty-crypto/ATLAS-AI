@@ -334,6 +334,9 @@ const appShell = document.querySelector("#app-shell");
 const loginForm = document.querySelector("#login-form");
 const registerForm = document.querySelector("#register-form");
 const authToggle = document.querySelector("#auth-toggle");
+const forgotToggle = document.querySelector("#forgot-toggle");
+const resendVerification = document.querySelector("#resend-verification");
+const resetForm = document.querySelector("#reset-form");
 const authStatus = document.querySelector("#auth-status");
 const accountEmail = document.querySelector("#account-email");
 let showingRegister = false;
@@ -498,6 +501,48 @@ authToggle.addEventListener("click", () => {
   authToggle.textContent = showingRegister ? "¿Ya tienes cuenta? Iniciar sesión" : "¿No tienes cuenta? Crear una";
   authStatus.textContent = "";
 });
+
+forgotToggle.addEventListener("click", async () => {
+  const email = document.querySelector("#login-email").value.trim();
+  if (!email) { authStatus.textContent = "Escribe tu correo en el campo de inicio de sesión y vuelve a intentarlo."; return; }
+  forgotToggle.disabled = true;
+  try {
+    const response = await fetch("/api/auth/forgot-password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+    const data = await response.json();
+    authStatus.textContent = data.message || "Si la cuenta existe, recibirás instrucciones cuando el correo esté configurado.";
+  } catch { authStatus.textContent = "No se pudo procesar la solicitud."; }
+  finally { forgotToggle.disabled = false; }
+});
+
+resendVerification.addEventListener("click", async () => {
+  const email = document.querySelector("#login-email").value.trim() || document.querySelector("#register-email").value.trim();
+  if (!email) { authStatus.textContent = "Escribe primero el correo de tu cuenta."; return; }
+  resendVerification.disabled = true;
+  try {
+    const response = await fetch("/api/auth/resend-verification", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+    const data = await response.json();
+    authStatus.textContent = data.message;
+  } catch { authStatus.textContent = "No se pudo procesar la solicitud."; }
+  finally { resendVerification.disabled = false; }
+});
+
+resetForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const token = new URLSearchParams(location.search).get("reset");
+  const password = document.querySelector("#reset-password").value;
+  const button = resetForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  try {
+    const response = await fetch("/api/auth/reset-password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token, password }) });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "No se pudo actualizar la contraseña.");
+    history.replaceState({}, "", "/");
+    resetForm.hidden = true;
+    authStatus.textContent = data.message;
+  } catch (error) { authStatus.textContent = error.message; }
+  finally { button.disabled = false; }
+});
+
 document.querySelector("#logout-button").addEventListener("click", async () => {
   await endConversation(false);
   await fetch("/api/auth/logout", { method: "POST" });
