@@ -1,10 +1,10 @@
 # ATLAS-AI
 
-Asistente personal inteligente con interfaz web, conversación por voz en tiempo real e interacción por texto.
+Asistente personal inteligente con interfaz web, conversación por voz en tiempo real, chat de texto y herramientas controladas del lado del servidor.
 
 ## Estado
 
-**Versión 0.2.0.** Incluye interfaz de voz WebRTC, historial local de conversaciones, chat de texto y un endpoint de servidor para respuestas inteligentes con búsqueda web.
+**Versión 0.3.0.** Incluye historial local, voz WebRTC, chat con Responses API, búsqueda web y function calling con herramientas propias y limitadas.
 
 ## Requisitos
 
@@ -26,12 +26,31 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
    `npm run dev`
 7. Abre [http://localhost:3000](http://localhost:3000).
 
-## Funciones disponibles
+## Capacidades
 
 - **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor.
-- **Chat de texto:** el servidor llama a Responses API usando el modelo `gpt-5.4` y la herramienta integrada `web_search`.
+- **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
 - **Historial local:** las conversaciones se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos ni se guardan en una base de datos.
-- **Citas web:** cuando Responses devuelve anotaciones de fuentes, la interfaz las muestra como enlaces.
+- **Cálculos:** herramienta de aritmética con analizador propio; no utiliza `eval` ni ejecuta código del usuario.
+- **Fecha y hora:** consulta la hora local de Monterrey, Nuevo León.
+- **Listas de tareas:** convierte instrucciones del usuario en listas de verificación. Esta primera versión no las agenda ni las persiste.
+- **Citas web:** muestra enlaces de fuentes cuando Responses API devuelve anotaciones.
+
+## Arquitectura de herramientas
+
+El modelo solo puede solicitar las funciones declaradas en `src/atlas-tools.mjs`. El servidor valida los argumentos, ejecuta una función de la lista permitida y devuelve el resultado a Responses API. Se limita el ciclo a dos rondas de herramientas por petición.
+
+No hay acceso a shell, sistema de archivos, correo, pagos, cuentas o servicios externos de escritura. Para añadir una acción con efectos reales se requerirá autenticación, permisos por usuario, confirmación explícita y registro de auditoría.
+
+## Pruebas
+
+Ejecuta las pruebas unitarias de las herramientas:
+
+```bash
+npm test
+```
+
+Estas pruebas no sustituyen una prueba de integración con una API key real.
 
 ## Seguridad y límites
 
@@ -39,7 +58,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
 - El historial se almacena en el navegador del usuario. Borrar los datos del sitio o usar otro navegador/perfil puede eliminar o separar ese historial.
 - Los endpoints tienen límites básicos por dirección IP en memoria. No sustituyen autenticación ni protección contra abuso en producción.
-- Antes de desplegar públicamente, agrega autenticación, límites distribuidos, HTTPS, monitoreo y controles de costos. No expongas el servidor sin esas medidas.
+- Antes de desplegar públicamente, agrega autenticación, límites distribuidos, HTTPS, monitoreo, controles de costos y almacenamiento seguro por usuario. No expongas el servidor sin esas medidas.
 
 ## Estructura
 
@@ -49,6 +68,10 @@ ATLAS-AI/
 │   ├── app.js
 │   ├── index.html
 │   └── styles.css
+├── src/
+│   └── atlas-tools.mjs
+├── test/
+│   └── atlas-tools.test.mjs
 ├── .env.example
 ├── .gitignore
 ├── package.json
@@ -58,14 +81,16 @@ ATLAS-AI/
 
 ## Documentación oficial
 
+- [Function calling](https://developers.openai.com/api/docs/guides/function-calling)
+- [Responses API y herramientas](https://developers.openai.com/api/docs/guides/tools)
+- [Búsqueda web](https://developers.openai.com/api/docs/guides/tools-web-search)
 - [Realtime API](https://developers.openai.com/api/docs/guides/realtime)
 - [WebRTC para voz](https://developers.openai.com/api/docs/guides/realtime-webrtc)
-- [Responses API](https://developers.openai.com/api/reference/responses/overview)
-- [Herramienta de búsqueda web](https://developers.openai.com/api/docs/guides/tools-web-search)
 
 ## Próximas etapas
 
 - Autenticación y sincronización segura del historial.
-- Herramientas propias con permisos y confirmación para acciones sensibles.
-- Ajustes de voz y preferencias de usuario.
-- Pruebas automatizadas y despliegue seguro.
+- Recordatorios persistentes con confirmación del usuario.
+- Integraciones externas con permisos granulares.
+- Herramientas para archivos y calendario con control de acceso.
+- Pruebas de integración y despliegue seguro.
