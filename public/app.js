@@ -8,6 +8,8 @@ const orb = document.querySelector("#orb");
 const transcript = document.querySelector("#transcript");
 const remoteAudio = document.querySelector("#remote-audio");
 const historyList = document.querySelector("#history-list");
+const historySearch = document.querySelector("#history-search");
+const historyCount = document.querySelector("#history-count");
 const conversationTitle = document.querySelector("#conversation-title");
 const chatForm = document.querySelector("#chat-form");
 const chatInput = document.querySelector("#chat-input");
@@ -30,17 +32,19 @@ let conversations = [];
 let currentConversationId = conversations[0]?.id || null;
 
 let saveQueue = Promise.resolve();
-function persistConversations() {
+function persistConversation(conversation) {
   conversations = conversations.slice(0, MAX_CONVERSATIONS);
-  const snapshot = JSON.stringify({ conversations });
+  const snapshot = JSON.stringify({ conversation });
   saveQueue = saveQueue.then(async () => {
-    const response = await fetch("/api/conversations", {
+    const response = await fetch("/api/conversations/" + encodeURIComponent(conversation.id), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: snapshot
     });
-    if (!response.ok) throw new Error("No se pudo guardar el historial en el servidor.");
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "No se pudo guardar la conversación.");
   }).catch((error) => setStatus(error.message || "No se pudo guardar el historial."));
+  return saveQueue;
 }
 
 function currentConversation() {
@@ -56,7 +60,7 @@ function createConversation() {
   };
   conversations.unshift(conversation);
   currentConversationId = conversation.id;
-  persistConversations();
+  persistConversation(conversation);
   renderConversation();
   renderHistory();
   chatInput.focus();
@@ -70,28 +74,79 @@ function formatDate(value) {
 
 function renderHistory() {
   historyList.replaceChildren();
-  if (!conversations.length) {
+  historyCount.textContent = String(conversations.length);
+  const query = historySearch.value.trim().toLocaleLowerCase("es-MX");
+  const filtered = conversations.filter((conversation) => {
+    if (!query) return true;
+    return conversation.title.toLocaleLowerCase("es-MX").includes(query) ||
+      conversation.messages.some((message) => message.content.toLocaleLowerCase("es-MX").includes(query));
+  });
+
+  if (!filtered.length) {
     const empty = document.createElement("p");
     empty.className = "history-empty";
-    empty.textContent = "Tus conversaciones guardadas aparecerán aquí.";
+    empty.textContent = conversations.length
+      ? "No hay conversaciones que coincidan con esa búsqueda."
+      : "Todavía no hay conversaciones. Inicia una nueva para comenzar.";
     historyList.append(empty);
     return;
   }
-  for (const conversation of conversations) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `history-item${conversation.id === currentConversationId ? " active" : ""}`;
+
+  for (const conversation of filtered) {
+    const row = document.createElement("div");
+    row.className = "history-item-row";
+
+    const select = document.createElement("button");
+    select.type = "button";
+    select.className = "history-item" + (conversation.id === currentConversationId ? " active" : "");
     const title = document.createElement("strong");
     title.textContent = conversation.title;
     const date = document.createElement("small");
-    date.textContent = formatDate(conversation.updatedAt);
-    button.append(title, date);
-    button.addEventListener("click", () => {
+    const count = conversation.messages.length;
+    date.textContent = count + (count === 1 ? " mensaje · " : " mensajes · ") + formatDate(conversation.updatedAt);
+    select.append(title, date);
+    select.addEventListener("click", () => {
       currentConversationId = conversation.id;
       renderConversation();
       renderHistory();
     });
-    historyList.append(button);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "history-delete";
+    remove.textContent = "×";
+    remove.setAttribute("aria-label", "Eliminar conversación: " + conversation.title);
+    remove.title = "Eliminar esta conversación";
+    remove.addEventListener("click", () => deleteSingleConversation(conversation.id));
+
+    row.append(select, remove);
+    historyList.append(row);
+  }
+}
+
+async function deleteSingleConversation(id) {
+  const conversation = conversations.find((item) => item.id === id);
+  if (!conversation || !window.confirm("¿Eliminar la conversación «" + conversation.title + "»?")) return;
+
+  try {
+    await saveQueue;
+    const response = await fetch("/api/conversations/" + encodeURIComponent(id), { method: "DELETE" });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "No se pudo eliminar la conversación.");
+
+    conversations = conversations.filter((item) => item.id !== id);
+    if (currentConversationId === id) {
+      currentConversationId = conversations[0]?.id || null;
+      if (!currentConversation()) createConversation();
+      else {
+        renderConversation();
+        renderHistory();
+      }
+    } else {
+      renderHistory();
+    }
+  } catch (error) {
+    setStatus(error.message || "No se pudo eliminar la conversación.");
   }
 }
 
@@ -145,7 +200,7 @@ function addMessage(role, content, citations = []) {
   }
   conversation.updatedAt = new Date().toISOString();
   conversations.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-  persistConversations();
+  persistConversation(conversation);
   renderMessage(message);
   conversationTitle.textContent = conversation.title;
   renderHistory();
@@ -318,15 +373,25 @@ startButton.addEventListener("click", startConversation);
 endButton.addEventListener("click", () => endConversation());
 chatForm.addEventListener("submit", sendChatMessage);
 newChatButton.addEventListener("click", createConversation);
-clearHistoryButton.addEventListener("click", () => {
+historySearch.addEventListener("input", renderHistory);
+clearHistoryButton.addEventListener("click", async () => {
   if (!conversations.length || !window.confirm("¿Quieres borrar todas las conversaciones de tu cuenta?")) return;
-  fetch("/api/conversations", { method: "DELETE" }).then((response) => {
-    if (!response.ok) throw new Error("No se pudo borrar el historial.");
+  clearHistoryButton.disabled = true;
+  try {
+    await saveQueue;
+    const response = await fetch("/api/conversations", { method: "DELETE" });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "No se pudo borrar el historial.");
     conversations = [];
     currentConversationId = null;
+    historySearch.value = "";
     renderConversation();
     renderHistory();
-  }).catch((error) => setStatus(error.message));
+  } catch (error) {
+    setStatus(error.message || "No se pudo borrar el historial.");
+  } finally {
+    clearHistoryButton.disabled = false;
+  }
 });
 
 const authPanel = document.querySelector("#auth-panel");
@@ -550,6 +615,7 @@ resetForm.addEventListener("submit", async (event) => {
 });
 
 document.querySelector("#logout-button").addEventListener("click", async () => {
+  await saveQueue;
   await endConversation(false);
   await fetch("/api/auth/logout", { method: "POST" });
   conversations = [];
