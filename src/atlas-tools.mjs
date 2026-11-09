@@ -39,6 +39,23 @@ export const ATLAS_FUNCTION_TOOLS = [
       required: ["tasks"],
       additionalProperties: false
     }
+  },
+  {
+    type: "function",
+    name: "convert_units",
+    description: "Convierte una cantidad entre unidades compatibles de longitud, masa, temperatura o volumen. Usa únicamente las unidades enumeradas y respeta la categoría.",
+    strict: true,
+    parameters: {
+      type: "object",
+      properties: {
+        category: { type: "string", enum: ["longitud", "masa", "temperatura", "volumen"] },
+        value: { type: "number", description: "Cantidad numérica finita entre -1e12 y 1e12." },
+        from_unit: { type: "string", enum: ["m", "km", "cm", "mi", "ft", "kg", "g", "lb", "oz", "C", "F", "K", "L", "mL", "gal_us"] },
+        to_unit: { type: "string", enum: ["m", "km", "cm", "mi", "ft", "kg", "g", "lb", "oz", "C", "F", "K", "L", "mL", "gal_us"] }
+      },
+      required: ["category", "value", "from_unit", "to_unit"],
+      additionalProperties: false
+    }
   }
 ];
 
@@ -105,6 +122,47 @@ export function calculateExpression(expression) {
   return Number(result.toPrecision(12));
 }
 
+const UNIT_DEFINITIONS = {
+  longitud: {
+    m: { factor: 1 }, km: { factor: 1000 }, cm: { factor: 0.01 },
+    mi: { factor: 1609.344 }, ft: { factor: 0.3048 }
+  },
+  masa: {
+    kg: { factor: 1 }, g: { factor: 0.001 }, lb: { factor: 0.45359237 },
+    oz: { factor: 0.028349523125 }
+  },
+  volumen: {
+    L: { factor: 1 }, mL: { factor: 0.001 }, gal_us: { factor: 3.785411784 }
+  },
+  temperatura: {
+    C: { toBase: (value) => value, fromBase: (value) => value },
+    F: { toBase: (value) => (value - 32) * 5 / 9, fromBase: (value) => value * 9 / 5 + 32 },
+    K: { toBase: (value) => value - 273.15, fromBase: (value) => value + 273.15 }
+  }
+};
+
+export function convertUnits({ category, value, from_unit, to_unit }) {
+  if (!Number.isFinite(value) || Math.abs(value) > 1e12) {
+    throw new Error("La cantidad debe ser un número finito entre -1e12 y 1e12.");
+  }
+  const units = UNIT_DEFINITIONS[category];
+  if (!units || !units[from_unit] || !units[to_unit]) {
+    throw new Error("Las unidades no pertenecen a la categoría seleccionada.");
+  }
+
+  let result;
+  if (category === "temperatura") {
+    const kelvin = units[from_unit].toBase(value);
+    if (kelvin < -273.15) throw new Error("La temperatura no puede ser inferior al cero absoluto.");
+    result = units[to_unit].fromBase(kelvin);
+  } else {
+    const baseValue = value * units[from_unit].factor;
+    result = baseValue / units[to_unit].factor;
+  }
+  if (!Number.isFinite(result)) throw new Error("El resultado de la conversión está fuera de rango.");
+  return Number(result.toPrecision(12));
+}
+
 export function executeAtlasTool(name, args = {}, now = new Date()) {
   if (name === "calculate") {
     const result = calculateExpression(args.expression);
@@ -130,6 +188,11 @@ export function executeAtlasTool(name, args = {}, now = new Date()) {
       persisted: false,
       tasks: args.tasks.map((task, index) => ({ number: index + 1, title: task.trim(), completed: false }))
     };
+  }
+
+  if (name === "convert_units") {
+    const result = convertUnits(args);
+    return { ok: true, ...args, result };
   }
 
   throw new Error("La herramienta solicitada no está autorizada.");
