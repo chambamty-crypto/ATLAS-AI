@@ -102,6 +102,7 @@ ATLAS-AI/
 │   ├── request-limiter.test.mjs
 │   ├── safety-identifier.test.mjs
 │   ├── server-contract.test.mjs
+│   ├── server-http.test.mjs
 │   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
@@ -129,7 +130,7 @@ Antes de un lanzamiento público, los siguientes hitos siguen pendientes:
 
 1. Ejecutar y revisar CI en Node.js 22 y 24.
 2. Probar registro, verificación SMTP, recuperación, chat y voz con credenciales de un entorno de prueba.
-3. Completar una revisión de seguridad y una prueba de aislamiento entre dos cuentas a través de HTTP.
+3. Completar una revisión de seguridad independiente; ya se añade una prueba HTTP automatizada de aislamiento entre dos cuentas.
 4. Incorporar MFA, eliminación/exportación de cuenta, monitoreo y límites distribuidos.
 5. Migrar a PostgreSQL antes de operar con varias instancias.
 6. Agregar nuevas integraciones solo con permisos granulares, confirmación explícita y auditoría.
