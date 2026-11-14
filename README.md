@@ -136,3 +136,24 @@ Antes de un lanzamiento público, los siguientes hitos siguen pendientes:
 6. Agregar nuevas integraciones solo con permisos granulares, confirmación explícita y auditoría.
 
 No se considera validada una integración externa hasta que una prueba real confirme su comportamiento. La voz requiere HTTPS (o localhost), permiso de micrófono, crédito y acceso habilitado a Realtime API.
+
+
+## Desarrollo con presupuesto cero
+
+ATLAS-AI no necesita contratar hosting para seguir desarrollándose. Mientras no exista presupuesto, la decisión recomendada es **mantenerlo como proyecto privado de ejecución local y validación continua**, sin publicarlo como servicio para usuarios externos.
+
+- El repositorio público y GitHub Actions sirven para conservar el código y ejecutar las pruebas automatizadas. La ejecución verde de CI no implica que exista un servidor público funcionando.
+- Para probarlo, usa una computadora propia con Node.js 22.13 o posterior y ejecuta `npm install`, `npm test` y después `npm run dev`. La aplicación queda disponible en `http://localhost:3000`.
+- El chat con modelos de OpenAI y la voz Realtime requieren una API key y pueden generar cargos por uso. Si no hay presupuesto, no habilites esas llamadas ni compartas una clave prestada.
+- El registro normal exige verificación por correo. Sin SMTP configurado, no se puede completar el flujo de alta de una cuenta; no se debe desactivar esa protección para aparentar que el registro funciona.
+- No recomiendo por ahora un hosting gratuito con disco efímero: ATLAS guarda cuentas, sesiones, historial, recuerdos y preferencias en SQLite. Si el proveedor borra el disco al reiniciar, se perderían esos datos.
+- No abras el servidor de desarrollo a Internet ni publiques el archivo `.env`, la base de datos o credenciales.
+
+### Ruta de trabajo sin gastar
+
+1. Mantener las pruebas automatizadas y corregir regresiones.
+2. Mejorar interfaz, accesibilidad, documentación y pruebas con datos ficticios sin llamadas de pago.
+3. Preparar exportación y respaldo local de SQLite antes de cualquier despliegue.
+4. Cuando exista presupuesto o un equipo de pruebas, evaluar un servidor con almacenamiento persistente, HTTPS, SMTP y límites de gasto de API.
+
+**Decisión de despliegue:** no contratar ni desplegar públicamente por ahora. Esta es la opción más segura y honesta con los recursos disponibles; evita costos inesperados y pérdida de datos.
