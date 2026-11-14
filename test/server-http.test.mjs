@@ -127,3 +127,53 @@ test("HTTP history and history tools remain isolated between authenticated accou
   const unauthenticated = await fetch(`${baseUrl}/api/conversations`);
   assert.equal(unauthenticated.status, 401);
 });
+
+test("HTTP memories and preferences remain isolated between authenticated accounts", { timeout: 15_000 }, async () => {
+  const firstPreferences = await fetch(`${baseUrl}/api/preferences`, {
+    method: "PUT",
+    headers: { cookie: firstCookie, "content-type": "application/json" },
+    body: JSON.stringify({ language: "en", response_tone: "warm", response_length: "detailed" })
+  });
+  assert.equal(firstPreferences.status, 200);
+  assert.equal((await firstPreferences.json()).preferences.language, "en");
+
+  const secondProfileBefore = await fetch(`${baseUrl}/api/profile`, { headers: { cookie: secondCookie } });
+  const secondBefore = await secondProfileBefore.json();
+  assert.equal(secondBefore.preferences.language, "es-MX");
+  assert.equal(secondBefore.preferences.response_tone, "professional");
+  assert.equal(secondBefore.memories.length, 0);
+
+  const firstMemoryResponse = await fetch(`${baseUrl}/api/memory`, {
+    method: "POST",
+    headers: { cookie: firstCookie, "content-type": "application/json" },
+    body: JSON.stringify({ category: "interests", content: "Preferencia privada de la primera cuenta." })
+  });
+  assert.equal(firstMemoryResponse.status, 201);
+  const firstMemory = (await firstMemoryResponse.json()).memory;
+
+  const secondMemoryResponse = await fetch(`${baseUrl}/api/memory`, {
+    method: "POST",
+    headers: { cookie: secondCookie, "content-type": "application/json" },
+    body: JSON.stringify({ category: "work", content: "Recuerdo privado de la segunda cuenta." })
+  });
+  assert.equal(secondMemoryResponse.status, 201);
+  const secondMemory = (await secondMemoryResponse.json()).memory;
+
+  const firstProfile = await (await fetch(`${baseUrl}/api/profile`, { headers: { cookie: firstCookie } })).json();
+  const secondProfile = await (await fetch(`${baseUrl}/api/profile`, { headers: { cookie: secondCookie } })).json();
+  assert.equal(firstProfile.memories.length, 1);
+  assert.equal(firstProfile.memories[0].id, firstMemory.id);
+  assert.equal(secondProfile.memories.length, 1);
+  assert.equal(secondProfile.memories[0].id, secondMemory.id);
+  assert.equal(secondProfile.preferences.language, "es-MX");
+
+  const crossAccountDelete = await fetch(`${baseUrl}/api/memory/${encodeURIComponent(firstMemory.id)}`, {
+    method: "DELETE",
+    headers: { cookie: secondCookie }
+  });
+  assert.equal(crossAccountDelete.status, 404);
+
+  const firstProfileAfter = await (await fetch(`${baseUrl}/api/profile`, { headers: { cookie: firstCookie } })).json();
+  assert.equal(firstProfileAfter.memories.length, 1);
+  assert.equal(firstProfileAfter.memories[0].id, firstMemory.id);
+});
