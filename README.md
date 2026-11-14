@@ -91,12 +91,18 @@ ATLAS-AI/
 │   ├── atlas-tools.mjs
 │   ├── auth-store.mjs
 │   ├── conversation-validation.mjs
+│   ├── request-limiter.mjs
+│   ├── safety-identifier.mjs
 │   └── user-context.mjs
 ├── test/
 │   ├── atlas-tools.test.mjs
 │   ├── auth-store.test.mjs
 │   ├── conversation-validation.test.mjs
 │   ├── frontend-history.test.mjs
+│   ├── request-limiter.test.mjs
+│   ├── safety-identifier.test.mjs
+│   ├── server-contract.test.mjs
+│   ├── server-http.test.mjs
 │   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
@@ -114,11 +120,40 @@ ATLAS-AI/
 - [Conversaciones Realtime](https://developers.openai.com/api/docs/guides/realtime-conversations)
 - [WebRTC para voz](https://developers.openai.com/api/docs/guides/voice-webrtc)
 
-## Próximas etapas
+## Estado y siguientes hitos
 
-- Verificación de correo, recuperación de cuenta y MFA.
-- Migración a PostgreSQL para despliegues multi-instancia.
-- Recordatorios persistentes con confirmación del usuario.
-- Integraciones externas con permisos granulares.
-- Herramientas para archivos y calendario con control de acceso.
-- Pruebas de integración y despliegue seguro.
+La verificación de correo y la recuperación de contraseña ya están implementadas; requieren configurar y probar un proveedor SMTP real. La memoria explícita, las preferencias por cuenta y la búsqueda privada del historial también están implementadas.
+
+La rama de mantenimiento v0.8.1 añade identificadores de seguridad seudonimizados para las solicitudes de cada cuenta, desactiva el almacenamiento de respuestas en la API cuando el flujo no necesita estado remoto y limita el crecimiento del registro local de rate limiting. Esto no sustituye límites distribuidos en producción.
+
+Antes de un lanzamiento público, los siguientes hitos siguen pendientes:
+
+1. Ejecutar y revisar CI en Node.js 22 y 24.
+2. Probar registro, verificación SMTP, recuperación, chat y voz con credenciales de un entorno de prueba.
+3. Completar una revisión de seguridad independiente; ya se añade una prueba HTTP automatizada de aislamiento entre dos cuentas.
+4. Incorporar MFA, eliminación/exportación de cuenta, monitoreo y límites distribuidos.
+5. Migrar a PostgreSQL antes de operar con varias instancias.
+6. Agregar nuevas integraciones solo con permisos granulares, confirmación explícita y auditoría.
+
+No se considera validada una integración externa hasta que una prueba real confirme su comportamiento. La voz requiere HTTPS (o localhost), permiso de micrófono, crédito y acceso habilitado a Realtime API.
+
+
+## Desarrollo con presupuesto cero
+
+ATLAS-AI no necesita contratar hosting para seguir desarrollándose. Mientras no exista presupuesto, la decisión recomendada es **mantenerlo como proyecto privado de ejecución local y validación continua**, sin publicarlo como servicio para usuarios externos.
+
+- El repositorio público y GitHub Actions sirven para conservar el código y ejecutar las pruebas automatizadas. La ejecución verde de CI no implica que exista un servidor público funcionando.
+- Para probarlo, usa una computadora propia con Node.js 22.13 o posterior y ejecuta `npm install`, `npm test` y después `npm run dev`. La aplicación queda disponible en `http://localhost:3000`.
+- El chat con modelos de OpenAI y la voz Realtime requieren una API key y pueden generar cargos por uso. Si no hay presupuesto, no habilites esas llamadas ni compartas una clave prestada.
+- El registro normal exige verificación por correo. Sin SMTP configurado, no se puede completar el flujo de alta de una cuenta; no se debe desactivar esa protección para aparentar que el registro funciona.
+- No recomiendo por ahora un hosting gratuito con disco efímero: ATLAS guarda cuentas, sesiones, historial, recuerdos y preferencias en SQLite. Si el proveedor borra el disco al reiniciar, se perderían esos datos.
+- No abras el servidor de desarrollo a Internet ni publiques el archivo `.env`, la base de datos o credenciales.
+
+### Ruta de trabajo sin gastar
+
+1. Mantener las pruebas automatizadas y corregir regresiones.
+2. Mejorar interfaz, accesibilidad, documentación y pruebas con datos ficticios sin llamadas de pago.
+3. Preparar exportación y respaldo local de SQLite antes de cualquier despliegue.
+4. Cuando exista presupuesto o un equipo de pruebas, evaluar un servidor con almacenamiento persistente, HTTPS, SMTP y límites de gasto de API.
+
+**Decisión de despliegue:** no contratar ni desplegar públicamente por ahora. Esta es la opción más segura y honesta con los recursos disponibles; evita costos inesperados y pérdida de datos.
