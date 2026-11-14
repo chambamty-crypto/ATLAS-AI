@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRateLimiter } from "./src/request-limiter.mjs";
+import { createSafetyIdentifier } from "./src/safety-identifier.mjs";
 import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, saveConversation, deleteConversation, replaceConversations, clearConversations } from "./src/auth-store.mjs";
 import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 import { USER_HISTORY_TOOL, buildUserContext, executeUserTool, getPreferences, listMemories, addMemory, deleteMemory, savePreferences } from "./src/user-context.mjs";
@@ -58,17 +60,12 @@ function requireAuth(req, res, next) {
 }
 app.use("/api", (req, res, next) => { res.set("Cache-Control", "no-store"); next(); });
 
-const requestBuckets = new Map();
+const requestLimiter = createRateLimiter();
 function rateLimit(maxRequests, windowMs) {
   return (req, res, next) => {
-    const key = req.ip || "unknown";
-    const now = Date.now();
-    const recent = (requestBuckets.get(key) || []).filter((time) => now - time < windowMs);
-    if (recent.length >= maxRequests) {
+    if (!requestLimiter.isAllowed(req.ip || "unknown", maxRequests, windowMs)) {
       return res.status(429).json({ error: "Demasiadas solicitudes. Intenta de nuevo en un minuto." });
     }
-    recent.push(now);
-    requestBuckets.set(key, recent);
     next();
   };
 }
@@ -110,7 +107,7 @@ function buildPersonalizedInstructions(userId) {
   return lines.join("\n");
 }
 
-async function callResponsesAPI(input, tools, instructions = assistantInstructions) {
+async function callResponsesAPI(input, tools, instructions = assistantInstructions, safetyId) {
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
@@ -123,6 +120,8 @@ async function callResponsesAPI(input, tools, instructions = assistantInstructio
       input,
       tools,
       tool_choice: "auto",
+      safety_identifier: safetyId,
+      store: false,
       max_output_tokens: 1000
     })
   });
@@ -369,7 +368,8 @@ app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (re
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "OpenAI-Safety-Identifier": createSafetyIdentifier(req.user.id)
       },
       body: JSON.stringify({
         expires_after: { anchor: "created_at", seconds: 600 },
@@ -446,7 +446,7 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
     const tools = [{ type: "web_search" }, ...ATLAS_FUNCTION_TOOLS, ...(preferences.memory_enabled ? [USER_HISTORY_TOOL] : [])];
     const instructions = buildPersonalizedInstructions(req.user.id);
     let input = safeMessages;
-    let data = await callResponsesAPI(input, tools, instructions);
+    let data = await callResponsesAPI(input, tools, instructions, createSafetyIdentifier(req.user.id));
 
     for (let round = 0; round < 2; round += 1) {
       const calls = (data.output || []).filter((item) => item.type === "function_call");
@@ -469,7 +469,7 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
           output: JSON.stringify(output)
         });
       }
-      data = await callResponsesAPI(input, tools, instructions);
+      data = await callResponsesAPI(input, tools, instructions, createSafetyIdentifier(req.user.id));
     }
 
     const text = getResponseText(data);
