@@ -91,12 +91,16 @@ ATLAS-AI/
 │   ├── atlas-tools.mjs
 │   ├── auth-store.mjs
 │   ├── conversation-validation.mjs
+│   ├── request-limiter.mjs
+│   ├── safety-identifier.mjs
 │   └── user-context.mjs
 ├── test/
 │   ├── atlas-tools.test.mjs
 │   ├── auth-store.test.mjs
 │   ├── conversation-validation.test.mjs
 │   ├── frontend-history.test.mjs
+│   ├── request-limiter.test.mjs
+│   ├── safety-identifier.test.mjs
 │   └── user-context.test.mjs
 ├── .github/workflows/test.yml
 ├── .env.example
@@ -114,11 +118,19 @@ ATLAS-AI/
 - [Conversaciones Realtime](https://developers.openai.com/api/docs/guides/realtime-conversations)
 - [WebRTC para voz](https://developers.openai.com/api/docs/guides/voice-webrtc)
 
-## Próximas etapas
+## Estado y siguientes hitos
 
-- Verificación de correo, recuperación de cuenta y MFA.
-- Migración a PostgreSQL para despliegues multi-instancia.
-- Recordatorios persistentes con confirmación del usuario.
-- Integraciones externas con permisos granulares.
-- Herramientas para archivos y calendario con control de acceso.
-- Pruebas de integración y despliegue seguro.
+La verificación de correo y la recuperación de contraseña ya están implementadas; requieren configurar y probar un proveedor SMTP real. La memoria explícita, las preferencias por cuenta y la búsqueda privada del historial también están implementadas.
+
+La rama de mantenimiento v0.8.1 añade identificadores de seguridad seudonimizados para las solicitudes de cada cuenta, desactiva el almacenamiento de respuestas en la API cuando el flujo no necesita estado remoto y limita el crecimiento del registro local de rate limiting. Esto no sustituye límites distribuidos en producción.
+
+Antes de un lanzamiento público, los siguientes hitos siguen pendientes:
+
+1. Ejecutar y revisar CI en Node.js 22 y 24.
+2. Probar registro, verificación SMTP, recuperación, chat y voz con credenciales de un entorno de prueba.
+3. Completar una revisión de seguridad y una prueba de aislamiento entre dos cuentas a través de HTTP.
+4. Incorporar MFA, eliminación/exportación de cuenta, monitoreo y límites distribuidos.
+5. Migrar a PostgreSQL antes de operar con varias instancias.
+6. Agregar nuevas integraciones solo con permisos granulares, confirmación explícita y auditoría.
+
+No se considera validada una integración externa hasta que una prueba real confirme su comportamiento. La voz requiere HTTPS (o localhost), permiso de micrófono, crédito y acceso habilitado a Realtime API.
