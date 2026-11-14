@@ -63,7 +63,8 @@ app.use("/api", (req, res, next) => { res.set("Cache-Control", "no-store"); next
 const requestLimiter = createRateLimiter();
 function rateLimit(maxRequests, windowMs) {
   return (req, res, next) => {
-    if (!requestLimiter.isAllowed(req.ip || "unknown", maxRequests, windowMs)) {
+    const key = [req.ip || "unknown", req.method, req.baseUrl, req.route?.path || req.path].join(":");
+    if (!requestLimiter.isAllowed(key, maxRequests, windowMs)) {
       return res.status(429).json({ error: "Demasiadas solicitudes. Intenta de nuevo en un minuto." });
     }
     next();
