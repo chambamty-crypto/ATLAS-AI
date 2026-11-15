@@ -16,6 +16,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
         address.setTextColor(0xff101827);
         address.setHint("http://192.168.1.100:3000");
         address.setText(prefs.getString("server_url", ""));
-        address.setInputType( Uri.parse("http://example.com").getScheme() != null ? 16 : 16);
+        address.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
         layout.addView(address);
 
         Button connect = new Button(this);
