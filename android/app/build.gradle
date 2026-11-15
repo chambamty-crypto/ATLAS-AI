@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.atlasai.mobile'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.atlasai.mobile'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '0.8.2'
+    }
+}
