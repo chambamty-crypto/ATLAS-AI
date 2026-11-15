@@ -13,6 +13,7 @@ import { normalizeConversation } from "./src/conversation-validation.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || "127.0.0.1";
 const apiKey = process.env.OPENAI_API_KEY;
 const model = process.env.OPENAI_MODEL || "gpt-5.4";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -479,6 +480,6 @@ app.get("/{*splat}", (_req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`ATLAS-AI listo en http://localhost:${port}`);
+app.listen(port, host, () => {
+  console.log(`ATLAS-AI listo en http://${host}:${port}`);
 });
