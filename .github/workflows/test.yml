@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [main, "feat/**"]
+    branches: [main, "feat/**", "feature/android-local-apk"]
   pull_request:
     branches: [main]
 
@@ -14,4 +14,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
       - run: npm test

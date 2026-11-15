@@ -13,11 +13,19 @@ function getTransport() {
   return transport;
 }
 
+function developmentConsoleMailEnabled() {
+  return process.env.NODE_ENV !== "production" && process.env.DEV_EMAIL_MODE === "console";
+}
+
 export function emailDeliveryConfigured() {
-  return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS && process.env.SMTP_FROM);
+  return developmentConsoleMailEnabled() || Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS && process.env.SMTP_FROM);
 }
 
 export async function sendAccountEmail({ to, subject, text, html }) {
+  if (developmentConsoleMailEnabled()) {
+    console.log("[ATLAS DEV EMAIL] Solo desarrollo; abre el enlace desde la computadora del servidor.", { to, subject, text });
+    return { sent: false, configured: true, developmentConsole: true };
+  }
   const mailer = getTransport();
   if (!mailer) return { sent: false, configured: false };
   await mailer.sendMail({ from: process.env.SMTP_FROM, to, subject, text, html });
