@@ -449,7 +449,7 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
       const instructions = [
         buildPersonalizedInstructions(req.user.id),
         "Estás ejecutándote en modo local. No tienes acceso a búsqueda web ni a herramientas externas en esta modalidad. No inventes información reciente ni afirmes haber ejecutado acciones externas."
-      ].join("\\n");
+      ].join("\n");
       const text = await callLocalModel({
         baseUrl: ollamaBaseUrl,
         model: ollamaModel,
