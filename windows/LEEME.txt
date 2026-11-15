@@ -1,0 +1,17 @@
+ATLAS-AI PARA WINDOWS — INICIO CON UN DOBLE CLIC
+
+1. Descomprime el paquete.
+2. Haz doble clic en Instalar-y-ejecutar-ATLAS.bat.
+3. El instalador detecta o instala Node.js, descarga ATLAS-AI y configura el servidor.
+4. Si tienes una API key de OpenAI, puedes introducirla cuando se solicite. Es opcional para abrir la interfaz, pero necesaria para chat y voz. El uso de API puede generar cargos.
+5. Espera a que aparezca una dirección HTTPS temporal y se abra ATLAS-AI en el navegador.
+6. En Android abre la APK y pega esa dirección. Si no tienes la APK, abre la dirección en Chrome del celular.
+
+ALTA DE CUENTA
+Al registrarte, el enlace de verificación aparece en la ventana de consola del servidor. Ábrelo desde la computadora y crea tu contraseña. Después inicia sesión desde el celular.
+
+CADA VEZ QUE LO USES
+Ejecuta Instalar-y-ejecutar-ATLAS.bat. La dirección cambia cada vez. La computadora debe permanecer encendida y conectada a internet. Para terminar, ejecuta Detener-ATLAS.bat.
+
+SEGURIDAD Y LIMITACIONES
+Es una configuración de demostración. Cualquiera que conozca la dirección temporal puede llegar a la pantalla de acceso. No compartas la dirección ni guardes información sensible. No abras puertos del router ni desactives el Firewall. La clave de OpenAI queda en el archivo .env dentro de %LOCALAPPDATA%\ATLAS-AI\app; no lo compartas. La dirección deja de funcionar al detener el túnel. No es un servicio permanente ni una instalación para producción.

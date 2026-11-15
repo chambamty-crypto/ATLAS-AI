@@ -1,0 +1,41 @@
+name: Windows one-click package
+
+on:
+  push:
+    branches:
+      - feature/windows-one-click-server
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-package:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate PowerShell syntax
+        shell: pwsh
+        run: |
+          $files = @("windows/Start-ATLAS.ps1", "windows/Stop-ATLAS.ps1")
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $file), [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              exit 1
+            }
+            Write-Host "PowerShell syntax OK: $file"
+          }
+      - name: Package Windows launcher
+        shell: pwsh
+        run: |
+          Compress-Archive -Path windows/* -DestinationPath ATLAS-AI-Windows.zip -Force
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ATLAS-AI-Windows-One-Click
+          path: ATLAS-AI-Windows.zip
+          retention-days: 30
