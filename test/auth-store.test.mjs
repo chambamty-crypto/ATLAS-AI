@@ -69,6 +69,19 @@ test("single-conversation writes preserve other chats and enforce account owners
   assert.equal(store.listConversations(first.id).length, 1);
 });
 
+
+test("email verification invalidates any password set before mailbox ownership is proven", async () => {
+  const user = store.createUserRecord("pre-hijack@example.test", await store.hashPassword("attacker chosen password"));
+  const session = store.createSession(user.id);
+  const token = store.createAccountToken(user.id, "verify_email", 60_000);
+  assert.equal(await store.verifyPassword("attacker chosen password", store.findUserByEmail(user.email).password_hash), true);
+  assert.equal(store.consumeAccountToken(token, "verify_email").id, user.id);
+  const refreshed = store.findUserByEmail(user.email);
+  assert.equal(refreshed.email_verified, 1);
+  assert.equal(await store.verifyPassword("attacker chosen password", refreshed.password_hash), false);
+  assert.equal(store.findSessionUser(session.token), null);
+});
+
 test.after(() => {
   store.db.close();
   for (const suffix of ["", "-shm", "-wal"]) {

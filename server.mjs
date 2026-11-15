@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { randomBytes } from "node:crypto";
+import { rateLimit } from "./src/rate-limit.mjs";
 import { createUserRecord, findUserByEmail, hashPassword, verifyPassword, createSession, findSessionUser, revokeSession, listConversations, saveConversation, deleteConversation, replaceConversations, clearConversations } from "./src/auth-store.mjs";
 import { ATLAS_FUNCTION_TOOLS, ATLAS_REALTIME_TOOLS, ATLAS_TOOL_NAMES, executeAtlasTool } from "./src/atlas-tools.mjs";
 import { USER_HISTORY_TOOL, buildUserContext, executeUserTool, getPreferences, listMemories, addMemory, deleteMemory, savePreferences } from "./src/user-context.mjs";
@@ -16,6 +18,8 @@ const model = process.env.OPENAI_MODEL || "gpt-5.4";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
+if (/^[1-3]$/.test(process.env.TRUST_PROXY || "")) app.set("trust proxy", Number(process.env.TRUST_PROXY));
+else if (process.env.TRUST_PROXY) console.warn("TRUST_PROXY debe ser un número de saltos de proxy de confianza entre 1 y 3; se ignoró.");
 app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -30,7 +34,8 @@ app.use(express.static(path.join(__dirname, "public"), { etag: true, maxAge: pro
 function readCookie(req, name) {
   const raw = req.headers.cookie || "";
   const item = raw.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`));
-  return item ? decodeURIComponent(item.slice(name.length + 1)) : "";
+  if (!item) return "";
+  try { return decodeURIComponent(item.slice(name.length + 1)); } catch { return ""; }
 }
 const SESSION_COOKIE = "atlas_session";
 const cookieOptions = () => `Path=/; HttpOnly; SameSite=Strict; Max-Age=604800${process.env.NODE_ENV === "production" ? "; Secure" : ""}`;
@@ -58,20 +63,7 @@ function requireAuth(req, res, next) {
 }
 app.use("/api", (req, res, next) => { res.set("Cache-Control", "no-store"); next(); });
 
-const requestBuckets = new Map();
-function rateLimit(maxRequests, windowMs) {
-  return (req, res, next) => {
-    const key = req.ip || "unknown";
-    const now = Date.now();
-    const recent = (requestBuckets.get(key) || []).filter((time) => now - time < windowMs);
-    if (recent.length >= maxRequests) {
-      return res.status(429).json({ error: "Demasiadas solicitudes. Intenta de nuevo en un minuto." });
-    }
-    recent.push(now);
-    requestBuckets.set(key, recent);
-    next();
-  };
-}
+const dummyPasswordHash = hashPassword(randomBytes(16).toString("hex"));
 
 const assistantInstructions = [
   "Eres ATLAS-AI, un asistente personal avanzado.",
@@ -173,7 +165,7 @@ async function sendVerification(req, user) {
   const token = createAccountToken(user.id, "verify_email", 24 * 60 * 60_000);
   const link = accountLink(req, token, "verify_email");
   try {
-    return await sendAccountEmail({ to: user.email, subject: "Verifica tu correo de ATLAS-AI", text: `Para verificar tu correo, abre este enlace (válido durante 24 horas): ${link}\\n\\nSi no solicitaste esta cuenta, ignora este mensaje.`, html: `<p>Confirma tu dirección de correo para activar tu cuenta de ATLAS-AI.</p><p><a href="${link}">Verificar mi correo</a></p><p>Este enlace vence en 24 horas. Si no solicitaste esta cuenta, ignora este mensaje.</p>` });
+    return await sendAccountEmail({ to: user.email, subject: "Verifica tu correo de ATLAS-AI", text: `Para verificar tu correo, abre este enlace (válido durante 24 horas): ${link}\n\nSi no solicitaste esta cuenta, ignora este mensaje.`, html: `<p>Confirma tu dirección de correo para activar tu cuenta de ATLAS-AI.</p><p><a href="${link}">Verificar mi correo</a></p><p>Este enlace vence en 24 horas. Si no solicitaste esta cuenta, ignora este mensaje.</p>` });
   } catch (error) {
     console.error("Verification email delivery failed:", error.message);
     return { sent: false, configured: emailDeliveryConfigured() };
@@ -183,9 +175,9 @@ async function sendVerification(req, user) {
 app.post("/api/auth/verify-email", csrfGuard, rateLimit(10, 15 * 60_000), (req, res) => {
   const user = consumeAccountToken(req.body?.token, "verify_email");
   if (!user) return res.status(400).json({ error: "El enlace no es válido o ya venció. Solicita uno nuevo." });
-  const session = createSession(user.id);
-  res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);
-  return res.json({ user: { id: user.id, email: user.email }, message: "Correo verificado. Tu cuenta está activa." });
+  // El titular del buzón establece la contraseña solo después de verificar el correo.
+  const passwordSetupToken = createAccountToken(user.id, "reset_password", 60 * 60_000);
+  return res.json({ passwordSetupToken, message: "Correo verificado. Ahora crea la contraseña de tu cuenta." });
 });
 
 app.post("/api/auth/resend-verification", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
@@ -205,7 +197,7 @@ app.post("/api/auth/forgot-password", csrfGuard, rateLimit(5, 15 * 60_000), asyn
     const token = createAccountToken(user.id, "reset_password", 60 * 60_000);
     const link = accountLink(req, token, "reset_password");
     try {
-      await sendAccountEmail({ to: user.email, subject: "Restablece tu contraseña de ATLAS-AI", text: `Para elegir una nueva contraseña, abre este enlace (válido durante una hora): ${link}\\n\\nSi no solicitaste el cambio, ignora este mensaje.`, html: `<p>Recibimos una solicitud para restablecer tu contraseña.</p><p><a href="${link}">Crear una nueva contraseña</a></p><p>Este enlace vence en una hora. Si no solicitaste el cambio, ignora este mensaje.</p>` });
+      await sendAccountEmail({ to: user.email, subject: "Restablece tu contraseña de ATLAS-AI", text: `Para elegir una nueva contraseña, abre este enlace (válido durante una hora): ${link}\n\nSi no solicitaste el cambio, ignora este mensaje.`, html: `<p>Recibimos una solicitud para restablecer tu contraseña.</p><p><a href="${link}">Crear una nueva contraseña</a></p><p>Este enlace vence en una hora. Si no solicitaste el cambio, ignora este mensaje.</p>` });
     } catch (error) { console.error("Password reset email delivery failed:", error.message); }
   }
   res.status(202).json({ message: "Si existe una cuenta verificada con ese correo y el servicio de correo está disponible, recibirás instrucciones." });
@@ -228,14 +220,12 @@ app.post("/api/auth/reset-password", csrfGuard, rateLimit(5, 15 * 60_000), async
 
 app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req, res) => {
   const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
-  const password = req.body?.password;
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 ||
-      typeof password !== "string" || password.length < 12 || password.length > 128) {
-    return res.status(400).json({ error: "Usa un correo válido y una contraseña de 12 a 128 caracteres." });
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+    return res.status(400).json({ error: "Usa un correo válido." });
   }
   try {
-    const passwordHash = await hashPassword(password);
-    const user = createUserRecord(email, passwordHash);
+    // No se acepta una contraseña antes de demostrar el control del correo.
+    const user = createUserRecord(email, `pending:${randomBytes(32).toString("hex")}`);
     const delivery = await sendVerification(req, user);
     return res.status(202).json({ pendingVerification: true, emailConfigured: delivery.configured, message: delivery.sent ? "Cuenta creada. Revisa tu correo para verificarla." : "Cuenta creada, pero el correo aún no está configurado o no pudo enviarse. Configura SMTP y solicita un nuevo enlace." });
   } catch (error) {
@@ -251,7 +241,8 @@ app.post("/api/auth/login", csrfGuard, rateLimit(5, 15 * 60_000), async (req, re
   if (!email || typeof password !== "string" || password.length > 128) return res.status(400).json({ error: "Credenciales no válidas." });
   try {
     const user = findUserByEmail(email);
-    if (!user || !(await verifyPassword(password, user.password_hash))) return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+    const passwordOk = await verifyPassword(password, user ? user.password_hash : await dummyPasswordHash);
+    if (!user || !passwordOk) return res.status(401).json({ error: "Correo o contraseña incorrectos." });
     if (!user.email_verified) return res.status(403).json({ error: "Verifica tu correo antes de iniciar sesión. Puedes solicitar un nuevo enlace." });
     const session = createSession(user.id);
     res.setHeader("Set-Cookie", `${SESSION_COOKIE}=${encodeURIComponent(session.token)}; ${cookieOptions()}`);

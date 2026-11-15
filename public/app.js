@@ -555,7 +555,7 @@ async function submitAuth(event, mode) {
   event.preventDefault();
   const form = event.currentTarget;
   const email = form.querySelector('input[type="email"]').value.trim();
-  const password = form.querySelector('input[type="password"]').value;
+  const password = mode === "login" ? form.querySelector('input[type="password"]').value : "";
   const submit = form.querySelector('button[type="submit"]');
   submit.disabled = true;
   authStatus.textContent = "Verificando acceso…";
@@ -563,7 +563,7 @@ async function submitAuth(event, mode) {
     const response = await fetch(`/api/auth/${mode}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify(mode === "login" ? { email, password } : { email })
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "No se pudo validar la cuenta.");
@@ -612,7 +612,7 @@ resendVerification.addEventListener("click", async () => {
 
 resetForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const token = new URLSearchParams(location.search).get("reset");
+  const token = window.atlasPasswordSetupToken || new URLSearchParams(location.search).get("reset");
   const password = document.querySelector("#reset-password").value;
   const button = resetForm.querySelector('button[type="submit"]');
   button.disabled = true;
@@ -621,6 +621,7 @@ resetForm.addEventListener("submit", async (event) => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "No se pudo actualizar la contraseña.");
     history.replaceState({}, "", "/");
+    window.atlasPasswordSetupToken = null;
     resetForm.hidden = true;
     loginForm.hidden = false;
     authToggle.hidden = false;
@@ -649,7 +650,13 @@ async function initializeAuth() {
       const verifyResponse = await fetch("/api/auth/verify-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: verificationToken }) });
       const verifyData = await verifyResponse.json();
       history.replaceState({}, "", "/");
-      if (verifyResponse.ok) { await enterAccount(verifyData.user); authStatus.textContent = verifyData.message; return; }
+      if (verifyResponse.ok) {
+        resetForm.hidden = false; loginForm.hidden = true; registerForm.hidden = true;
+        authToggle.hidden = true; forgotToggle.hidden = true; resendVerification.hidden = true;
+        window.atlasPasswordSetupToken = verifyData.passwordSetupToken;
+        document.querySelector("#auth-title").textContent = "Crea tu contraseña.";
+        authStatus.textContent = verifyData.message; return;
+      }
       showAuth(verifyData.error || "No se pudo verificar el correo.");
       return;
     }

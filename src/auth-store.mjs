@@ -180,7 +180,10 @@ export function consumeAccountToken(token, purpose) {
     .get(digest, purpose, Date.now());
   if (!row) return null;
   db.prepare("DELETE FROM account_tokens WHERE token_hash=?").run(digest);
-  if (purpose === "verify_email") db.prepare("UPDATE users SET email_verified=1 WHERE id=?").run(row.id);
+  if (purpose === "verify_email") {
+    db.prepare("UPDATE users SET email_verified=1, password_hash=? WHERE id=?").run(`pending:${randomBytes(32).toString("hex")}`, row.id);
+    db.prepare("DELETE FROM sessions WHERE user_id=?").run(row.id);
+  }
   return row;
 }
 
