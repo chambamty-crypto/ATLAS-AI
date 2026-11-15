@@ -1,6 +1,6 @@
 # ATLAS-AI
 
-Asistente personal inteligente con interfaz web, conversación por voz en tiempo real, chat de texto y herramientas controladas del lado del servidor.
+Asistente personal inteligente con interfaz web, chat de texto local, historial privado y una opción de voz en tiempo real mediante OpenAI.
 
 ## Estado
 
@@ -10,7 +10,6 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 - Node.js 22.13 o posterior (incluye `node:sqlite`; en Node 22 esta API sigue marcada como experimental).
 - Ollama para Windows y un modelo local descargado (modo recomendado: `qwen3:4b`).
-- Node.js 22.13 o posterior.
 - Navegador moderno. La voz WebRTC requiere configurar OpenAI por separado.
 
 ## Instalación local
