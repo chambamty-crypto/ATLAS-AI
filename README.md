@@ -4,7 +4,7 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.8.0.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.8.2.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
 
 ## Requisitos
 
@@ -32,8 +32,8 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 - **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
 - **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
-- **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
-- **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.
+- **Cuentas:** registro con correo; la contraseña se establece únicamente después de verificar el control del buzón. Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
+- **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. Tras verificar, el titular crea su contraseña mediante un token de un solo uso. Un registro previo de un correo ajeno no permite al registrante reservar la contraseña de esa cuenta.
 - **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
 - **Sesiones:** token aleatorio opaco en cookie `HttpOnly`, `SameSite=Strict`, con `Secure` en producción y expiración de siete días. El servidor conserva únicamente el hash SHA-256 del token.
 - **Historial privado y persistente:** conversaciones guardadas en SQLite por cuenta, disponibles al volver a iniciar sesión. El panel permite buscar por título o contenido, abrir una conversación, eliminar una individual o borrar todo el historial. Cada conversación se guarda de forma independiente para evitar que una pestaña sobrescriba el historial completo de otra; máximo 40 conversaciones y 100 mensajes por conversación.
@@ -72,7 +72,7 @@ El workflow de GitHub Actions ejecuta npm test en los cambios de main y en pull 
 
 - La API key principal solo se utiliza en el servidor; el frontend recibe un client secret temporal exclusivamente para iniciar Realtime.
 - Nunca publiques el archivo `.env` ni compartas tu clave en chats o capturas.
-- Los endpoints sensibles exigen sesión autenticada; las operaciones de escritura comprueban el origen. Se añaden cabeceras de seguridad y límites básicos por IP en memoria.
+- Los endpoints sensibles exigen sesión autenticada; las operaciones de escritura comprueban el origen. Se añaden cabeceras de seguridad y límites independientes por ruta e IP, con limpieza periódica y tope de cardinalidad.
 - SQLite es apropiado para una instancia única con disco persistente. En plataformas con disco efímero o varias réplicas, configura un volumen persistente o migra a PostgreSQL antes de escalar. Conserva copias de seguridad cifradas del archivo de base de datos.
 - La autenticación incluye verificación de correo y recuperación por SMTP, pero todavía no incorpora MFA ni eliminación de cuenta. Configura y prueba SMTP antes de producción; sin SMTP, las cuentas nuevas quedan pendientes de verificación y no pueden iniciar sesión. No consideres el servicio listo para un lanzamiento público amplio sin MFA, monitoreo, límites distribuidos y revisión de seguridad.
 - En producción sirve ATLAS exclusivamente detrás de HTTPS y define `NODE_ENV=production`; el proxy TLS debe conservar el host original.
