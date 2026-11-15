@@ -122,3 +122,8 @@ ATLAS-AI/
 - Integraciones externas con permisos granulares.
 - Herramientas para archivos y calendario con control de acceso.
 - Pruebas de integración y despliegue seguro.
+
+
+## Prueba en Android (APK local)
+
+Se agregó un contenedor Android de prueba que carga la interfaz real desde el servidor Node.js de tu computadora. Consulta [la guía de instalación y conexión](docs/android-local-test.md). Para permitir conexiones desde el teléfono, configura `HOST=0.0.0.0` en `.env`; el valor predeterminado sigue siendo `127.0.0.1` para no exponer el servidor en la red local accidentalmente. La APK debug se compila mediante GitHub Actions en la rama `feature/android-local-apk`.
