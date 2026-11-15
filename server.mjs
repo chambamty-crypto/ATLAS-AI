@@ -8,11 +8,15 @@ import { USER_HISTORY_TOOL, buildUserContext, executeUserTool, getPreferences, l
 import { createAccountToken, consumeAccountToken, updatePasswordAndRevokeSessions } from "./src/auth-store.mjs";
 import { emailDeliveryConfigured, sendAccountEmail } from "./src/mailer.mjs";
 import { normalizeConversation } from "./src/conversation-validation.mjs";
+import { callLocalModel } from "./src/local-model.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
 const apiKey = process.env.OPENAI_API_KEY;
+const aiProvider = (process.env.AI_PROVIDER || (apiKey ? "openai" : "ollama")).trim().toLowerCase();
 const model = process.env.OPENAI_MODEL || "gpt-5.4";
+const ollamaBaseUrl = process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434";
+const ollamaModel = process.env.OLLAMA_MODEL || "qwen3:4b";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
@@ -356,12 +360,15 @@ app.delete("/api/conversations", csrfGuard, requireAuth, (req, res) => {
 
 app.get("/api/health", (_req, res) => {
   res.set("Cache-Control", "no-store");
-  res.json({ ok: true, name: "ATLAS-AI", configured: Boolean(apiKey), tools: [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name] });
+  res.json({ ok: true, name: "ATLAS-AI", configured: aiProvider === "ollama" || (aiProvider === "openai" && Boolean(apiKey)), provider: aiProvider, tools: [...ATLAS_TOOL_NAMES, USER_HISTORY_TOOL.name] });
 });
 
 app.post("/api/session", csrfGuard, requireAuth, rateLimit(8, 60_000), async (req, res) => {
-  if (!apiKey) {
-    return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
+  if (aiProvider === "ollama") {
+    return res.status(501).json({ error: "La voz en tiempo real aún no está disponible con el modelo local. Usa el chat de texto." });
+  }
+  if (aiProvider !== "openai" || !apiKey) {
+    return res.status(503).json({ error: "Configura AI_PROVIDER=openai y OPENAI_API_KEY para habilitar la voz en tiempo real." });
   }
 
   try {
@@ -422,10 +429,6 @@ app.post("/api/tool", csrfGuard, requireAuth, rateLimit(40, 60_000), (req, res) 
 });
 
 app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async (req, res) => {
-  if (!apiKey) {
-    return res.status(503).json({ error: "Falta configurar OPENAI_API_KEY en el servidor." });
-  }
-
   const messages = req.body?.messages;
   if (!Array.isArray(messages) || messages.length === 0 || messages.length > 12) {
     return res.status(400).json({ error: "Envía entre 1 y 12 mensajes recientes." });
@@ -439,6 +442,28 @@ app.post("/api/assistant", csrfGuard, requireAuth, rateLimit(20, 60_000), async 
       return res.status(400).json({ error: "El formato de la conversación no es válido." });
     }
     safeMessages.push({ role: message.role, content: message.content.trim() });
+  }
+
+  if (aiProvider === "ollama") {
+    try {
+      const instructions = [
+        buildPersonalizedInstructions(req.user.id),
+        "Estás ejecutándote en modo local. No tienes acceso a búsqueda web ni a herramientas externas en esta modalidad. No inventes información reciente ni afirmes haber ejecutado acciones externas."
+      ].join("\n");
+      const text = await callLocalModel({
+        baseUrl: ollamaBaseUrl,
+        model: ollamaModel,
+        messages: [{ role: "system", content: instructions }, ...safeMessages]
+      });
+      return res.json({ text, citations: [], provider: "ollama" });
+    } catch (error) {
+      console.error("Local model request failed:", error.message);
+      return res.status(502).json({ error: error.message || "ATLAS no pudo conectar con el modelo local." });
+    }
+  }
+
+  if (aiProvider !== "openai" || !apiKey) {
+    return res.status(503).json({ error: "Configura AI_PROVIDER=ollama o proporciona OPENAI_API_KEY para usar OpenAI." });
   }
 
   try {
