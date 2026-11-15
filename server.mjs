@@ -228,7 +228,7 @@ app.post("/api/auth/register", csrfGuard, rateLimit(5, 15 * 60_000), async (req,
     // No se acepta una contraseña antes de demostrar el control del correo.
     const user = createUserRecord(email, `pending:${randomBytes(32).toString("hex")}`);
     const delivery = await sendVerification(req, user);
-    return res.status(202).json({ pendingVerification: true, emailConfigured: delivery.configured, message: delivery.sent ? "Cuenta creada. Revisa tu correo para verificarla." : "Cuenta creada, pero el correo aún no está configurado o no pudo enviarse. Configura SMTP y solicita un nuevo enlace." });
+    return res.status(202).json({ pendingVerification: true, emailConfigured: delivery.configured, message: delivery.sent ? "Cuenta creada. Revisa tu correo para verificarla." : delivery.developmentConsole ? "Cuenta creada. Enlace de verificación impreso en la consola del servidor." : "Cuenta creada, pero el correo aún no está configurado o no pudo enviarse. Configura SMTP y solicita un nuevo enlace." });
   } catch (error) {
     if (String(error.message).includes("UNIQUE")) return res.status(409).json({ error: "No se pudo crear la cuenta con esos datos." });
     console.error("Registration failed:", error.message);
