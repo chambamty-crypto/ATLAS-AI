@@ -4,13 +4,14 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
 
 ## Estado
 
-**Versión 0.8.0.** Incorpora verificación obligatoria de correo y recuperación de contraseña por enlaces de un solo uso, además de memoria personal administrable, preferencias por cuenta, búsqueda privada del historial, voz WebRTC, chat con Responses API, búsqueda web y herramientas propias.
+**Versión 0.8.0.** Incorpora cuentas, historial privado, memoria personal y preferencias por usuario. El chat puede funcionar con un modelo local mediante Ollama, sin clave de API. La voz WebRTC con OpenAI sigue siendo opcional y requiere credenciales de OpenAI.
 
 ## Requisitos
 
 - Node.js 22.13 o posterior (incluye `node:sqlite`; en Node 22 esta API sigue marcada como experimental).
-- Una API key de OpenAI con acceso a Responses API y Realtime API.
-- Navegador moderno con permiso de micrófono para la función de voz.
+- Ollama para Windows y un modelo local descargado (modo recomendado: `qwen3:4b`).
+- Node.js 22.13 o posterior.
+- Navegador moderno. La voz WebRTC requiere configurar OpenAI por separado.
 
 ## Instalación local
 
@@ -20,18 +21,21 @@ Asistente personal inteligente con interfaz web, conversación por voz en tiempo
    `cd ATLAS-AI`
 3. Instala dependencias:
    `npm install`
-4. Copia `.env.example` como `.env`.
-5. Abre `.env` y agrega tu clave en `OPENAI_API_KEY`.
-6. Configura `APP_URL` con el origen público de ATLAS y completa las variables SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) para enviar verificación y recuperación. En producción, `APP_URL` debe usar HTTPS.
-7. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
-8. Inicia el servidor:
-   `npm run dev`
-9. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
+4. Instala [Ollama para Windows](https://ollama.com/download/windows) y ábrelo.
+5. En PowerShell, descarga el modelo ligero recomendado:
+   `ollama pull qwen3:4b`
+6. Copia `.env.example` como `.env`. El modo local ya queda seleccionado con `AI_PROVIDER=ollama`; no agregues ninguna clave de OpenAI.
+7. Configura `APP_URL` con el origen público de ATLAS y completa las variables SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) si deseas enviar verificación y recuperación. En producción, `APP_URL` debe usar HTTPS.
+8. Asegúrate de que `ATLAS_DB_PATH` apunte a una carpeta persistente y escribible. Por defecto se crea `./data/atlas.sqlite`.
+9. Inicia el servidor:
+   `npm start`
+10. Abre [http://localhost:3000](http://localhost:3000) y crea una cuenta.
 
 ## Capacidades
 
-- **Conversación por voz:** WebRTC con OpenAI Realtime y credenciales temporales emitidas por el servidor. La sesión recibe las funciones permitidas y el navegador remite sus llamadas a `/api/tool`; la lógica se ejecuta en el servidor.
-- **Chat inteligente:** Responses API, modelo configurable mediante `OPENAI_MODEL` (predeterminado: `gpt-5.4`), con búsqueda web.
+- **Chat local:** Ollama en `http://127.0.0.1:11434`, con modelo configurable mediante `OLLAMA_MODEL` (predeterminado: `qwen3:4b`). Las solicitudes se procesan en la computadora donde corre el servidor y no necesitan clave API.
+- **Modo OpenAI opcional:** configura `AI_PROVIDER=openai`, `OPENAI_API_KEY` y `OPENAI_MODEL` para recuperar Responses API, búsqueda web y voz WebRTC.
+- **Voz:** la conversación WebRTC actual requiere OpenAI Realtime. En modo Ollama, el servidor informa que la voz local todavía no está implementada; el chat de texto sí funciona.
 - **Cuentas:** registro e inicio de sesión con correo y contraseña (mínimo 12 caracteres). Las contraseñas se derivan con scrypt y salt individual; nunca se guardan en texto plano.
 - **Verificación de correo:** enlaces aleatorios de un solo uso, almacenados como hash y con vencimiento de 24 horas. El acceso queda bloqueado hasta verificar. Los enlaces se envían por SMTP configurable.
 - **Recuperación de contraseña:** enlaces de un solo uso con vencimiento de una hora. Al cambiar la contraseña se revocan todas las sesiones activas. Las respuestas de solicitud no revelan si un correo está registrado.
@@ -122,3 +126,12 @@ ATLAS-AI/
 - Integraciones externas con permisos granulares.
 - Herramientas para archivos y calendario con control de acceso.
 - Pruebas de integración y despliegue seguro.
+
+
+## Modelo local y privacidad
+
+Ollama expone su API local en `http://127.0.0.1:11434`. ATLAS-AI se conecta desde el servidor Node.js; el navegador y la aplicación Android siguen comunicándose únicamente con ATLAS. No expongas el puerto 11434 directamente a Internet ni lo publiques mediante Cloudflare Tunnel. Si accedes a ATLAS desde fuera de casa, el procesamiento local ocurre en la PC que aloja el servidor.
+
+Con 16 GB de RAM, empieza con `qwen3:4b`. El rendimiento depende también del procesador y la GPU. La descarga del modelo requiere Internet una sola vez; después, las consultas del modelo se ejecutan localmente.
+
+En modo local no están disponibles la búsqueda web integrada de OpenAI ni el ciclo automático de herramientas del modelo. Las cuentas, el historial y la memoria por usuario permanecen en el servidor. La voz local se abordará en una fase posterior.
